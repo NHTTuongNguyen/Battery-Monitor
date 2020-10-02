@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BatteryMonitor</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_information">Information</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="BATTERY">Battery</string>
+    <string name="Status">Status</string>
+    <string name="Health">Health</string>
+    <string name="Power">Power</string>
+    <string name="Voltage">Voltage</string>
+    <string name="Temperature">Temperature</string>
+    <string name="Level">Level</string>
+    <string name="BatteryType">BatteryType</string>
+    <string name="ChargingSource">ChargingSource</string>
+</resources>
