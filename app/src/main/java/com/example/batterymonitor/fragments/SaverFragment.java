@@ -1,5 +1,6 @@
 package com.example.batterymonitor.fragments;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +9,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.batterymonitor.MainActivity;
 import com.example.batterymonitor.R;
-import com.example.batterymonitor.receiver.BatteryReceiver;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,25 +68,25 @@ public class SaverFragment extends Fragment {
     }
 
 
-    private BatteryReceiver batteryReceiver = new BatteryReceiver();
-    private IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saver, container, false);
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().registerReceiver(batteryReceiver, intentFilter);
+        View view =  inflater.inflate(R.layout.fragment_saver, container, false);
+        TextView textView  =  view.findViewById(R.id.txtTestView);
+
+        Date today =new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+        String dateToStr = format.format(today);
+        textView.setText(dateToStr);
+
+        return view;
     }
 
-    @Override
-    public void onPause() {
-        getActivity().unregisterReceiver(batteryReceiver);
-        super.onPause();
-    }
+
+
+
 }

@@ -96,6 +96,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <TextView
+                                android:id="@+id/txtCurrentTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Charging"
@@ -135,6 +136,7 @@
                         android:orientation="vertical"
                         android:layout_height="wrap_content">
                         <LinearLayout
+                            android:layout_marginTop="@dimen/dimen_10"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
@@ -146,6 +148,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -179,6 +182,8 @@
 
                                 </LinearLayout>
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -190,7 +195,7 @@
                                             android:id="@+id/img_Health"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@drawable/ic_home_black_24dp" />
+                                            android:src="@drawable/ic_baseline_health_24" />
                                         <TextView
                                             android:layout_toRightOf="@+id/img_Health"
                                             android:layout_marginLeft="10dp"
@@ -212,6 +217,8 @@
 
                                 </LinearLayout>
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -245,6 +252,8 @@
 
                                 </LinearLayout>
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -284,13 +293,15 @@
                                 android:layout_margin="10dp"
                                 android:background="@android:color/black"
                                 android:layout_width="1dp"
-                                android:layout_height="@dimen/dimen_70"/>
+                                android:layout_height="match_parent"/>
                             <LinearLayout
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -325,6 +336,8 @@
 
                                 </LinearLayout>
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent">
@@ -360,6 +373,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -394,6 +409,8 @@
 
                                 </LinearLayout>
                                 <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_5"
+
                                     android:orientation="vertical"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     android:layout_width="match_parent"
@@ -431,7 +448,9 @@
 
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_margin="@dimen/dimen_10"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginBottom="@dimen/dimen_15"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
