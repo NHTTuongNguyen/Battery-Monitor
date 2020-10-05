@@ -1,4 +1,4 @@
-package com.example.batterymonitor;
+package com.example.batterymonitor.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -8,28 +8,29 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeActivity extends AppCompatActivity {
-    private String tabTitles[] = new String[] { "Information", "Saver" };
+    private String tabTitles[] = new String[] { "Information", "Saver"};
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
+    private ImageView imgToSetting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        permission_WRITE_SETTINGS(200);
-
         viewPager2 = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tabs);
+        imgToSetting = findViewById(R.id.imgToSetting);
         final ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager2.setAdapter(adapter);
 
@@ -61,16 +62,17 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        imgToSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this,SettingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void permission_WRITE_SETTINGS(int requestCode) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.System.canWrite(getApplicationContext())) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, requestCode);
-            }
-        }
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -85,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 finishAffinity();
                             }
-                        })
+                })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

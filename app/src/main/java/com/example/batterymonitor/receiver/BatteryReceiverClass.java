@@ -9,14 +9,9 @@ import android.os.BatteryManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.batterymonitor.HomeActivity;
+import com.example.batterymonitor.activity.HomeActivity;
 import com.example.batterymonitor.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class BatteryReceiverClass extends BroadcastReceiver {
     TextView txtStatusLabel,
@@ -28,7 +23,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtBatteryType,
             txtChargingSource,
             txtPower,
-            txtBigDOC,txtCurrentTime;
+            txtBigDOC;
     ImageView imgBatteryImage,imageView_Bluetooth;
 
     @Override
@@ -43,9 +38,8 @@ public class BatteryReceiverClass extends BroadcastReceiver {
          txtChargingSource = ((HomeActivity)context).findViewById(R.id.txtChargingSource);
          txtPower = ((HomeActivity)context).findViewById(R.id.txtPower);
          txtBigDOC = ((HomeActivity)context).findViewById(R.id.txtNhietDoLon);
-         txtCurrentTime = ((HomeActivity)context).findViewById(R.id.txtCurrentTime);
          imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
-        imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
+         imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
 
         String action = intent.getAction();
 
@@ -82,13 +76,8 @@ public class BatteryReceiverClass extends BroadcastReceiver {
 
                 }
             }
-            ///set Time
-            String format = "HH:mm";
-            SimpleDateFormat sdf =new SimpleDateFormat(format, Locale.US);
-            String callstarttime = sdf.format(Calendar.getInstance().getTime());
-            if (txtCurrentTime !=null) {
-                txtCurrentTime.setText(callstarttime);
-            }
+
+
             ///txtVoltage
             if (txtVoltage!=null) {
                 float floatVoltage = (float) (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) * 0.001);

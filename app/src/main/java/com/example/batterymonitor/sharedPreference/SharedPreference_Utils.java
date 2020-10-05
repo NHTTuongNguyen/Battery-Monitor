@@ -12,6 +12,7 @@ public class SharedPreference_Utils {
     private static final String MyPREFERENCES = "MyPrefsSetting77" ;
     private static final String Bluetooth_ON = "bluetooth_turn_On_Key";
     private static final String Bluetooth_OFF = "bluetooth_turn_Off_Key";
+    private static final String Wifi= "wifi_Key";
 
 
     public SharedPreference_Utils(Context context){
@@ -27,6 +28,17 @@ public class SharedPreference_Utils {
             int selectedBluetooth = sharedPreferences.getInt(Bluetooth_ON, R.drawable.ic_baseline_bluetooth_disabled_24);
             Log.d("get_BBB", selectedBluetooth + "");
             return selectedBluetooth;
+    }
+    public static void setWifi(int wifi){
+        setSharedPreferences_Int(Wifi,wifi);
+        Log.d("setBluetooth_Turn_On",wifi+"");
+    }
+
+
+    public static int getWifi(){
+        int selectedWifi = sharedPreferences.getInt(Wifi, R.drawable.ic_baseline_signal_wifi_4_bar_24);
+        Log.d("get_BBB", selectedWifi + "");
+        return selectedWifi;
     }
     public static void setBluetooth_OFF(int bluetooth_off){
         setSharedPreferences_Int(Bluetooth_OFF,bluetooth_off);

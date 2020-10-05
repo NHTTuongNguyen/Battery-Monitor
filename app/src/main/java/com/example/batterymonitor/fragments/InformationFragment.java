@@ -1,9 +1,15 @@
 package com.example.batterymonitor.fragments;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,12 +23,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.Axis;
@@ -47,46 +58,28 @@ public class InformationFragment extends Fragment {
     }
     private LinearLayout linearLayout_View,
             linearLayout_SettingWifi,
-            linearLayout_Bluetooth,linearLayout_Brightness,linearLayout_Landscape;
+            linearLayout_Bluetooth,linearLayout_Brightness,linearLayout_Landscape,linearLayout_WifiOnOFF;
     private  final String url_Battery= Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS;
-    private final String url_SettingWifi =Settings.ACTION_WIFI_SETTINGS;
+    private final String url_SettingWifi = Settings.ACTION_WIFI_SETTINGS;
     SharedPreference_Utils sharedPreference_utils;
-    private ImageView imageView_Bluetooth,imageView_Brightness,imageView_Landscape;
+    private ImageView imageView_Bluetooth,imageView_Brightness,imageView_Landscape,imageView_WifiOnOff;
     private View view;
     private LineChartView lineChartView;
+    private TextView txtCurrentTimeThread,txtCurrentDaysThread,txtCurrentMemoryThread;
 
 
 
     private BatteryReceiverClass batteryReceiverClass;
     private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,intentFilter_ACTION_STATE_CHANGED;
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-//        Log.i("ManuFacturer :", Build.MANUFACTURER);
-//        Log.i("Board : ", Build.BOARD);
-//        Log.i("Display : ", Build.DISPLAY);
-//        Log.i("Battery : ", Build.VERSION.BASE_OS );
-//        batteryTxt = (TextView) view.findViewById(R.id.batteryTxt);
-//////        this.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-//        BatteryManager bm = (BatteryManager) getContext().getSystemService(BATTERY_SERVICE);
-//        int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-//        batteryTxt.setText(String.valueOf(batLevel) + "%");
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         initView();
+        sharedPreference_utils = new SharedPreference_Utils(getActivity());
         batteryReceiverClass = new BatteryReceiverClass();
-
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-//        intentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-
-
-
-
         linearLayout_View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,14 +126,21 @@ public class InformationFragment extends Fragment {
             boolean brightness;
             @Override
             public void onClick(View view) {
-                brightness = !brightness;
-                if (brightness){
-                    Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-                    imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
-                }else {
-                    Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-                    imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_7_24);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (!Settings.System.canWrite(getActivity())) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getActivity().getPackageName()));
+                        startActivityForResult(intent, 200);
+                    }
+                    brightness = !brightness;
+                    if (brightness){
+                        Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+                        imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
+                    }else {
+                        Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+                        imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_7_24);
+                    }
                 }
+
             }
         });
         linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
@@ -150,35 +150,105 @@ public class InformationFragment extends Fragment {
                 landscape = !landscape;
                 if (landscape){
 
-                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_stay_current_landscape_24);
+                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
 //                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
                 }
                 else {
-                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_landscape_24);
+                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
 //                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                 }
             }
         });
+        linearLayout_WifiOnOFF.setOnClickListener(new View.OnClickListener() {
+            boolean wifi;
+            @Override
+            public void onClick(View view) {
+                wifi = !wifi;
+                if (wifi){
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
+                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
+
+                }else {
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_4_bar_24);
+
+                }
+            }
+        });
         initChart();
+
+        displayCurrentTime();
         return view;
     }
 
+    private void displayCurrentTime() {
+        Thread myThread;
+        Runnable runnable = new CountDownRunner();
+        myThread= new Thread(runnable);
+        myThread.start();
+    }
+    private void doWork() {
+        getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                try{
+                    txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
+                    txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
+
+
+                    ////////////////////
+//                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+//                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
+//                    activityManager.getMemoryInfo(mi);
+//                    long availableMegs = mi.availMem / 1048576L;
+//                    long percentAvail = mi.availMem / mi.totalMem;
+//                    Log.d("availableMegs",availableMegs+"");
+//                    Log.d("percentAvail",percentAvail+"");
+
+//                    txtCurrentMemoryThread.setText(availableMegs+"");
+
+                    //////////////////
+                    Calendar calendar = Calendar.getInstance();
+                    String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                    txtCurrentDaysThread.setText(currentDate);
+                    Date dt = new Date();
+                    int hours = dt.getHours();
+                    int minutes = dt.getMinutes();
+                    int seconds = dt.getSeconds();
+                    String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
+                    txtCurrentTimeThread.setText(curTime);
+                }catch (Exception e) {}
+            }
+        });
+    }
+
+
+    private class CountDownRunner implements Runnable {
+        public void run() {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    doWork();
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
     private void initView() {
-        sharedPreference_utils = new SharedPreference_Utils(getActivity());
         lineChartView = view.findViewById(R.id.chart);
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
+        imageView_WifiOnOff = view.findViewById(R.id.img_WifiOnOff);
         linearLayout_View =view.findViewById(R.id.linearLayout_View);
         linearLayout_Landscape = view.findViewById(R.id.linearLayout_Landscape);
         linearLayout_SettingWifi = view.findViewById(R.id.linearLayout_SettingWifi);
         linearLayout_Bluetooth = view.findViewById(R.id.linearLayout_Bluetooth);
         linearLayout_Brightness = view.findViewById(R.id.linearLayout_Brightness);
+        linearLayout_WifiOnOFF = view.findViewById(R.id.linearLayout_WifiOnOFF);
     }
-
-
     private void initChart() {
         String[] axisDataX =
                 {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
@@ -227,22 +297,19 @@ public class InformationFragment extends Fragment {
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
     }
-
     private void setActionIntent(String actionIntent) {
         Intent intent = new Intent();
         intent.setAction(actionIntent);
         getActivity().startActivity(intent);
     }
-
     @Override
     public void onResume() {
         super.onResume();
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-
+        imageView_WifiOnOff.setImageResource(sharedPreference_utils.getWifi());
 
     }
-
     @Override
     public void onPause() {
         getActivity().unregisterReceiver(batteryReceiverClass);

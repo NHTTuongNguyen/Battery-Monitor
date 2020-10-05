@@ -10,13 +10,13 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorYellow">#FFFF00</color>
     <color name="colorBlack">#000000</color>
-
+    <color name="colorBlue">#1E90FF</color>
     <color name="colorYellowReadStory">#fffde7</color>
     <color name="colorBlue_1">#2c3258</color>
 
     <color name="colorDefaultButton">#CFCFCF</color>
     <color name="colorNau">#795548</color>
-    <color name="colorBlueGray">#5d6d7c</color>
+    <color name="colorBlueGray">#fff</color>
 
 
     <color name="backgroundColorBlack">#171820</color>
@@ -24,4 +24,14 @@
     <color name="backgroundColor">#fff</color>
     <color name="textColor">#000</color>
     <color name="black">#000</color>
+
+
+
+    <color name="colorPrimaryNight">#16202c</color>
+    <color name="colorPrimaryDarkNight">#141d26</color>
+    <color name="colorAccentNight">#ffffff</color>
+
+    <color name="primaryTitleColor">#212121</color>
+    <color name="primaryTitleColorNight">#FFFFFF</color>
+
 </resources>

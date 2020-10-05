@@ -7,11 +7,12 @@
         <item name="colorPrimaryDark">@color/colorWhite</item>
         <item name="colorAccent">@color/colorGreen</item>
         <item name="android:windowLightStatusBar">true</item>
-<!--        <item name="colorPrimary">#9C27B0</item>-->
-<!--        <item name="colorPrimaryDark">#CDDC39</item>-->
-<!--        <item name="colorAccent">@color/colorGreen</item>-->
-<!--        <item name="android:windowLightStatusBar">true</item>-->
-    </style>
+<!--        <item name="android:fontFamily">@font/marvel</item>-->
+        <item name="primaryTitleColor">@color/primaryTitleColor</item>
 
+    </style>
+    <style name="TextViewSize">
+        <item name="android:textSize">13dp</item>
+    </style>
 
 </resources>

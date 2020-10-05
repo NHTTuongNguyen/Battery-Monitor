@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private static final int CARD_ITEM_SIZE = 2;
-    private String tabTitles[] = new String[] { "Information", "Saver" };
+    private String tabTitles[] = new String[] { "Information", "Saver"};
 
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
