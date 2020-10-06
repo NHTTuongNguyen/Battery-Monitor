@@ -29,10 +29,7 @@ public class MainActivity extends AppCompatActivity {
         activityManager.getMemoryInfo(mi);
         double availableMegs = mi.availMem / 0x100000L;
 
-//Percentage can be calculated for API 16+
         double percentAvail = mi.availMem / (double)mi.totalMem * 100.0;
-
-
 
 
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);

@@ -13,15 +13,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-                    <androidx.cardview.widget.CardView
+            <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dimen_10"
                         app:cardCornerRadius="@dimen/dimen_10">
                             <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:layout_height="wrap_content">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,26 +30,26 @@
 
                 <ImageView
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:id="@+id/img_DarkTheme"
+                    android:id="@+id/img_ClassicMode"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_nights_stay_44" />
+                    android:src="@drawable/ic_baseline_offline_bolt_24" />
 
                 <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_toRightOf="@id/img_DarkTheme"
+                    android:layout_toRightOf="@id/img_ClassicMode"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/txtDarktheme"
+                        android:textStyle="bold"
+                        android:id="@+id/txtClassicMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/ClassicModel"/>
                     <RelativeLayout
-                        android:layout_below="@id/txtDarktheme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -66,8 +66,23 @@
                 </LinearLayout>
 
             </RelativeLayout>
+                                <LinearLayout
+                                    android:layout_marginBottom="@dimen/dimen_10"
+                                    android:id="@+id/linearLayoutClassMode_Line"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
 
-            <LinearLayout
+                                    <View
+                                        android:layout_gravity="center"
+                                        android:background="@color/colorGreen"
+                                        android:layout_width="@dimen/dimen_50"
+                                        android:layout_height="5dp"/>
+                                </LinearLayout>
+
+                                <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearLayoutClassMode"
                 android:theme="@style/TextViewSize"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -102,7 +117,6 @@
                                 />
 
                             <TextView
-                                android:id="@+id/txttrangthai"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -290,11 +304,13 @@
 
         </LinearLayout>
                     </androidx.cardview.widget.CardView>
+
+
             <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_10"
-        app:cardCornerRadius="@dimen/dimen_10">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_10">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -306,21 +322,24 @@
                 android:orientation="horizontal">
 
                 <ImageView
+
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:id="@+id/img_DarkTheme"
+                    android:id="@+id/img_LongLifeMode"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_nights_stay_44" />
+                    android:src="@drawable/ic_baseline_wb_sunny_24" />
 
                 <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_toRightOf="@id/img_DarkTheme"
+                    android:layout_toRightOf="@id/img_LongLifeMode"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/txtLongLifeMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/LongLifeMode"/>
@@ -340,8 +359,24 @@
                 </LinearLayout>
 
             </RelativeLayout>
+             <LinearLayout
+                 android:layout_marginBottom="@dimen/dimen_10"
+
+                 android:id="@+id/linearLayoutLongLifeMode_Line"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical">
+
+                 <View
+                     android:layout_gravity="center"
+                     android:background="@color/colorGreen"
+                     android:layout_width="@dimen/dimen_50"
+                     android:layout_height="5dp"/>
+             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayoutLongLifeMode"
+                android:visibility="gone"
                 android:theme="@style/TextViewSize"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -581,20 +616,22 @@
 
                 <ImageView
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:id="@+id/img_DarkTheme"
+                    android:id="@+id/imgSleepMode"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_nights_stay_44" />
+                    android:src="@drawable/ic_baseline_nights_stay_24" />
 
                 <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_toRightOf="@id/img_DarkTheme"
+                    android:layout_toRightOf="@id/imgSleepMode"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/txtSleepMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/SleepMode"/>
@@ -616,6 +653,27 @@
 
             </RelativeLayout>
             <LinearLayout
+                android:layout_marginBottom="@dimen/dimen_10"
+
+                android:id="@+id/linearLayoutSleepMode_Line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_gravity="center"
+                    android:background="@color/colorGreen"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="5dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutSleepMode"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
                 android:layout_marginLeft="@dimen/dimen_10"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -634,7 +692,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-            <LinearLayout
+                <LinearLayout
                 android:theme="@style/TextViewSize"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -854,6 +912,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -874,20 +933,22 @@
 
                 <ImageView
                     android:layout_marginTop="@dimen/dimen_5"
-                    android:id="@+id/img_DarkTheme"
+                    android:id="@+id/imgCusTomMode"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_nights_stay_44" />
+                    android:src="@drawable/ic_baseline_color_lens_24" />
 
                 <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_toRightOf="@id/img_DarkTheme"
+                    android:layout_toRightOf="@id/imgCusTomMode"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/txtCustomMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/CustomMode"/>
@@ -909,250 +970,272 @@
 
             </RelativeLayout>
             <LinearLayout
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:id="@+id/linearLayoutCustomMode_Line"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:layout_height="wrap_content">
-                <Button
-                    android:text="00:00"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_navigate_next_24"/>
-                <Button
-                    android:text="00:00"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <LinearLayout
-                android:theme="@style/TextViewSize"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:padding="@dimen/dimen_10">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:id="@+id/img_Status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"
-                                />
-                            <TextView
-                                android:layout_toRightOf="@+id/img_Status"
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Wifi"
-                                android:textColor="#1C223C"
-                                />
-
-                            <TextView
-                                android:id="@+id/txttrangthai"
-                                android:layout_alignParentRight="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="On"
-                                android:textColor="#1C223C"
-                                />
-                        </RelativeLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:id="@+id/img_Health"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_bluetooth_24" />
-                            <TextView
-                                android:layout_toRightOf="@+id/img_Health"
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Bluetooth"
-                                android:textColor="#1C223C"
-                                />
-
-                            <TextView
-                                android:id="@+id/txtHealth"
-                                android:layout_alignParentRight="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Off"
-                                android:textColor="#1C223C"
-                                />
-                        </RelativeLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:id="@+id/img_Power"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_power_24" />
-                            <TextView
-                                android:layout_toRightOf="@+id/img_Power"
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/HapticFeedback"
-                                android:textColor="#1C223C"
-                                />
-
-                            <TextView
-                                android:id="@+id/txtPower"
-                                android:layout_alignParentRight="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Off"
-                                android:textColor="#1C223C"
-                                />
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
                 <View
-                    android:layout_margin="10dp"
-                    android:background="@android:color/black"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"/>
+                    android:layout_gravity="center"
+                    android:background="@color/colorGreen"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayoutCustomMode"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <LinearLayout
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:id="@+id/img_Voltage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_brightness_7_24"/>
-                            <TextView
-                                android:layout_toRightOf="@+id/img_Voltage"
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Brightness"
-                                android:textColor="#1C223C"
-                                />
-
-                            <TextView
-                                android:id="@+id/txtVoltage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:text="50%"
-                                android:textColor="#1C223C"
-
-                                />
-                        </RelativeLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:id="@+id/img_Temperature"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_brightness_1_24"  />
-                            <TextView
-                                android:layout_toRightOf="@+id/img_Temperature"
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ScreenTimeOut"
-                                android:textColor="#1C223C" />
-
-                            <TextView
-                                android:id="@+id/txtTemperature"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="0dp"
-                                android:text="30s"
-                                android:textColor="#1C223C" />
-                        </RelativeLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:id="@+id/img_Level"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_baseline_volume_up_24" />
-                            <TextView
-                                android:layout_toRightOf="@+id/img_Level"
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Volume"
-                                android:textColor="#1C223C" />
-                            <TextView
-                                android:id="@+id/txtLevel"
-                                android:layout_alignParentRight="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/Off"
-                                android:textColor="#1C223C" />
-                        </RelativeLayout>
-                    </LinearLayout>
+                    <Button
+                        android:text="00:00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_navigate_next_24"/>
+                    <Button
+                        android:text="00:00"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:theme="@style/TextViewSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:padding="@dimen/dimen_10">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/img_Status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"
+                                    />
+                                <TextView
+                                    android:layout_toRightOf="@+id/img_Status"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Wifi"
+                                    android:textColor="#1C223C"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/txttrangthai"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="On"
+                                    android:textColor="#1C223C"
+                                    />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/img_Health"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_bluetooth_24" />
+                                <TextView
+                                    android:layout_toRightOf="@+id/img_Health"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Bluetooth"
+                                    android:textColor="#1C223C"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/txtHealth"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Off"
+                                    android:textColor="#1C223C"
+                                    />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/img_Power"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_power_24" />
+                                <TextView
+                                    android:layout_toRightOf="@+id/img_Power"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/HapticFeedback"
+                                    android:textColor="#1C223C"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/txtPower"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Off"
+                                    android:textColor="#1C223C"
+                                    />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_margin="10dp"
+                        android:background="@android:color/black"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"/>
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/img_Voltage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_brightness_7_24"/>
+                                <TextView
+                                    android:layout_toRightOf="@+id/img_Voltage"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Brightness"
+                                    android:textColor="#1C223C"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/txtVoltage"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:text="50%"
+                                    android:textColor="#1C223C"
+
+                                    />
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/img_Temperature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_brightness_1_24"  />
+                                <TextView
+                                    android:layout_toRightOf="@+id/img_Temperature"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/ScreenTimeOut"
+                                    android:textColor="#1C223C" />
+
+                                <TextView
+                                    android:id="@+id/txtTemperature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="0dp"
+                                    android:text="30s"
+                                    android:textColor="#1C223C" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:id="@+id/img_Level"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_volume_up_24" />
+                                <TextView
+                                    android:layout_toRightOf="@+id/img_Level"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Volume"
+                                    android:textColor="#1C223C" />
+                                <TextView
+                                    android:id="@+id/txtLevel"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/Off"
+                                    android:textColor="#1C223C" />
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

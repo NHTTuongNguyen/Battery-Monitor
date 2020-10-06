@@ -39,7 +39,7 @@
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_brightness_7_24"/>
+                    android:src="@drawable/ic_baseline_settings_34"/>
             </LinearLayout>
 
             <com.google.android.material.tabs.TabLayout

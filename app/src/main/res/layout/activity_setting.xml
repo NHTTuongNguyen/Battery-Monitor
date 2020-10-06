@@ -25,23 +25,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Setting"/>
-<!--            <ImageView-->
-<!--                android:layout_marginRight="@dimen/dimen_10"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:layout_marginTop="@dimen/dimen_10"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@drawable/ic_baseline_brightness_7_24"/>-->
-            <TextView
-                android:text="X"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="@dimen/dimen_30"
+            <ImageView
+                android:id="@+id/imgSettingCancel"
+                android:background="?android:attr/selectableItemBackground"
                 android:layout_marginRight="@dimen/dimen_10"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_close_44"/>
+
         </RelativeLayout>
 
 
@@ -356,6 +349,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/TapShowNotification" />
                                 <Switch
+                                    android:id="@+id/switchNotification"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"/>

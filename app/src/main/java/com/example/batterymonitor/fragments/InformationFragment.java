@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
@@ -126,21 +127,22 @@ public class InformationFragment extends Fragment {
             boolean brightness;
             @Override
             public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!Settings.System.canWrite(getActivity())) {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getActivity().getPackageName()));
-                        startActivityForResult(intent, 200);
-                    }
-                    brightness = !brightness;
-                    if (brightness){
-                        Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-                        imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
-                    }else {
-                        Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-                        imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_7_24);
-                    }
-                }
+               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                   if (Settings.System.canWrite(getActivity())){
+                       brightness = !brightness;
+                       if (brightness){
+                           Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+                           imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
+                       }else {
+                           Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+                           imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_7_24);
+                       }
+                   }else {
+                       alertDialogPermission();
 
+
+                   }
+               }
             }
         });
         linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +182,32 @@ public class InformationFragment extends Fragment {
 
         displayCurrentTime();
         return view;
+    }
+
+    private  void alertDialogPermission() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setTitle("Permission write settings !");
+        alertDialogBuilder
+                .setMessage("Allow permission write settings for your system ?")
+                .setCancelable(false)
+                .setPositiveButton("ALLOW",
+                        new DialogInterface.OnClickListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                                intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                dialog.cancel();
+                            }
+                        })
+                .setNegativeButton("DENY", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void displayCurrentTime() {

@@ -18,7 +18,6 @@
                 app:cardBackgroundColor="@color/colorBlueGray"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10"
-                android:layout_alignParentTop="true"
                 android:id="@+id/adsCard">
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView

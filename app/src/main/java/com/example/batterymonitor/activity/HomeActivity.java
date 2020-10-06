@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -70,6 +72,19 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+//                && !notificationManager.isNotificationPolicyAccessGranted()) {
+//
+//            Intent intent = new Intent(
+//                    android.provider.Settings
+//                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+//
+//            startActivity(intent);
+//        }
     }
 
 
