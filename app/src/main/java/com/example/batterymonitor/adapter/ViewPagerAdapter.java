@@ -38,7 +38,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null);
         TextView textView = view.findViewById(R.id.tabText);
         textView.setText(tabTitles[position]);
-        textView.setTextSize(18);
+        textView.setTextSize(15);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         if(position == 0)
             textView.setTextColor(context.getResources().getColor(R.color.colorGreen));
@@ -58,6 +58,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         View selected = tab.getCustomView();
         TextView tv = (TextView) selected.findViewById(R.id.tabText);
-        tv.setTextColor(context.getResources().getColor(R.color.colorBlue_1));
+        tv.setTextColor(context.getResources().getColor(R.color.colorBlack));
     }
 }

@@ -9,16 +9,56 @@ import com.example.batterymonitor.R;
 public class SharedPreference_Utils {
     private static  Context mcontext;
     private static SharedPreferences sharedPreferences;
-    private static final String MyPREFERENCES = "MyPrefsSetting77" ;
+    private static final String MyPREFERENCES = "MyPrefsSetting777" ;
     private static final String Bluetooth_ON = "bluetooth_turn_On_Key";
     private static final String Bluetooth_OFF = "bluetooth_turn_Off_Key";
     private static final String Wifi= "wifi_Key";
+    private static final String NightMode = "NightMode_Key";
+    private static final String SwitchDarkMode = "SwitchDarkMode_Key";
+    private static final String DesktopFloating = "DesktopFloating_Key";
+
+
 
 
     public SharedPreference_Utils(Context context){
-        mcontext=context;
-        sharedPreferences  = mcontext.getSharedPreferences(MyPREFERENCES,mcontext.MODE_PRIVATE);
+//        mcontext=context;
+        sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
     }
+    public void setDesktopFloating(Boolean state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(DesktopFloating,state);
+        editor.commit();
+    }
+    public Boolean getDesktopFloating(){
+        Boolean state = sharedPreferences.getBoolean(DesktopFloating,false);
+        return state;
+    }
+
+    public void setSwitchDarkMode(Boolean state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SwitchDarkMode,state);
+        editor.commit();
+    }
+    public Boolean getSwitchDarkMode(){
+        Boolean state = sharedPreferences.getBoolean(SwitchDarkMode,false);
+        return state;
+    }
+    public void setNightModeState(Boolean state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(NightMode,state);
+        editor.commit();
+    }
+    public Boolean getNightModeState(){
+        Boolean state = sharedPreferences.getBoolean(NightMode,false);
+        return state;
+    }
+
+
+
+
+
+
+
     public static void setBluetooth_Turn_On(int bluetooth_Turn_On){
         setSharedPreferences_Int(Bluetooth_ON,bluetooth_Turn_On);
         Log.d("setBluetooth_Turn_On",bluetooth_Turn_On+"");

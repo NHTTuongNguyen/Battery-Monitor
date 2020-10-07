@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.activity.SettingActivity;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
 
@@ -75,9 +78,9 @@ public class InformationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         initView();
-        sharedPreference_utils = new SharedPreference_Utils(getActivity());
         batteryReceiverClass = new BatteryReceiverClass();
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
@@ -145,20 +148,34 @@ public class InformationFragment extends Fragment {
                }
             }
         });
+        int orient = getResources().getConfiguration().orientation;
+        switch(orient) {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
+
+                Log.d("YYY","ORIENTATION_LANDSCAPE:");
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
+
+                Log.d("YYY","ORIENTATION_PORTRAIT:");
+                // handle portrait here
+                break;
+            default:
+        }
         linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
             boolean landscape;
             @Override
             public void onClick(View view) {
                 landscape = !landscape;
                 if (landscape){
-
                     imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
-//                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
                 }
                 else {
                     imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
-//                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                 }
             }
@@ -333,9 +350,14 @@ public class InformationFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+
+
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
         imageView_WifiOnOff.setImageResource(sharedPreference_utils.getWifi());
+
+
 
     }
     @Override

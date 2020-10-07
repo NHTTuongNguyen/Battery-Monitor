@@ -12,22 +12,46 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapter.ViewPagerAdapter;
+import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class HomeActivity extends AppCompatActivity {
     private String tabTitles[] = new String[] { "Information", "Saver"};
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ImageView imgToSetting;
+    private SharedPreference_Utils sharedPreference_utils;
+    @Override
+    protected void onResume() {
+//        sharedPreference_utils = new SharedPreference_Utils(this);
+//        if (sharedPreference_utils.getNightModeState() == true){
+//            setTheme(R.style.DarkTheme);
+//        }else {
+//            setTheme(R.style.AppTheme);
+//        }
+        super.onResume();
+        Log.d("ASD","onResume");
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreference_utils = new SharedPreference_Utils(this);
+
+        if (sharedPreference_utils.getNightModeState() == true){
+            setTheme(R.style.DarkTheme);
+        }else {
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         viewPager2 = findViewById(R.id.view_pager);
@@ -73,20 +97,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-//                && !notificationManager.isNotificationPolicyAccessGranted()) {
-//
-//            Intent intent = new Intent(
-//                    android.provider.Settings
-//                            .ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-//
-//            startActivity(intent);
-//        }
-    }
 
+
+    }
 
 
     @Override

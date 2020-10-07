@@ -3,36 +3,36 @@ package com.example.batterymonitor.fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
 import android.util.Log;
-import android.util.Size;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.Utils.SizeNumber;
-import com.example.batterymonitor.activity.HomeActivity;
+import com.example.batterymonitor.dialog.TimePickerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,11 +94,21 @@ public class SaverFragment extends Fragment {
             linearLayoutLongLifeMode,
             linearLayoutSleepMode,
             linearLayoutCustomMode;
+    private Button btnStartSleepMode,btnStopSleepMode;
+    private Button btnScreenTimeoutCustomMode,btnBrightnessCustomMode;
+    private Button btn10pre,btn20pre,btn30pre,btn40pre,btn50pre,btn60pre,btn70pre,btn80pre;
+    private Switch switchVolumeCustomMode,switchBluetoothCustomMode;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)  {
 
         view = inflater.inflate(R.layout.fragment_saver, container, false);
+
+        btnBrightnessCustomMode = view.findViewById(R.id.btnBrightnessCustomMode);
+        btnScreenTimeoutCustomMode = view.findViewById(R.id.btnScreenTimeoutCustomMode);
+
+
+        switchVolumeCustomMode = view.findViewById(R.id.switchVolumeCustomMode);
+        switchBluetoothCustomMode = view.findViewById(R.id.switchBluetoothCustomMode);
 
         linearLayoutClassMode_Line = view.findViewById(R.id.linearLayoutClassMode_Line);
         linearLayoutLongLifeMode_Line = view.findViewById(R.id.linearLayoutLongLifeMode_Line);
@@ -125,6 +135,10 @@ public class SaverFragment extends Fragment {
         radioButtonSleepMode = view.findViewById(R.id.radioButtonSleepMode);
         radioButtonCustomMode = view.findViewById(R.id.radioButtonCustomMode);
 
+        btnStartSleepMode  =view.findViewById(R.id.btnStartSleepMode);
+        btnStopSleepMode = view.findViewById(R.id.btnStopSleepMode);
+        eventBtnStartSleepMode();
+        eventBtnStopMode();
 
         radioButtonClassicMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @SuppressLint("ResourceType")
@@ -156,9 +170,8 @@ public class SaverFragment extends Fragment {
                             setScreenTimeout(SizeNumber.Thirty_seconds);
                             ////SCREEN_BRIGHTNESS
                             setScreen_Brightness(SizeNumber.namnoiphantram);
-
                             ////setAudioManager
-                            setAudioManager();
+                            setVolumeTurnOff();
                             ///setBluetoothDisable
                             setBluetoothTurnOff();
 
@@ -203,7 +216,7 @@ public class SaverFragment extends Fragment {
                             setScreen_Brightness(SizeNumber.haimuoiphantram);
 
                             ////setAudioManager
-                            setAudioManager();
+                            setVolumeTurnOff();
                             ///setBluetoothDisable
                             setBluetoothTurnOff();
 
@@ -250,10 +263,9 @@ public class SaverFragment extends Fragment {
                             ///setScreen_Brightness
                             setScreen_Brightness(SizeNumber.haimuoiphantram);
                             ////setAudioManager
-                            setAudioManager();
+                            setVolumeTurnOff();
                             ///setBluetoothDisable
                             setBluetoothTurnOff();
-
 
                         }
                     }else {
@@ -290,6 +302,102 @@ public class SaverFragment extends Fragment {
                             ///setVisibility
                             linearLayoutCustomMode_Line.setVisibility(View.GONE);
                             linearLayoutCustomMode.setVisibility(View.VISIBLE);
+                            ///setSwitchVolumeCustomMode
+                            switchVolumeCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                    if (b){
+                                        setVolumeTurnOn();
+                                    }else {
+                                        setVolumeTurnOff();
+                                    }
+                                }
+                            });
+                            ////setBluetooth
+                            switchBluetoothCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+                                    if (b){
+                                        adapter.enable();
+                                    }else {
+                                        adapter.disable();
+                                    }
+                                }
+                            });
+                            ///setButtonBrightnessCustomMode;
+                            btnBrightnessCustomMode.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                                    View viewLayout = inflater.inflate(R.layout.dialog_brightness,null);
+                                    builder.setView(viewLayout);
+//                                    builder.setMessage("Write your message here.");
+                                    builder.setCancelable(true);
+                                    btn10pre = viewLayout.findViewById(R.id.btn10pre);
+                                    btn20pre = viewLayout.findViewById(R.id.btn20pre);
+                                    btn40pre = viewLayout.findViewById(R.id.btn40pre);
+                                    btn60pre = viewLayout.findViewById(R.id.btn60pre);
+                                    btn80pre = viewLayout.findViewById(R.id.btn80pre);
+                                    btn10pre.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            int i = 10;
+
+                                            Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    builder.setPositiveButton(
+                                            "Yes",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+                                    builder.setNegativeButton(
+                                            "No",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+
+                                                }
+                                            });
+
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                                }
+                            });
+                            btnScreenTimeoutCustomMode.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                                    View add_menu_layout = inflater.inflate(R.layout.dialog_screentimeout,null);
+                                    builder.setView(add_menu_layout);
+//                                    builder.setMessage("Write your message here.");
+                                    builder.setCancelable(true);
+                                    builder.setPositiveButton(
+                                            "Yes",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                                    builder.setNegativeButton(
+                                            "No",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+
+                                    AlertDialog alertDialog = builder.create();
+                                    alertDialog.show();
+                                }
+                            });
+
                         }
                     }else {
                         radioButtonCustomMode.setChecked(false);
@@ -304,13 +412,7 @@ public class SaverFragment extends Fragment {
         setVisibilityLinearLayout();
         return view;
     }
-
-    private void setBluetoothTurnOff() {
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        adapter.disable();
-    }
-
-    private void setAudioManager() {
+    private void setVolumeTurnOff() {
         AudioManager amanager = (AudioManager)getActivity().getSystemService(getActivity().AUDIO_SERVICE);
 //        amanager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
@@ -319,6 +421,41 @@ public class SaverFragment extends Fragment {
         amanager.setStreamMute(AudioManager.STREAM_RING, true);
         amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
 
+    }
+    private void setVolumeTurnOn() {
+        AudioManager amanager = (AudioManager)getActivity().getSystemService(getActivity().AUDIO_SERVICE);
+//        amanager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
+        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
+        amanager.setStreamMute(AudioManager.STREAM_RING, false);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+
+    }
+    private void eventBtnStopMode() {
+        btnStopSleepMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment timePicker = new TimePickerFragment(getActivity());
+                timePicker.show(getActivity().getSupportFragmentManager(), "time picker");
+            }
+        });
+    }
+
+    private void eventBtnStartSleepMode() {
+        btnStartSleepMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment timePicker = new TimePickerFragment(getActivity());
+                timePicker.show(getActivity().getSupportFragmentManager(), "time picker");
+
+            }
+        });
+    }
+
+    private void setBluetoothTurnOff() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        adapter.disable();
     }
 
     private void setScreen_Brightness(int screenBrightness) {
@@ -386,4 +523,6 @@ public class SaverFragment extends Fragment {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundcolor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.SaverFragment">
@@ -14,15 +15,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_10">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dimen_10"
-                        app:cardCornerRadius="@dimen/dimen_10">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:orientation="vertical"
-                                android:layout_height="wrap_content">
-            <RelativeLayout
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -44,6 +46,7 @@
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textColor="?attr/textcolor"
                         android:textStyle="bold"
                         android:id="@+id/txtClassicMode"
                         android:layout_width="wrap_content"
@@ -54,51 +57,51 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:textColor="?attr/textcolor"
                             android:layout_width="wrap_content"
                             android:text="@string/LowPower"
                             android:layout_height="wrap_content"/>
+
                         <RadioButton
                             android:id="@+id/radioButtonClassicMode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"/>
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="2dp" />
                     </RelativeLayout>
                 </LinearLayout>
-
             </RelativeLayout>
-                                <LinearLayout
-                                    android:layout_marginBottom="@dimen/dimen_10"
-                                    android:id="@+id/linearLayoutClassMode_Line"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <View
-                                        android:layout_gravity="center"
-                                        android:background="@color/colorGreen"
-                                        android:layout_width="@dimen/dimen_50"
-                                        android:layout_height="5dp"/>
-                                </LinearLayout>
-
-                                <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/linearLayoutClassMode"
-                android:theme="@style/TextViewSize"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:padding="@dimen/dimen_10">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:orientation="vertical"
+                        android:layout_marginBottom="@dimen/dimen_10"
+                        android:id="@+id/linearLayoutClassMode_Line"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <View
+                            android:layout_gravity="center"
+                            android:background="@color/colorGreen"
+                            android:layout_width="@dimen/dimen_50"
+                            android:layout_height="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:id="@+id/linearLayoutClassMode"
+                            android:theme="@style/TextViewSize"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:padding="@dimen/dimen_10">
+                     <LinearLayout
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -113,7 +116,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Wifi"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -121,7 +124,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="On"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -145,7 +148,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Bluetooth"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -154,7 +157,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -178,7 +181,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/HapticFeedback"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -187,23 +190,23 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
-                <View
+                        <View
                     android:layout_margin="10dp"
                     android:background="@android:color/black"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"/>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_marginBottom="@dimen/dimen_5"
                         android:orientation="vertical"
@@ -223,7 +226,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Brightness"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -232,9 +235,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:text="50%"
-                                android:textColor="#1C223C"
-
-                                />
+                                android:textColor="?attr/textcolor" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -257,7 +258,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ScreenTimeOut"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
 
                             <TextView
                                 android:id="@+id/txtTemperature"
@@ -266,7 +267,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="0dp"
                                 android:text="30s"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
                         </RelativeLayout>
                     </LinearLayout>
                     <LinearLayout
@@ -288,25 +289,26 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Volume"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
                             <TextView
                                 android:id="@+id/txtLevel"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="?attr/cardbackgroundcolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -338,6 +340,7 @@
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textColor="?attr/textcolor"
                         android:textStyle="bold"
                         android:id="@+id/txtLongLifeMode"
                         android:layout_width="wrap_content"
@@ -347,6 +350,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:textColor="?attr/textcolor"
                             android:layout_width="wrap_content"
                             android:text="@string/CloseEverything"
                             android:layout_height="wrap_content"/>
@@ -375,8 +379,8 @@
              </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayoutLongLifeMode"
                 android:visibility="gone"
+                android:id="@+id/linearLayoutLongLifeMode"
                 android:theme="@style/TextViewSize"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -407,7 +411,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Wifi"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -416,7 +420,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -440,7 +444,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Bluetooth"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -449,7 +453,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -473,7 +477,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/HapticFeedback"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -482,7 +486,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -518,7 +522,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Brightness"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -527,7 +531,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:text="20%"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
 
                                 />
                         </RelativeLayout>
@@ -552,7 +556,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ScreenTimeOut"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
 
                             <TextView
                                 android:id="@+id/txtTemperature"
@@ -561,7 +565,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="0dp"
                                 android:text="15s"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor"/>
                         </RelativeLayout>
                     </LinearLayout>
                     <LinearLayout
@@ -583,14 +587,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Volume"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
                             <TextView
                                 android:id="@+id/txtLevel"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -600,10 +604,11 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_10"
-        app:cardCornerRadius="@dimen/dimen_10">
+                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_10">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -630,6 +635,7 @@
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:textColor="?attr/textcolor"
                         android:textStyle="bold"
                         android:id="@+id/txtSleepMode"
                         android:layout_width="wrap_content"
@@ -640,6 +646,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:textColor="?attr/textcolor"
                             android:layout_width="wrap_content"
                             android:text="@string/Automatically"
                             android:layout_height="wrap_content"/>
@@ -668,17 +675,19 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:id="@+id/linearLayoutSleepMode"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
                 <Button
+                    android:id="@+id/btnStartSleepMode"
                     android:text="00:00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -688,17 +697,18 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_navigate_next_24"/>
                 <Button
+                    android:id="@+id/btnStopSleepMode"
                     android:text="00:00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
                 <LinearLayout
-                android:theme="@style/TextViewSize"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:padding="@dimen/dimen_10">
+                    android:theme="@style/TextViewSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:padding="@dimen/dimen_10">
                 <LinearLayout
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -718,12 +728,13 @@
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"/>
                             <TextView
+                                android:textColor="?attr/textcolor"
                                 android:layout_toRightOf="@+id/img_Status"
                                 android:layout_marginLeft="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Wifi"
-                                android:textColor="#1C223C"
+
                                 />
 
                             <TextView
@@ -732,7 +743,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -756,7 +767,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Bluetooth"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -765,7 +776,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -789,7 +800,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/HapticFeedback"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -798,7 +809,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
                         </RelativeLayout>
 
@@ -834,7 +845,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Brightness"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
                                 />
 
                             <TextView
@@ -843,7 +854,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:text="15%"
-                                android:textColor="#1C223C"
+                                android:textColor="?attr/textcolor"
 
                                 />
                         </RelativeLayout>
@@ -868,7 +879,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ScreenTimeOut"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor"/>
 
                             <TextView
                                 android:id="@+id/txtTemperature"
@@ -877,7 +888,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="0dp"
                                 android:text="30s"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor" />
                         </RelativeLayout>
                     </LinearLayout>
                     <LinearLayout
@@ -899,14 +910,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Volume"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor"/>
                             <TextView
                                 android:id="@+id/txtLevel"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Off"
-                                android:textColor="#1C223C" />
+                                android:textColor="?attr/textcolor"/>
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -917,325 +928,319 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_10"
-        app:cardCornerRadius="@dimen/dimen_10">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-            <RelativeLayout
+                app:cardBackgroundColor="?attr/cardbackgroundcolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:id="@+id/imgCusTomMode"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/cercleshape"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_baseline_color_lens_24" />
-
+                app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_toRightOf="@id/imgCusTomMode"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textStyle="bold"
-                        android:id="@+id/txtCustomMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/CustomMode"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="@string/EnterUsing"
-                            android:layout_height="wrap_content"/>
-                        <RadioButton
-                            android:id="@+id/radioButtonCustomMode"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"/>
-                    </RelativeLayout>
+                            android:layout_margin="@dimen/dimen_10"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:id="@+id/imgCusTomMode"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:background="@drawable/cercleshape"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_baseline_color_lens_24" />
+
+                            <LinearLayout
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_toRightOf="@id/imgCusTomMode"
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textColor="?attr/textcolor"
+                                    android:textStyle="bold"
+                                    android:id="@+id/txtCustomMode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/CustomMode"/>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:textColor="?attr/textcolor"
+                                        android:layout_width="wrap_content"
+                                        android:text="@string/EnterUsing"
+                                        android:layout_height="wrap_content"/>
+                                    <RadioButton
+                                        android:id="@+id/radioButtonCustomMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"/>
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_marginBottom="@dimen/dimen_10"
+                            android:id="@+id/linearLayoutCustomMode_Line"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <View
+                                android:layout_gravity="center"
+                                android:background="@color/colorGreen"
+                                android:layout_width="@dimen/dimen_50"
+                                android:layout_height="5dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/linearLayoutCustomMode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="@dimen/dimen_10"
+                                android:layout_height="wrap_content">
+                                <Button
+                                    android:text="00:00"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_navigate_next_24"/>
+                                <Button
+                                    android:text="00:00"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:theme="@style/TextViewSize"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="2"
+                                android:padding="@dimen/dimen_10">
+                                <LinearLayout
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <LinearLayout
+                                        android:layout_marginBottom="@dimen/dimen_5"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <ImageView
+                                                android:id="@+id/img_Status"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"
+                                                />
+                                            <TextView
+                                                android:layout_toRightOf="@+id/img_Status"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/Wifi"
+                                                android:textColor="?attr/textcolor"
+                                                />
+
+                                            <Switch
+                                                android:layout_alignParentRight="true"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textColor="?attr/textcolor" />
+                                        </RelativeLayout>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_marginBottom="@dimen/dimen_5"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <ImageView
+                                                android:id="@+id/img_Health"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:src="@drawable/ic_baseline_bluetooth_24" />
+                                            <TextView
+                                                android:layout_toRightOf="@+id/img_Health"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/Bluetooth"
+                                                android:textColor="?attr/textcolor"
+                                                />
+
+                                            <Switch
+                                                android:id="@+id/switchBluetoothCustomMode"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_alignParentRight="true"
+                                                android:layout_marginRight="0dp"
+                                                android:textColor="?attr/textcolor" />
+                                        </RelativeLayout>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_marginBottom="@dimen/dimen_5"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <ImageView
+                                                android:id="@+id/img_Power"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:src="@drawable/ic_baseline_power_24" />
+                                            <TextView
+                                                android:layout_toRightOf="@+id/img_Power"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/HapticFeedback"
+                                                android:textColor="?attr/textcolor"
+                                                />
+
+                                            <Switch
+                                                android:layout_alignParentRight="true"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:textColor="?attr/textcolor" />
+                                        </RelativeLayout>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                                <View
+                                    android:layout_margin="10dp"
+                                    android:background="@android:color/black"
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"/>
+                                <LinearLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:orientation="vertical"
+                                    android:layout_height="wrap_content">
+                                    <LinearLayout
+                                        android:layout_marginBottom="@dimen/dimen_5"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <ImageView
+                                                android:id="@+id/img_Voltage"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:src="@drawable/ic_baseline_brightness_7_24"/>
+                                            <TextView
+                                                android:id="@+id/txtCustomModeBrightness"
+                                                android:layout_toRightOf="@+id/img_Voltage"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/Brightness"
+                                                android:textColor="?attr/textcolor"
+                                                />
+
+                                            <Button
+                                                android:id="@+id/btnBrightnessCustomMode"
+                                                android:background="@drawable/bg_button"
+                                                android:layout_width="@dimen/dimen_40"
+                                                android:layout_height="@dimen/dimen_20"
+                                                android:text="50%"
+                                                android:textSize="12dp"
+                                                android:textColor="?attr/textcolor"
+                                                android:layout_alignParentRight="true"
+                                                />
+                                        </RelativeLayout>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_marginBottom="@dimen/dimen_5"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <ImageView
+                                                android:id="@+id/img_Temperature"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:src="@drawable/ic_baseline_brightness_1_24"  />
+                                            <TextView
+                                                android:layout_toRightOf="@+id/img_Temperature"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="@string/ScreenTimeOut"
+                                                android:textColor="?attr/textcolor" />
+
+                                            <Button
+                                                android:id="@+id/btnScreenTimeoutCustomMode"
+                                                android:background="@drawable/bg_button"
+                                                android:layout_width="@dimen/dimen_40"
+                                                android:layout_height="@dimen/dimen_20"
+                                                android:text="30s"
+                                                android:textSize="12dp"
+                                                android:textColor="?attr/textcolor"
+                                                android:layout_alignParentRight="true"
+                                                />
+                                        </RelativeLayout>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_marginBottom="@dimen/dimen_5"
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                                    <RelativeLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content">
+                                                    <ImageView
+                                                android:id="@+id/img_Level"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:src="@drawable/ic_baseline_volume_up_24" />
+                                                    <TextView
+                                                        android:layout_toRightOf="@+id/img_Level"
+                                                        android:layout_marginLeft="10dp"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:text="@string/Volume"
+                                                        android:textColor="?attr/textcolor" />
+                                                        <Switch
+                                                            android:id="@+id/switchVolumeCustomMode"
+                                                            android:layout_alignParentRight="true"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:textColor="?attr/textcolor" />
+                                                 </RelativeLayout>
+                                            </LinearLayout>
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
                 </LinearLayout>
-
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_marginBottom="@dimen/dimen_10"
-                android:id="@+id/linearLayoutCustomMode_Line"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_gravity="center"
-                    android:background="@color/colorGreen"
-                    android:layout_width="@dimen/dimen_50"
-                    android:layout_height="5dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linearLayoutCustomMode"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:text="00:00"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_navigate_next_24"/>
-                    <Button
-                        android:text="00:00"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:theme="@style/TextViewSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:padding="@dimen/dimen_10">
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:layout_marginBottom="@dimen/dimen_5"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/img_Status"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"
-                                    />
-                                <TextView
-                                    android:layout_toRightOf="@+id/img_Status"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Wifi"
-                                    android:textColor="#1C223C"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/txttrangthai"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="On"
-                                    android:textColor="#1C223C"
-                                    />
-                            </RelativeLayout>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginBottom="@dimen/dimen_5"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/img_Health"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_baseline_bluetooth_24" />
-                                <TextView
-                                    android:layout_toRightOf="@+id/img_Health"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Bluetooth"
-                                    android:textColor="#1C223C"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/txtHealth"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Off"
-                                    android:textColor="#1C223C"
-                                    />
-                            </RelativeLayout>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginBottom="@dimen/dimen_5"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/img_Power"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_baseline_power_24" />
-                                <TextView
-                                    android:layout_toRightOf="@+id/img_Power"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/HapticFeedback"
-                                    android:textColor="#1C223C"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/txtPower"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Off"
-                                    android:textColor="#1C223C"
-                                    />
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <View
-                        android:layout_margin="10dp"
-                        android:background="@android:color/black"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:layout_marginBottom="@dimen/dimen_5"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/img_Voltage"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_baseline_brightness_7_24"/>
-                                <TextView
-                                    android:layout_toRightOf="@+id/img_Voltage"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Brightness"
-                                    android:textColor="#1C223C"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/txtVoltage"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:text="50%"
-                                    android:textColor="#1C223C"
-
-                                    />
-                            </RelativeLayout>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginBottom="@dimen/dimen_5"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/img_Temperature"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_baseline_brightness_1_24"  />
-                                <TextView
-                                    android:layout_toRightOf="@+id/img_Temperature"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/ScreenTimeOut"
-                                    android:textColor="#1C223C" />
-
-                                <TextView
-                                    android:id="@+id/txtTemperature"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="0dp"
-                                    android:text="30s"
-                                    android:textColor="#1C223C" />
-                            </RelativeLayout>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginBottom="@dimen/dimen_5"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/img_Level"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_baseline_volume_up_24" />
-                                <TextView
-                                    android:layout_toRightOf="@+id/img_Level"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Volume"
-                                    android:textColor="#1C223C" />
-                                <TextView
-                                    android:id="@+id/txtLevel"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/Off"
-                                    android:textColor="#1C223C" />
-                            </RelativeLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
     </ScrollView>
 </LinearLayout>
