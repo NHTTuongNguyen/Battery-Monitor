@@ -9,7 +9,7 @@ import com.example.batterymonitor.R;
 public class SharedPreference_Utils {
     private static  Context mcontext;
     private static SharedPreferences sharedPreferences;
-    private static final String MyPREFERENCES = "MyPrefsSetting777" ;
+    private static final String MyPREFERENCES = "MyPrefsSetting" ;
     private static final String Bluetooth_ON = "bluetooth_turn_On_Key";
     private static final String Bluetooth_OFF = "bluetooth_turn_Off_Key";
     private static final String Wifi= "wifi_Key";

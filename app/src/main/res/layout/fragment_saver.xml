@@ -37,7 +37,7 @@
                     android:layout_height="44dp"
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_offline_bolt_24" />
+                    android:src="@drawable/ic_baseline_offline_bolt_24_default" />
 
                 <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
@@ -85,6 +85,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                            android:visibility="gone"
                             android:id="@+id/linearLayoutClassMode"
                             android:theme="@style/TextViewSize"
                             android:layout_width="match_parent"
@@ -603,6 +604,9 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+
+
             <androidx.cardview.widget.CardView
                 app:cardBackgroundColor="?attr/cardbackgroundcolor"
                 android:layout_width="match_parent"
@@ -676,7 +680,6 @@
 
             <LinearLayout
 
-                android:id="@+id/linearLayoutSleepMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -703,6 +706,8 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/linearLayoutSleepMode"
+                    android:visibility="gone"
                     android:theme="@style/TextViewSize"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -997,7 +1002,6 @@
                                 android:layout_height="5dp"/>
                         </LinearLayout>
                         <LinearLayout
-                            android:id="@+id/linearLayoutCustomMode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -1023,6 +1027,8 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:visibility="gone"
+                                android:id="@+id/linearLayoutCustomMode"
                                 android:theme="@style/TextViewSize"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

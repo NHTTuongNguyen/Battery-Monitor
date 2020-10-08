@@ -32,26 +32,18 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private ImageView imgToSetting;
     private SharedPreference_Utils sharedPreference_utils;
-    @Override
-    protected void onResume() {
-//        sharedPreference_utils = new SharedPreference_Utils(this);
-//        if (sharedPreference_utils.getNightModeState() == true){
-//            setTheme(R.style.DarkTheme);
-//        }else {
-//            setTheme(R.style.AppTheme);
-//        }
-        super.onResume();
-        Log.d("ASD","onResume");
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
 
         if (sharedPreference_utils.getNightModeState() == true){
-            setTheme(R.style.DarkTheme);
-        }else {
             setTheme(R.style.AppTheme);
+
+        }else {
+            setTheme(R.style.DarkTheme);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         viewPager2 = findViewById(R.id.view_pager);

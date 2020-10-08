@@ -3,10 +3,12 @@ package com.example.batterymonitor.fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,7 +18,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -179,7 +180,7 @@ public class SaverFragment extends Fragment {
                     }
                     else {
                         radioButtonClassicMode.setChecked(false);
-                        alertDialogPermission();
+                        alertDialogPermission_WriteSettings();
                     }
 
                 }
@@ -229,7 +230,7 @@ public class SaverFragment extends Fragment {
                         }
                     }else {
                         radioButtonLongLifeMode.setChecked(false);
-                        alertDialogPermission();
+                        alertDialogPermission_WriteSettings();
                     }
                 }
             }
@@ -267,10 +268,14 @@ public class SaverFragment extends Fragment {
                             ///setBluetoothDisable
                             setBluetoothTurnOff();
 
+                            WifiManager wifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                            wifi.setWifiEnabled(false);
+
+
                         }
                     }else {
                         radioButtonSleepMode.setChecked(false);
-                        alertDialogPermission();
+                        alertDialogPermission_WriteSettings();
                     }
 
                 }
@@ -401,7 +406,7 @@ public class SaverFragment extends Fragment {
                         }
                     }else {
                         radioButtonCustomMode.setChecked(false);
-                        alertDialogPermission();
+                        alertDialogPermission_WriteSettings();
                     }
 
                 }
@@ -497,9 +502,8 @@ public class SaverFragment extends Fragment {
 
     private void setScreenTimeout(int millisecounds) {
         android.provider.Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, millisecounds);
-//        Settings.System.getInt(getActivity().getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT,millisecounds);
     }
-    private  void alertDialogPermission() {
+    private  void alertDialogPermission_WriteSettings() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Permission write settings !");
         alertDialogBuilder

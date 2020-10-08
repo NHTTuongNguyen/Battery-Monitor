@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundcolor"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.InformationFragment">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,8 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
-                app:cardCornerRadius="@dimen/dimen_10"
-                android:layout_below="@id/tempGraphCard">
+                app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -36,7 +36,7 @@
                     android:padding="@dimen/dimen_10">
                     <LinearLayout
                         android:layout_weight="1"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
@@ -59,18 +59,10 @@
                                 android:layout_height="wrap_content"/>
                         </LinearLayout>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            android:weightSum="2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
                             <LinearLayout
-                                android:layout_weight="1"
                                 android:id="@+id/linearLayout_HourDay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -98,36 +90,46 @@
                                     android:text="CurrentDays"
                                     android:textSize="13dp"/>
                             </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <LinearLayout
-                                    android:id="@+id/linearLayout_View"
-                                    android:background="?android:attr/selectableItemBackground"
-                                    android:layout_width="62dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-                                    <ImageView
-                                        android:layout_width="44dp"
-                                        android:layout_height="44dp"
-                                        android:background="@drawable/cercleshape"
-                                        android:padding="10dp"
-                                        android:src="@drawable/ic_baseline_offline_bolt_24"
-                                        app:tint="@color/colorGreen" />
-                                </LinearLayout>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical">-->
+<!--                                <LinearLayout-->
+<!--                                    android:id="@+id/linearLayout_View"-->
+<!--                                    android:background="?android:attr/selectableItemBackground"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_weight="1"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:orientation="vertical">-->
+<!--                                    <Button-->
+<!--                                        android:layout_width="@dimen/dimen_40"-->
+<!--                                        android:layout_height="@dimen/dimen_20"-->
+<!--                                        android:background="@drawable/bg_button"-->
+<!--                                        android:text="..."-->
+<!--                                        android:textColor="?attr/textcolor"-->
+<!--                                        app:tint="@color/colorGreen" />-->
+<!--                                </LinearLayout>-->
+<!--                            </LinearLayout>-->
+                            <Button
+                                android:id="@+id/btnViewBattery"
+                                android:layout_margin="@dimen/dimen_20"
+                                android:layout_toRightOf="@+id/linearLayout_HourDay"
+                                android:layout_width="@dimen/dimen_40"
+                                android:layout_height="@dimen/dimen_20"
+                                android:background="@drawable/bg_button"
+                                android:text="..."
+                                android:textColor="?attr/textcolor"
+                                app:tint="@color/colorGreen" />
+                        </RelativeLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="?attr/backgroundcolor"
+                app:cardBackgroundColor="?attr/cardbackgroundcolor"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10"
                 android:id="@+id/monitorCard">
@@ -476,7 +478,7 @@
                                 android:layout_height="44dp"
                                 android:background="@drawable/cercleshape"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_baseline_signal_wifi_4_bar_24" />
+                                android:src="@drawable/ic_baseline_signal_wifi_default" />
 
 
 
@@ -540,7 +542,7 @@
                                 android:layout_height="44dp"
                                 android:background="@drawable/cercleshape"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_baseline_brightness_7_24"/>
+                                android:src="@drawable/ic_baseline_brightness_default"/>
 
 
 
@@ -579,6 +581,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="?attr/cardbackgroundcolor"
@@ -602,18 +605,15 @@
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="450dp"
                 app:cardBackgroundColor="?attr/cardbackgroundcolor"
                 android:layout_margin="@dimen/dimen_10"
-                app:cardCornerRadius="@dimen/dimen_10"
-                android:id="@+id/tempGraphCard"
-                android:layout_below="@id/levelGraphCard"
-                >
+                app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
+                    android:padding="@dimen/dimen_10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dimen_10">
+                    android:orientation="vertical">
                     <TextView
                         android:textColor="?attr/textcolor"
                         android:layout_width="match_parent"
@@ -621,18 +621,10 @@
                         android:textSize="@dimen/heading_3"
                         android:text="Battery Temperature Graph"/>
 
-                    <TextView
-                        android:textColor="?attr/textcolor"
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/line_Charts"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal"
-                        android:text="Statistics for over the past 24 hours"/>
-                    <TextView
-                        android:textColor="?attr/textcolor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_normal"
-                        android:text="....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................."/>
+                        android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -640,4 +632,4 @@
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

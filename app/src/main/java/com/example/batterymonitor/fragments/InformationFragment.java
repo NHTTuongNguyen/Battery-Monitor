@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,12 +34,20 @@ import com.example.batterymonitor.R;
 import com.example.batterymonitor.activity.SettingActivity;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -49,9 +58,11 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 
-public class InformationFragment extends Fragment {
+public class InformationFragment extends Fragment{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static  final String TAG= "InformationFragment";
+    private LineChart lineChart;
     public static InformationFragment newInstance(String param1, String param2) {
         InformationFragment fragment = new InformationFragment();
         Bundle args = new Bundle();
@@ -76,12 +87,15 @@ public class InformationFragment extends Fragment {
     private BatteryReceiverClass batteryReceiverClass;
     private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,intentFilter_ACTION_STATE_CHANGED;
 
+    private Button btnViewBattery;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         initView();
         batteryReceiverClass = new BatteryReceiverClass();
+        btnViewBattery = view.findViewById(R.id.btnViewBattery);
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         linearLayout_View.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +152,7 @@ public class InformationFragment extends Fragment {
                            imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
                        }else {
                            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-                           imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_7_24);
+                           imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_default);
                        }
                    }else {
                        alertDialogPermission();
@@ -148,21 +162,8 @@ public class InformationFragment extends Fragment {
                }
             }
         });
-        int orient = getResources().getConfiguration().orientation;
-        switch(orient) {
-            case Configuration.ORIENTATION_LANDSCAPE:
-                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
+        eventScreen_ORIENTATION();
 
-                Log.d("YYY","ORIENTATION_LANDSCAPE:");
-                break;
-            case Configuration.ORIENTATION_PORTRAIT:
-                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
-
-                Log.d("YYY","ORIENTATION_PORTRAIT:");
-                // handle portrait here
-                break;
-            default:
-        }
         linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
             boolean landscape;
             @Override
@@ -187,18 +188,76 @@ public class InformationFragment extends Fragment {
                 wifi = !wifi;
                 if (wifi){
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
-                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
+//                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
 
                 }else {
-                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_4_bar_24);
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
 
                 }
             }
         });
+        btnViewBattery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setActionIntent(url_Battery);
+
+            }
+        });
         initChart();
+        initChart2();
+
 
         displayCurrentTime();
         return view;
+    }
+
+    private void initChart2() {
+        lineChart  = view.findViewById(R.id.line_Charts);
+//        lineChart.setOnChartGestureListener(getActivity());
+//        lineChart.setOnChartValueSelectedListener(getActivity());
+
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(false);
+
+        ArrayList<Entry> yValues = new ArrayList<>();
+        yValues.add(new Entry(0,60f));
+        yValues.add(new Entry(10,50f));
+        yValues.add(new Entry(20,70f));
+        yValues.add(new Entry(30,30f));
+        yValues.add(new Entry(40,50f));
+        yValues.add(new Entry(50,60f));
+        yValues.add(new Entry(60,40f));
+        yValues.add(new Entry(70,70f));
+        yValues.add(new Entry(80,10f));
+        yValues.add(new Entry(90,20f));
+        yValues.add(new Entry(100,40f));
+        LineDataSet ser1 = new LineDataSet(yValues,"Data Set 1 ");
+        ser1.setFillAlpha(110);
+        ser1.setColor(getResources().getColor(R.color.colorGreen));
+        ser1.setLineWidth(3f);
+        ser1.setValueTextSize(15f);
+        ser1.setValueTextColor(Color.RED);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+        dataSets.add(ser1);
+        LineData data  = new LineData(dataSets);
+        lineChart.setData(data);
+    }
+
+    private void eventScreen_ORIENTATION() {
+        int orient = getResources().getConfiguration().orientation;
+        switch(orient) {
+            case Configuration.ORIENTATION_LANDSCAPE:
+                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
+                Log.d("YYY","ORIENTATION_LANDSCAPE:");
+                break;
+            case Configuration.ORIENTATION_PORTRAIT:
+                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
+                Log.d("YYY","ORIENTATION_PORTRAIT:");
+                // handle portrait here
+                break;
+            default:
+        }
     }
 
     private  void alertDialogPermission() {
@@ -239,8 +298,6 @@ public class InformationFragment extends Fragment {
                 try{
                     txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
                     txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
-
-
                     ////////////////////
 //                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
 //                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
@@ -355,7 +412,7 @@ public class InformationFragment extends Fragment {
 
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-        imageView_WifiOnOff.setImageResource(sharedPreference_utils.getWifi());
+//        imageView_WifiOnOff.setImageResource(sharedPreference_utils.getWifi());
 
 
 

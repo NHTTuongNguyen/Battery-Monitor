@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.batterymonitor.R;
-import com.example.batterymonitor.service.ExampleService;
+import com.example.batterymonitor.service.ServiceNotifi;
 
 public class TestActivity extends AppCompatActivity {
     private EditText editTextInput;
@@ -24,27 +24,7 @@ public class TestActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btnStart);
         btnStop = findViewById(R.id.btnStop);
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startService();
-            }
-        });
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopService();
-            }
-        });
+
     }
-    public void startService() {
-//        String input = editTextInput.getText().toString();
-        Intent serviceIntent = new Intent(this, ExampleService.class);
-//        serviceIntent.putExtra("inputExtra", input);
-        ContextCompat.startForegroundService(this, serviceIntent);
-    }
-    public void stopService() {
-        Intent serviceIntent = new Intent(this, ExampleService.class);
-        stopService(serviceIntent);
-    }
+
 }

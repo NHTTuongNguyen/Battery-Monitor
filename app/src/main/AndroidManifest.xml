@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -52,7 +54,7 @@
                   <category android:name="android.intent.category.LAUNCHER" />
               </intent-filter>
         </activity>
-        <service android:name=".service.ExampleService" />
+        <service android:name=".service.ServiceNotifi" />
 
     </application>
 

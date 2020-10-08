@@ -8,10 +8,14 @@ import android.content.res.Resources;
 import android.os.BatteryManager;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.batterymonitor.activity.HomeActivity;
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.service.ServiceNotifi;
 
 public class BatteryReceiverClass extends BroadcastReceiver {
     TextView txtStatusLabel,
@@ -23,12 +27,15 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtBatteryType,
             txtChargingSource,
             txtPower,
-            txtBigDOC;
+            txtBigDOC,
+            txtChatHeadImage;
     ImageView imgBatteryImage,imageView_Bluetooth;
+    private Switch switchBluetoothCustomMode;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-         txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
+          txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
+        txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
          txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
          txtHealth = ((HomeActivity)context).findViewById(R.id.txtHealth);
          txtVoltage = ((HomeActivity)context).findViewById(R.id.txtVoltage);
@@ -40,7 +47,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
          txtBigDOC = ((HomeActivity)context).findViewById(R.id.txtNhietDoLon);
          imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
          imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
-
+        switchBluetoothCustomMode = ((HomeActivity)context).findViewById(R.id.switchBluetoothCustomMode);
         String action = intent.getAction();
 
         if (action != null && action.equals(Intent.ACTION_BATTERY_CHANGED)){
@@ -59,6 +66,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             // Image
             if (imgBatteryImage!=null){
                 Resources res = context.getResources();
+
                 if (percentage >= 90) {
                     imgBatteryImage.setImageDrawable(res.getDrawable(R.drawable.b100));
 
@@ -88,7 +96,13 @@ public class BatteryReceiverClass extends BroadcastReceiver {
 
             /////setBattery
             if (txtBatteryType !=null) {
-                txtBatteryType.setText(intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY));
+                String typeBattery = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
+                txtBatteryType.setText(typeBattery);
+//                Intent serviceIntent = new Intent(context, ExampleService.class);
+//                serviceIntent.putExtra("inputExtra", typeBattery);
+//                Log.d("set_serviceIntent",typeBattery+"");
+//                ContextCompat.startForegroundService(context, serviceIntent);
+
             }
             /////getChargingSource
             getChargingSource(intent);
@@ -96,8 +110,13 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             ////Temperature
             if (txtTemperature !=null && txtBigDOC !=null) {
                 float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
+//                Intent serviceIntent = new Intent(context, ServiceNotifi.class);
+//                serviceIntent.putExtra("inputExtra", tempTemp);
+//                Log.d("set_serviceIntent",tempTemp+"");
+//                ContextCompat.startForegroundService(context, serviceIntent);
                 txtTemperature.setText(tempTemp + " °C");
                 txtBigDOC.setText(tempTemp + " °C");
+//                txtChatHeadImage.setText(tempTemp+"");
             }
 
         }
@@ -113,6 +132,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         switch(state) {
             case BluetoothAdapter.STATE_OFF:
                 imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
+                switchBluetoothCustomMode.setChecked(false);
                 Log.d("BluetoothAdapter","Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
@@ -120,7 +140,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 break;
             case BluetoothAdapter.STATE_ON:
                imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24);
-
+                switchBluetoothCustomMode.setChecked(true);
                 Log.d("BluetoothAdapter","Bluetooth on");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
@@ -152,6 +172,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 break;
         }
         if (txtStatusLabel!=null) {
+
             txtStatusLabel.setText(message);
         }
     }
