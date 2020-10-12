@@ -82,22 +82,22 @@ public class SettingActivity extends AppCompatActivity {
         switchDesktopMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    sharePre.setDesktopFloating(true);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(SettingActivity.this)) {
-
-                        //If the draw over permission is not available open the settings screen
-                        //to grant the permission.
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                Uri.parse("package:" + getPackageName()));
-                        startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
-                    } else {
-                        initializeView();
-                    }
-
-                }else {
-                    sharePre.setDesktopFloating(false);
-                }
+//                if (b){
+//                    sharePre.setDesktopFloating(true);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(SettingActivity.this)) {
+//
+//                        //If the draw over permission is not available open the settings screen
+//                        //to grant the permission.
+//                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                                Uri.parse("package:" + getPackageName()));
+//                        startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+//                    } else {
+//                        initializeView();
+//                    }
+//
+//                }else {
+//                    sharePre.setDesktopFloating(false);
+//                }
             }
         });
     }
@@ -133,15 +133,15 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
-                    switchDesktopMode.setChecked(true);
+//                    switchDesktopMode.setChecked(true);
                     sharePre.setSwitchDarkMode(true);
-//                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
-//                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
+                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
+                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
                 }else {
-                    switchDesktopMode.setChecked(false);
+//                    switchDesktopMode.setChecked(false);
                     sharePre.setSwitchDarkMode(false);
-//                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
-//                    stopService(serviceIntent);
+                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
+                    stopService(serviceIntent);
                 }
             }
         });

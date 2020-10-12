@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,33 +33,32 @@ public class ServiceNotifi extends Service {
     private View mChatHeadView;
 
     public ServiceNotifi() {
-
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initChat();
+//        initChat();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        float input = intent.getFloatExtra("inputExtra",0);
+//        float input = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
+//        float input = intent.getFloatExtra("inputExtra",0);
+        float input = 31.1f;
         Intent notificationIntent = new Intent(this, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                    .setContentTitle("Example Service")
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_circle)) // set a png or jpg images
+                    .setSmallIcon(R.drawable.ic_baseline_android_24)
                     .setContentTitle("Battery: "+input+" °C")
                     .setContentText(getString(R.string.BatteryMonitorRunning))
-                    .setSmallIcon(R.drawable.ic_baseline_android_24)
                     .setContentIntent(pendingIntent)
                     .build();
             startForeground(1, notification);
-
-
         //do heavy work on a background thread
-        //stopSelf();
+//        stopSelf();
         return START_NOT_STICKY;
     }
     @Override
@@ -120,20 +122,16 @@ public class ServiceNotifi extends Service {
             private int initialY;
             private float initialTouchX;
             private float initialTouchY;
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-
                         //remember the initial position.
                         initialX = params.x;
                         initialY = params.y;
-
                         //get the touch location
                         initialTouchX = event.getRawX();
                         initialTouchY = event.getRawY();
-
                         lastAction = event.getAction();
                         return true;
                     case MotionEvent.ACTION_UP:

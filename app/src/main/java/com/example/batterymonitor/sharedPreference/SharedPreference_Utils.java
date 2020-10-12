@@ -16,10 +16,6 @@ public class SharedPreference_Utils {
     private static final String NightMode = "NightMode_Key";
     private static final String SwitchDarkMode = "SwitchDarkMode_Key";
     private static final String DesktopFloating = "DesktopFloating_Key";
-
-
-
-
     public SharedPreference_Utils(Context context){
 //        mcontext=context;
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
@@ -33,7 +29,6 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(DesktopFloating,false);
         return state;
     }
-
     public void setSwitchDarkMode(Boolean state){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SwitchDarkMode,state);
@@ -52,13 +47,6 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(NightMode,false);
         return state;
     }
-
-
-
-
-
-
-
     public static void setBluetooth_Turn_On(int bluetooth_Turn_On){
         setSharedPreferences_Int(Bluetooth_ON,bluetooth_Turn_On);
         Log.d("setBluetooth_Turn_On",bluetooth_Turn_On+"");
@@ -73,8 +61,6 @@ public class SharedPreference_Utils {
         setSharedPreferences_Int(Wifi,wifi);
         Log.d("setBluetooth_Turn_On",wifi+"");
     }
-
-
     public static int getWifi(){
         int selectedWifi = sharedPreferences.getInt(Wifi, R.drawable.ic_baseline_signal_wifi_4_bar_24);
         Log.d("get_BBB", selectedWifi + "");
@@ -86,15 +72,10 @@ public class SharedPreference_Utils {
 
     }
     public static int getBluetooth_Turn_Off(){
-        int selectedBluetooth = sharedPreferences.getInt(Bluetooth_OFF, R.drawable.ic_baseline_bluetooth_24);
+        int selectedBluetooth = sharedPreferences.getInt(Bluetooth_OFF, R.drawable.ic_baseline_bluetooth_24_default);
         Log.d("getBluetooth_Turn_Off", selectedBluetooth + "");
-
         return selectedBluetooth;
     }
-
-
-
-
     private static void setSharedPreferences_Int(String keyName, int id){
         if (sharedPreferences!=null) {
             sharedPreferences = mcontext.getSharedPreferences(MyPREFERENCES, mcontext.MODE_PRIVATE);
@@ -103,5 +84,4 @@ public class SharedPreference_Utils {
             editor.apply();
         }
     }
-
 }

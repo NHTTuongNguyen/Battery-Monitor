@@ -42,8 +42,8 @@
                         <ImageView
                             android:id="@+id/imghinhpin"
                             android:src="@drawable/b50"
-                            android:layout_width="@dimen/dimen_60"
-                            android:layout_height="@dimen/dimen_60"/>
+                            android:layout_width="@dimen/dimen_50"
+                            android:layout_height="@dimen/dimen_50"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -113,6 +113,7 @@
 <!--                                </LinearLayout>-->
 <!--                            </LinearLayout>-->
                             <Button
+                                android:visibility="gone"
                                 android:id="@+id/btnViewBattery"
                                 android:layout_margin="@dimen/dimen_20"
                                 android:layout_toRightOf="@+id/linearLayout_HourDay"
@@ -523,9 +524,6 @@
                                 android:background="@drawable/cercleshape"
                                 android:padding="10dp"
                                 android:src="@drawable/ic_baseline_bluetooth_disabled_24" />
-
-
-
                         </LinearLayout>
                         <LinearLayout
                             android:background="?android:attr/selectableItemBackground"
@@ -535,7 +533,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
-
                             <ImageView
                                 android:id="@+id/img_Brightness"
                                 android:layout_width="44dp"
@@ -543,12 +540,7 @@
                                 android:background="@drawable/cercleshape"
                                 android:padding="10dp"
                                 android:src="@drawable/ic_baseline_brightness_default"/>
-
-
-
-
                         </LinearLayout>
-
                         <LinearLayout
                             android:id="@+id/linearLayout_Landscape"
                             android:background="?android:attr/selectableItemBackground"
@@ -557,7 +549,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
-
                             <ImageView
                                 android:id="@+id/img_Landscape"
                                 android:layout_width="44dp"
@@ -565,66 +556,43 @@
                                 android:background="@drawable/cercleshape"
                                 android:padding="10dp"
                                 android:src="@drawable/ic_baseline_screen_lock_rotation_24" />
-
-
-
                         </LinearLayout>
-
-
                     </LinearLayout>
-
-                </LinearLayout>
-
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
-                android:layout_margin="@dimen/dimen_10"
-                app:cardCornerRadius="@dimen/dimen_10"
-                android:id="@+id/levelGraphCard"
-                android:layout_below="@id/monitorCard"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dimen_10">
-
-                    <lecho.lib.hellocharts.view.LineChartView
-                        android:padding="20dp"
-                        android:id="@+id/chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="500dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="250dp"
                 app:cardBackgroundColor="?attr/cardbackgroundcolor"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
-                    android:padding="@dimen/dimen_10"
+                    android:layout_margin="@dimen/dimen_10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <TextView
-                        android:textColor="?attr/textcolor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/heading_3"
-                        android:text="Battery Temperature Graph"/>
-
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/line_Charts"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                android:layout_margin="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_10">
+                <LinearLayout
+                    android:layout_margin="@dimen/dimen_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <lecho.lib.hellocharts.view.LineChartView
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

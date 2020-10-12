@@ -62,7 +62,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 txtPercentageLabel.setText(percentage + "%");
                 txtLevel.setText(percentage + "%");
             }
-
             // Image
             if (imgBatteryImage!=null){
                 Resources res = context.getResources();
@@ -85,7 +84,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 }
             }
 
-
             ///txtVoltage
             if (txtVoltage!=null) {
                 float floatVoltage = (float) (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) * 0.001);
@@ -93,16 +91,10 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             }
             ////setHealth
             setHealth(intent);
-
             /////setBattery
             if (txtBatteryType !=null) {
                 String typeBattery = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
                 txtBatteryType.setText(typeBattery);
-//                Intent serviceIntent = new Intent(context, ExampleService.class);
-//                serviceIntent.putExtra("inputExtra", typeBattery);
-//                Log.d("set_serviceIntent",typeBattery+"");
-//                ContextCompat.startForegroundService(context, serviceIntent);
-
             }
             /////getChargingSource
             getChargingSource(intent);
@@ -110,12 +102,11 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             ////Temperature
             if (txtTemperature !=null && txtBigDOC !=null) {
                 float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
-//                Intent serviceIntent = new Intent(context, ServiceNotifi.class);
-//                serviceIntent.putExtra("inputExtra", tempTemp);
-//                Log.d("set_serviceIntent",tempTemp+"");
-//                ContextCompat.startForegroundService(context, serviceIntent);
                 txtTemperature.setText(tempTemp + " °C");
                 txtBigDOC.setText(tempTemp + " °C");
+//                Intent serviceIntent = new Intent(context, ServiceNotifi.class);
+//                serviceIntent.putExtra("inputExtra", tempTemp);
+//                ContextCompat.startForegroundService(context, serviceIntent);
 //                txtChatHeadImage.setText(tempTemp+"");
             }
 
@@ -132,15 +123,15 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         switch(state) {
             case BluetoothAdapter.STATE_OFF:
                 imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
-                switchBluetoothCustomMode.setChecked(false);
+//                switchBluetoothCustomMode.setChecked(false);
                 Log.d("BluetoothAdapter","Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
                 Log.d("BluetoothAdapter","Turning Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_ON:
-               imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24);
-                switchBluetoothCustomMode.setChecked(true);
+               imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
+//                switchBluetoothCustomMode.setChecked(true);
                 Log.d("BluetoothAdapter","Bluetooth on");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
@@ -172,7 +163,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 break;
         }
         if (txtStatusLabel!=null) {
-
             txtStatusLabel.setText(message);
         }
     }

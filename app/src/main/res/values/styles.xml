@@ -9,7 +9,7 @@
         <item name="backgroundcolor">#fcfcfc</item>
         <item name="cardbackgroundcolor">#ffffff</item>
         <item name="textcolor">#808080</item>
-        <item name="tintcolor">#000000</item>
+        <item name="tintcolor">#808080</item>
         <item name="buttoncolor">#2196F3</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>

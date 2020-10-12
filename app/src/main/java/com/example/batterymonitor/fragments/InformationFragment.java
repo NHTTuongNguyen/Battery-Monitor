@@ -1,22 +1,20 @@
 package com.example.batterymonitor.fragments;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
@@ -31,30 +29,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
-import com.example.batterymonitor.activity.SettingActivity;
+import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 
@@ -79,15 +74,13 @@ public class InformationFragment extends Fragment{
     SharedPreference_Utils sharedPreference_utils;
     private ImageView imageView_Bluetooth,imageView_Brightness,imageView_Landscape,imageView_WifiOnOff;
     private View view;
-    private LineChartView lineChartView;
     private TextView txtCurrentTimeThread,txtCurrentDaysThread,txtCurrentMemoryThread;
-
-
-
     private BatteryReceiverClass batteryReceiverClass;
     private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,intentFilter_ACTION_STATE_CHANGED;
-
     private Button btnViewBattery;
+    private BarChart barChart;
+    private LineChart lineChartTest;
+    private int mFillColor = Color.argb(150,51,181,229);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,13 +109,18 @@ public class InformationFragment extends Fragment{
             public void onClick(View view) {
 //                trues = !trues;
                 BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                if (adapter.isEnabled()){
-                    imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
-                    adapter.disable();
-                } else {
-                    imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24);
-                    adapter.enable();
+                if (adapter == null){
+                    Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (adapter.isEnabled()){
+                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
+                        adapter.disable();
+                    } else {
+                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
+                        adapter.enable();
+                    }
                 }
+
 
 //                    if (trues) {
 ////                        SharedPreference_Utils.setBluetooth_Turn_On(R.drawable.ic_baseline_bluetooth_24);
@@ -203,47 +201,113 @@ public class InformationFragment extends Fragment{
 
             }
         });
-        initChart();
+
         initChart2();
-
-
+        chartTest();
         displayCurrentTime();
         return view;
     }
 
+    private void chartTest() {
+        LineChartView lineChartView = view.findViewById(R.id.chart);
+        String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
+                "Oct", "Nov", "Dec"};
+//        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+        List<Integer> yAxisData = new ArrayList<>();
+        yAxisData.add(50);
+        yAxisData.add(20);
+        yAxisData.add(15);
+        yAxisData.add(30);
+        yAxisData.add(20);
+        yAxisData.add(60);
+        yAxisData.add(15);
+        yAxisData.add(40);
+        yAxisData.add(45);
+        yAxisData.add(10);
+        yAxisData.add(90);
+        yAxisData.add(18);
+        ////
+        List yAxisValues = new ArrayList();
+        List axisValues = new ArrayList();
+
+
+
+        Line line = new Line(yAxisValues);
+        line.setColor(Color.RED);
+
+        line.setColor(R.color.colorGreen);
+        for(int i = 0; i < axisData.length; i++){
+            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        }
+
+//        for (int i = 0; i < yAxisData.length; i++){
+//            yAxisValues.add(new PointValue(i, yAxisData[i]));
+//        }
+        for (int i = 0; i < yAxisData.size(); i++){
+            yAxisValues.add(new PointValue(i, yAxisData.get(i)));
+        }
+
+        List lines = new ArrayList();
+        lines.add(line);
+
+        LineChartData data = new LineChartData();
+        data.setLines(lines);
+        lineChartView.setLineChartData(data);
+        Axis axis = new Axis();
+        axis.setValues(axisValues);
+        data.setAxisXBottom(axis);
+
+        Axis yAxis = new Axis();
+        data.setAxisYLeft(yAxis);
+
+
+
+
+    }
+
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
-//        lineChart.setOnChartGestureListener(getActivity());
-//        lineChart.setOnChartValueSelectedListener(getActivity());
+//        List<ChartsModel> yValues = new ArrayList<>();
+//        yValues.add(10,50f);
+//        yValues.add(70f);
+//        yValues.add(30f);
+//        yValues.add(50f);
+//        yValues.add(60f);
+//        yValues.add(40f);
+//        yValues.add(new ChartsModel(10,50));
+        List<Entry> yValues = new ArrayList<>();
+//        float [] toaDoX = {10,20,30,40,50,60};
+//        float [] toaDoY = {50f,70f,30f,50f,60f,40f};
+//        yValues.add(new Entry(toaDoX,50f));
 
-        lineChart.setDragEnabled(true);
-        lineChart.setScaleEnabled(false);
-
-        ArrayList<Entry> yValues = new ArrayList<>();
-        yValues.add(new Entry(0,60f));
         yValues.add(new Entry(10,50f));
         yValues.add(new Entry(20,70f));
         yValues.add(new Entry(30,30f));
         yValues.add(new Entry(40,50f));
         yValues.add(new Entry(50,60f));
         yValues.add(new Entry(60,40f));
-        yValues.add(new Entry(70,70f));
-        yValues.add(new Entry(80,10f));
-        yValues.add(new Entry(90,20f));
-        yValues.add(new Entry(100,40f));
-        LineDataSet ser1 = new LineDataSet(yValues,"Data Set 1 ");
-        ser1.setFillAlpha(110);
-        ser1.setColor(getResources().getColor(R.color.colorGreen));
-        ser1.setLineWidth(3f);
-        ser1.setValueTextSize(15f);
-        ser1.setValueTextColor(Color.RED);
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-        dataSets.add(ser1);
+        LineDataSet set1 = new LineDataSet(yValues,"Data Battery");
+        set1.setLineWidth(3f);
+        set1.setCircleRadius(5f);
+        set1.setCircleHoleRadius(2.5f);
+        set1.setColor(Color.LTGRAY);
+        set1.setCircleColor(Color.WHITE);
+        set1.setHighLightColor(Color.WHITE);
+        set1.setDrawValues(false);
+//        set1.setDrawCircles(false);
+        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set1.setCubicIntensity(0.2f);
+        set1.setDrawFilled(true);
+        set1.setFillColor(Color.CYAN);
+        set1.setFillAlpha(80);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
         LineData data  = new LineData(dataSets);
+        Drawable drawable  = ContextCompat.getDrawable(getActivity(),R.drawable.gradient_charts);
+        set1.setFillDrawable(drawable);
         lineChart.setData(data);
     }
-
     private void eventScreen_ORIENTATION() {
         int orient = getResources().getConfiguration().orientation;
         switch(orient) {
@@ -259,7 +323,6 @@ public class InformationFragment extends Fragment{
             default:
         }
     }
-
     private  void alertDialogPermission() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Permission write settings !");
@@ -292,7 +355,7 @@ public class InformationFragment extends Fragment{
         myThread= new Thread(runnable);
         myThread.start();
     }
-    private void doWork() {
+    private void setRunOnUiThread() {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 try{
@@ -329,7 +392,7 @@ public class InformationFragment extends Fragment{
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    doWork();
+                    setRunOnUiThread();
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -339,7 +402,7 @@ public class InformationFragment extends Fragment{
         }
     }
     private void initView() {
-        lineChartView = view.findViewById(R.id.chart);
+
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
@@ -351,54 +414,7 @@ public class InformationFragment extends Fragment{
         linearLayout_Brightness = view.findViewById(R.id.linearLayout_Brightness);
         linearLayout_WifiOnOFF = view.findViewById(R.id.linearLayout_WifiOnOFF);
     }
-    private void initChart() {
-        String[] axisDataX =
-                {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
 
-        int[] axisDataY = {15, 10, 50, 25, 40, 35, 30, 45, 50, 55, 63, 65};
-        List axisValuesX = new ArrayList();
-        List axisValuesY = new ArrayList();
-
-        Line line = new Line(axisValuesY);
-
-
-        for(int i = 0; i < axisDataX.length; i++){
-            axisValuesX.add(i, new AxisValue(i).setLabel(axisDataX[i]));
-            Log.d("axisDataX",axisValuesX.get(i)+"");
-
-        }
-
-        for (int i = 0; i < axisDataY.length; i++){
-            axisValuesY.add(new PointValue(i, axisDataY[i]));
-        }
-
-        List lines = new ArrayList();
-        lines.add(line);
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-        lineChartView.setLineChartData(data);
-
-
-        Axis axis = new Axis();
-        axis.setValues(axisValuesX);
-        data.setAxisXBottom(axis);
-        Axis yAxis = new Axis();
-        data.setAxisYLeft(yAxis);
-
-        Line linessss = new Line(axisValuesY);
-        linessss.setColor(R.color.colorPrimary);
-        axis.setTextSize(16);
-        axis.setTextColor(Color.parseColor("#03A9F4"));
-
-        yAxis.setTextColor(Color.parseColor("#03A9F4"));
-        yAxis.setTextSize(16);
-
-        yAxis.setName("Sales in millions");
-        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-        viewport.top =70;
-        lineChartView.setMaximumViewport(viewport);
-        lineChartView.setCurrentViewport(viewport);
-    }
     private void setActionIntent(String actionIntent) {
         Intent intent = new Intent();
         intent.setAction(actionIntent);

@@ -182,7 +182,8 @@ public class SaverFragment extends Fragment {
                         radioButtonClassicMode.setChecked(false);
                         alertDialogPermission_WriteSettings();
                     }
-
+                }else {
+                    Toast.makeText(getActivity(), "AASDASDASADD", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -232,9 +233,12 @@ public class SaverFragment extends Fragment {
                         radioButtonLongLifeMode.setChecked(false);
                         alertDialogPermission_WriteSettings();
                     }
+                }else {
+
                 }
             }
         });
+
         radioButtonSleepMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdSleepMode) {
@@ -279,7 +283,6 @@ public class SaverFragment extends Fragment {
                     }
 
                 }
-
             }
         });
         radioButtonCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -308,6 +311,9 @@ public class SaverFragment extends Fragment {
                             linearLayoutCustomMode_Line.setVisibility(View.GONE);
                             linearLayoutCustomMode.setVisibility(View.VISIBLE);
                             ///setSwitchVolumeCustomMode
+                            setScreenTimeout(SizeNumber.Fifteen_seconds);
+                            ///setScreen_Brightness
+                            setScreen_Brightness(SizeNumber.haimuoiphantram);
                             switchVolumeCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -323,97 +329,98 @@ public class SaverFragment extends Fragment {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                                     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                                    if (b){
-                                        adapter.enable();
+                                    if (adapter == null){
+                                        Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
                                     }else {
-                                        adapter.disable();
+                                        if (b){
+                                            adapter.enable();
+                                        }else {
+                                            adapter.disable();
+                                        }
                                     }
+
                                 }
                             });
                             ///setButtonBrightnessCustomMode;
-                            btnBrightnessCustomMode.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                                    View viewLayout = inflater.inflate(R.layout.dialog_brightness,null);
-                                    builder.setView(viewLayout);
-//                                    builder.setMessage("Write your message here.");
-                                    builder.setCancelable(true);
-                                    btn10pre = viewLayout.findViewById(R.id.btn10pre);
-                                    btn20pre = viewLayout.findViewById(R.id.btn20pre);
-                                    btn40pre = viewLayout.findViewById(R.id.btn40pre);
-                                    btn60pre = viewLayout.findViewById(R.id.btn60pre);
-                                    btn80pre = viewLayout.findViewById(R.id.btn80pre);
-                                    btn10pre.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            int i = 10;
-
-                                            Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                    builder.setPositiveButton(
-                                            "Yes",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.cancel();
-
-                                                }
-                                            });
-                                    builder.setNegativeButton(
-                                            "No",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.cancel();
-
-                                                }
-                                            });
-
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                }
-                            });
-                            btnScreenTimeoutCustomMode.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                                    View add_menu_layout = inflater.inflate(R.layout.dialog_screentimeout,null);
-                                    builder.setView(add_menu_layout);
-//                                    builder.setMessage("Write your message here.");
-                                    builder.setCancelable(true);
-                                    builder.setPositiveButton(
-                                            "Yes",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-                                    builder.setNegativeButton(
-                                            "No",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    dialog.cancel();
-                                                }
-                                            });
-
-                                    AlertDialog alertDialog = builder.create();
-                                    alertDialog.show();
-                                }
-                            });
-
+//                            btnBrightnessCustomMode.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+//                                    View viewLayout = inflater.inflate(R.layout.dialog_brightness,null);
+//                                    builder.setView(viewLayout);
+////                                    builder.setMessage("Write your message here.");
+//                                    builder.setCancelable(true);
+//                                    btn10pre = viewLayout.findViewById(R.id.btn10pre);
+//                                    btn20pre = viewLayout.findViewById(R.id.btn20pre);
+//                                    btn40pre = viewLayout.findViewById(R.id.btn40pre);
+//                                    btn60pre = viewLayout.findViewById(R.id.btn60pre);
+//                                    btn80pre = viewLayout.findViewById(R.id.btn80pre);
+//                                    btn10pre.setOnClickListener(new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View view) {
+//                                            int i = 10;
+//
+//                                            Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    });
+//                                    builder.setPositiveButton(
+//                                            "Yes",
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    dialog.cancel();
+//
+//                                                }
+//                                            });
+//                                    builder.setNegativeButton(
+//                                            "No",
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    dialog.cancel();
+//
+//                                                }
+//                                            });
+//
+//                                    AlertDialog alertDialog = builder.create();
+//                                    alertDialog.show();
+//                                }
+//                            });
+//                            btnScreenTimeoutCustomMode.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+//                                    View add_menu_layout = inflater.inflate(R.layout.dialog_screentimeout,null);
+//                                    builder.setView(add_menu_layout);
+////                                    builder.setMessage("Write your message here.");
+//                                    builder.setCancelable(true);
+//                                    builder.setPositiveButton(
+//                                            "Yes",
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    dialog.cancel();
+//                                                }
+//                                            });
+//                                    builder.setNegativeButton(
+//                                            "No",
+//                                            new DialogInterface.OnClickListener() {
+//                                                public void onClick(DialogInterface dialog, int id) {
+//                                                    dialog.cancel();
+//                                                }
+//                                            });
+//
+//                                    AlertDialog alertDialog = builder.create();
+//                                    alertDialog.show();
+//                                }
+//                            });
                         }
                     }else {
                         radioButtonCustomMode.setChecked(false);
                         alertDialogPermission_WriteSettings();
                     }
-
                 }
-
             }
         });
-
         setVisibilityLinearLayout();
         return view;
     }
@@ -425,7 +432,6 @@ public class SaverFragment extends Fragment {
         amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
         amanager.setStreamMute(AudioManager.STREAM_RING, true);
         amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-
     }
     private void setVolumeTurnOn() {
         AudioManager amanager = (AudioManager)getActivity().getSystemService(getActivity().AUDIO_SERVICE);
@@ -435,7 +441,6 @@ public class SaverFragment extends Fragment {
         amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
         amanager.setStreamMute(AudioManager.STREAM_RING, false);
         amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-
     }
     private void eventBtnStopMode() {
         btnStopSleepMode.setOnClickListener(new View.OnClickListener() {
@@ -460,7 +465,12 @@ public class SaverFragment extends Fragment {
 
     private void setBluetoothTurnOff() {
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        adapter.disable();
+        if (adapter == null){
+            Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
+        }else {
+            adapter.disable();
+        }
+
     }
 
     private void setScreen_Brightness(int screenBrightness) {
