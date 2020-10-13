@@ -4,10 +4,8 @@
     package="com.example.batterymonitor">
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"

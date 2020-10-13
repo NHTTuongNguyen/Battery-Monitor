@@ -17,22 +17,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btn15s"
                 android:text="15s"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn30s"
                 android:text="30s"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn1m"
                 android:textAllCaps="false"
                 android:text="1min"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn5m"
                 android:textAllCaps="false"
                 android:text="5min"
                 android:layout_weight="1"
@@ -45,24 +49,28 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                android:id="@+id/btn10m"
                 android:textAllCaps="false"
                 android:text="10min"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn15m"
                 android:textAllCaps="false"
                 android:text="15min"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn20m"
                 android:textAllCaps="false"
                 android:text="20min"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <Button
+                android:id="@+id/btn30m"
                 android:textAllCaps="false"
                 android:text="30min"
                 android:layout_weight="1"

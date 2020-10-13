@@ -32,7 +32,7 @@
     <string name="Setting">Setting</string>
     <string name="Custom">Custom</string>
     <string name="ThemeColor">Theme color</string>
-    <string name="Lighttheme">Lighttheme</string>
+    <string name="LightTheme">Light Theme</string>
     <string name="Switchtolighttheme">Switch to light theme</string>
     <string name="Switch">Switch</string>
     <string name="NotificationSwitch">Notification Switch</string>
@@ -55,4 +55,6 @@
     <string name="Automatically">Automatically enter the low power\nconsumption during the sleep time.</string>
     <string name="EnterUsing">Enter using time according to the\ncustom settings</string>
     <string name="BatteryMonitorRunning">Battery Monitor is Running</string>
+    <string name="Celsius">°C</string>
+    <string name="ChangeBrightness">Change your brightness</string>
 </resources>

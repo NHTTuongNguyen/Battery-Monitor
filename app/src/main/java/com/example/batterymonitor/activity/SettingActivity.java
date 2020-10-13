@@ -6,9 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -35,13 +35,20 @@ public class SettingActivity extends AppCompatActivity {
         sharePre = new SharedPreference_Utils(SettingActivity.this);
         if (sharePre.getNightModeState() == true){
             setTheme(R.style.AppTheme);
-
         }else {
             setTheme(R.style.DarkTheme);
 
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        ////
+        Intent intent = getIntent();
+        if (intent != null) {
+            String message = intent.getStringExtra("message");
+            Log.d("get_message",message);
+        }
+        ///
         relativeLayout_Rate = findViewById(R.id.relativeLayout_Rate);
         relativeLayout_MoreApp = findViewById(R.id.relativeLayout_MoreApp);
         switchChangeDarkMode = findViewById(R.id.switchChangeDarkMode);
@@ -76,9 +83,9 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setEventSwitchDesktopMode() {
-        if (sharePre.getDesktopFloating() == true){
-            switchDesktopMode.setChecked(true);
-        }
+//        if (sharePre.getDesktopFloating() == true){
+//            switchDesktopMode.setChecked(true);
+//        }
         switchDesktopMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -126,7 +133,7 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
     private void setEventSwitchNotification() {
-        if (sharePre.getSwitchDarkMode() == true){
+        if (sharePre.getSwitchNotification() == true){
             switchNotification.setChecked(true);
         }
         switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -134,12 +141,12 @@ public class SettingActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
 //                    switchDesktopMode.setChecked(true);
-                    sharePre.setSwitchDarkMode(true);
+                    sharePre.setSwitchNotification(true);
                     Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
                     ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
                 }else {
 //                    switchDesktopMode.setChecked(false);
-                    sharePre.setSwitchDarkMode(false);
+                    sharePre.setSwitchNotification(false);
                     Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
                     stopService(serviceIntent);
                 }

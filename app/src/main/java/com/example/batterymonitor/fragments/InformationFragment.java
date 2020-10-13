@@ -1,7 +1,9 @@
 package com.example.batterymonitor.fragments;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -76,7 +79,9 @@ public class InformationFragment extends Fragment{
     private View view;
     private TextView txtCurrentTimeThread,txtCurrentDaysThread,txtCurrentMemoryThread;
     private BatteryReceiverClass batteryReceiverClass;
-    private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,intentFilter_ACTION_STATE_CHANGED;
+    private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,
+            intentFilter_ACTION_STATE_CHANGED,
+            intentFilter_WIFI_STATE_CHANGED_ACTION;
     private Button btnViewBattery;
     private BarChart barChart;
     private LineChart lineChartTest;
@@ -91,6 +96,7 @@ public class InformationFragment extends Fragment{
         btnViewBattery = view.findViewById(R.id.btnViewBattery);
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        intentFilter_WIFI_STATE_CHANGED_ACTION = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         linearLayout_View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,12 +176,10 @@ public class InformationFragment extends Fragment{
                 if (landscape){
                     imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
                     getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
                 }
                 else {
                     imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
                     getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
                 }
             }
         });
@@ -187,10 +191,8 @@ public class InformationFragment extends Fragment{
                 if (wifi){
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
 //                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
-
                 }else {
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
-
                 }
             }
         });
@@ -198,16 +200,13 @@ public class InformationFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 setActionIntent(url_Battery);
-
             }
         });
-
         initChart2();
         chartTest();
         displayCurrentTime();
         return view;
     }
-
     private void chartTest() {
         LineChartView lineChartView = view.findViewById(R.id.chart);
         String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
@@ -264,7 +263,6 @@ public class InformationFragment extends Fragment{
 
 
     }
-
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
 //        List<ChartsModel> yValues = new ArrayList<>();
@@ -348,7 +346,6 @@ public class InformationFragment extends Fragment{
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
     private void displayCurrentTime() {
         Thread myThread;
         Runnable runnable = new CountDownRunner();
@@ -362,13 +359,15 @@ public class InformationFragment extends Fragment{
                     txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
                     txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
                     ////////////////////
-//                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-//                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
-//                    activityManager.getMemoryInfo(mi);
-//                    long availableMegs = mi.availMem / 1048576L;
-//                    long percentAvail = mi.availMem / mi.totalMem;
-//                    Log.d("availableMegs",availableMegs+"");
-//                    Log.d("percentAvail",percentAvail+"");
+                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
+                    activityManager.getMemoryInfo(mi);
+                    long availableMegs = mi.availMem / 1048576L;
+                    long percentAvail = mi.availMem / mi.totalMem;
+                    Log.d("availableMegs",availableMegs+"");
+
+
+                    Log.d("percentAvail",percentAvail+"");
 
 //                    txtCurrentMemoryThread.setText(availableMegs+"");
 
@@ -387,7 +386,6 @@ public class InformationFragment extends Fragment{
         });
     }
 
-
     private class CountDownRunner implements Runnable {
         public void run() {
             while (!Thread.currentThread().isInterrupted()) {
@@ -402,7 +400,6 @@ public class InformationFragment extends Fragment{
         }
     }
     private void initView() {
-
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
@@ -428,6 +425,7 @@ public class InformationFragment extends Fragment{
 
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
 //        imageView_WifiOnOff.setImageResource(sharedPreference_utils.getWifi());
 
 

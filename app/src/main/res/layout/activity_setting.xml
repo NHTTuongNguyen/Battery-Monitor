@@ -257,7 +257,7 @@
                                 android:id="@+id/txtDarktheme"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/Lighttheme"/>
+                                android:text="@string/LightTheme"/>
                             <RelativeLayout
                                 android:layout_below="@id/txtDarktheme"
                                 android:layout_width="match_parent"

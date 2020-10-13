@@ -35,4 +35,8 @@
     <style name="TextViewSize">
         <item name="android:textSize">13dp</item>
     </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorAccent</item>
+    </style>
 </resources>

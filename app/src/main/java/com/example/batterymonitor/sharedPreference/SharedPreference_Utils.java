@@ -13,12 +13,34 @@ public class SharedPreference_Utils {
     private static final String Bluetooth_ON = "bluetooth_turn_On_Key";
     private static final String Bluetooth_OFF = "bluetooth_turn_Off_Key";
     private static final String Wifi= "wifi_Key";
-    private static final String NightMode = "NightMode_Key";
-    private static final String SwitchDarkMode = "SwitchDarkMode_Key";
-    private static final String DesktopFloating = "DesktopFloating_Key";
+    private static final String NightMode = "nightMode_Key";
+    private static final String SwitchNotification = "switchNotification_Key";
+    private static final String DesktopFloating = "desktopFloating_Key";
+    private static final String RadioButtonCustomMode = "radioButtonCustomMode_Key";
+    private static final String SeekBarBrightness = "seekBarBrightness_Key";
+    private static final String NumberSeekBarBrightness = "numberSeekBarBrightness_Key";
+
     public SharedPreference_Utils(Context context){
 //        mcontext=context;
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
+    }
+    public void setNumberSeekBarBrightness(int numberSeekBarBrightness){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(NumberSeekBarBrightness,numberSeekBarBrightness);
+        editor.commit();
+    }
+    public int getNumberSeekBarBrightness(){
+        int state = sharedPreferences.getInt(NumberSeekBarBrightness,0);
+        return state;
+    }
+    public void setSeekBarBrightness(int seekBarBrightness){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SeekBarBrightness,seekBarBrightness);
+        editor.commit();
+    }
+    public int getSeeSeekBarBrightness(){
+        int state = sharedPreferences.getInt(SeekBarBrightness,0);
+        return state;
     }
     public void setDesktopFloating(Boolean state){
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -29,13 +51,13 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(DesktopFloating,false);
         return state;
     }
-    public void setSwitchDarkMode(Boolean state){
+    public void setSwitchNotification(Boolean state){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(SwitchDarkMode,state);
+        editor.putBoolean(SwitchNotification,state);
         editor.commit();
     }
-    public Boolean getSwitchDarkMode(){
-        Boolean state = sharedPreferences.getBoolean(SwitchDarkMode,false);
+    public Boolean getSwitchNotification(){
+        Boolean state = sharedPreferences.getBoolean(SwitchNotification,false);
         return state;
     }
     public void setNightModeState(Boolean state){
@@ -47,6 +69,18 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(NightMode,false);
         return state;
     }
+
+    public void setRadioButtonCustomMode(Boolean state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(RadioButtonCustomMode,state);
+        editor.commit();
+    }
+    public Boolean getRadioButtonCustomMode(){
+        Boolean state = sharedPreferences.getBoolean(RadioButtonCustomMode,false);
+        return state;
+    }
+
+
     public static void setBluetooth_Turn_On(int bluetooth_Turn_On){
         setSharedPreferences_Int(Bluetooth_ON,bluetooth_Turn_On);
         Log.d("setBluetooth_Turn_On",bluetooth_Turn_On+"");

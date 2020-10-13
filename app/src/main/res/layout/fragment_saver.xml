@@ -1027,7 +1027,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:visibility="gone"
+
                                 android:id="@+id/linearLayoutCustomMode"
                                 android:theme="@style/TextViewSize"
                                 android:layout_width="match_parent"
@@ -1064,6 +1064,7 @@
                                                 />
 
                                             <Switch
+                                                android:id="@+id/switchWifiCustomMode"
                                                 android:layout_alignParentRight="true"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
@@ -1173,7 +1174,7 @@
                                                 android:background="@drawable/bg_button"
                                                 android:layout_width="@dimen/dimen_40"
                                                 android:layout_height="@dimen/dimen_20"
-                                                android:text="50%"
+                                                android:text="..."
                                                 android:textSize="12dp"
                                                 android:textColor="?attr/textcolor"
                                                 android:layout_alignParentRight="true"
@@ -1207,7 +1208,7 @@
                                                 android:background="@drawable/bg_button"
                                                 android:layout_width="@dimen/dimen_40"
                                                 android:layout_height="@dimen/dimen_20"
-                                                android:text="30s"
+                                                android:text="..."
                                                 android:textSize="12dp"
                                                 android:textColor="?attr/textcolor"
                                                 android:layout_alignParentRight="true"

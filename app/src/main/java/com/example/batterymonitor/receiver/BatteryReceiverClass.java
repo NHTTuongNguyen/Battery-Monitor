@@ -5,16 +5,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.batterymonitor.activity.HomeActivity;
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.activity.SettingActivity;
 import com.example.batterymonitor.service.ServiceNotifi;
 
 public class BatteryReceiverClass extends BroadcastReceiver {
@@ -35,7 +38,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
           txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
-        txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
+          txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
          txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
          txtHealth = ((HomeActivity)context).findViewById(R.id.txtHealth);
          txtVoltage = ((HomeActivity)context).findViewById(R.id.txtVoltage);
@@ -104,18 +107,44 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
                 txtTemperature.setText(tempTemp + " °C");
                 txtBigDOC.setText(tempTemp + " °C");
-//                Intent serviceIntent = new Intent(context, ServiceNotifi.class);
-//                serviceIntent.putExtra("inputExtra", tempTemp);
-//                ContextCompat.startForegroundService(context, serviceIntent);
-//                txtChatHeadImage.setText(tempTemp+"");
+                //
+//                String tesst = "This is anh test";
+//                Intent i = new Intent(context, SettingActivity.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                i.putExtra("message", tesst);
+//                Log.d("set_message",tesst);
+//                context.startActivity(i);
             }
+
 
         }
 
         ////BLUETOOTH
             if (action !=null && action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)){
             setChangeBluetooth(intent);
-        }
+
+            ////wififf
+                int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN);
+                switch (wifiStateExtra){
+                    case WifiManager.WIFI_STATE_ENABLED:
+//                        wifiSwitch.setChecked(true);
+//                        wifiSwitch.setText("WiFi is ON");
+                        Log.d("wifiStateExtra","On");
+                        break;
+                    case WifiManager.WIFI_STATE_DISABLED:
+//                        wifiSwitch.setChecked(false);
+//                        wifiSwitch.setText("WiFi is OFF");
+                        Log.d("wifiStateExtra","off");
+                        break;
+                    case WifiManager.WIFI_STATE_UNKNOWN:
+//                        wifiSwitch.setChecked(false);
+//                        wifiSwitch.setText("WiFi is OFF");
+                        Log.d("wifiStateExtra","K BIET");
+                        break;
+                }
+
+
+            }
 
     }
     private void setChangeBluetooth(Intent intent){
