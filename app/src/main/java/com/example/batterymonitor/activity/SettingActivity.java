@@ -44,10 +44,7 @@ public class SettingActivity extends AppCompatActivity {
 
         ////
         Intent intent = getIntent();
-        if (intent != null) {
-            String message = intent.getStringExtra("message");
-            Log.d("get_message",message);
-        }
+
         ///
         relativeLayout_Rate = findViewById(R.id.relativeLayout_Rate);
         relativeLayout_MoreApp = findViewById(R.id.relativeLayout_MoreApp);
