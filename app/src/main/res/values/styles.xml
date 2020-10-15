@@ -1,31 +1,28 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 <!--        <item name="android:fontFamily">@font/marvel</item>-->
-        <item name="backgroundcolor">#fcfcfc</item>
-        <item name="cardbackgroundcolor">#ffffff</item>
-        <item name="textcolor">#808080</item>
-        <item name="tintcolor">#808080</item>
-        <item name="buttoncolor">#2196F3</item>
+        <item name="attrsBackgroundColor">@color/colorBackgroundLight</item>
+        <item name="attrsCardBackgroundColor">@color/colorBackgroundCardLight</item>
+        <item name="attrsTextColor">@color/colorTextLight</item>
+        <item name="attrsTintColor">@color/colorTintLight</item>
+        <item name="attrsButtonColor">@color/colorButtonLight</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">#212121</item>
-        <item name="colorPrimaryDark">#000000</item>
-        <!--        <item name="android:statusBarColor">#ffffff</item>-->
-        <!--        <item name="colorPrimaryDark">#ffffff</item>-->
+
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="backgroundcolor">#303030</item>
-        <item name="cardbackgroundcolor">#424242</item>
-        <item name="textcolor">#ffffff</item>
-        <item name="tintcolor">#ffffff</item>
-        <item name="buttoncolor">#2196F3</item>
+        <item name="attrsBackgroundColor">@color/colorBackgroundNight</item>
+        <item name="attrsCardBackgroundColor">@color/colorBackgroundCardNight</item>
+        <item name="attrsTextColor">@color/colorTextNight</item>
+        <item name="attrsTintColor">@color/colorTintNight</item>
+        <item name="attrsButtonColor">@color/colorButtonNight</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
     <style name="WindowAnimationTransition">

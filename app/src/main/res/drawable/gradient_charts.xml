@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
         android:angle="90"
-        android:startColor="?attr/cardbackgroundcolor"
+        android:startColor="?attr/attrsCardBackgroundColor"
         android:endColor="@color/colorGreen"
         android:type="linear"/>
 </shape>

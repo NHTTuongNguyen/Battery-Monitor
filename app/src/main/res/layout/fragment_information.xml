@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundcolor"
+    android:background="?attr/attrsBackgroundColor"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.InformationFragment">
@@ -14,16 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_10"
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
-                android:layout_margin="@dimen/dimen_10"
-                app:cardCornerRadius="@dimen/dimen_10"
-                android:id="@+id/adsCard">
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -76,14 +70,22 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"/>
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:id="@+id/txtCurrentTimeThread"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="CurrentTime"
                                     android:textSize="@dimen/dimen_15"/>
+
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
+                                    android:id="@+id/txtCurrentTimeBroacat"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="CurrentTime"
+                                    android:textSize="@dimen/dimen_15"/>
+                                <TextView
+                                    android:textColor="?attr/attrsTextColor"
                                     android:id="@+id/txtCurrentDaysThread"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -121,7 +123,7 @@
                                 android:layout_height="@dimen/dimen_20"
                                 android:background="@drawable/bg_button"
                                 android:text="..."
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 app:tint="@color/colorGreen" />
                         </RelativeLayout>
 
@@ -130,7 +132,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10"
                 android:id="@+id/monitorCard">
@@ -165,7 +167,7 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_status_24" />
                                     <TextView
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         android:layout_toRightOf="@+id/img_Status"
                                         android:layout_marginLeft="10dp"
                                         android:layout_width="wrap_content"
@@ -180,7 +182,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Charging"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
@@ -204,7 +206,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Health"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
 
                                     <TextView
@@ -213,7 +215,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Good"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
@@ -237,7 +239,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Power"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
 
                                     <TextView
@@ -246,7 +248,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="USB Port"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
@@ -272,7 +274,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/BatteryType"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
 
                                     <TextView
@@ -281,7 +283,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Type"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
@@ -317,7 +319,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Voltage"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
 
                                     <TextView
@@ -326,7 +328,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
                                         android:text="4000 mv"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
 
                                         />
                                 </RelativeLayout>
@@ -351,7 +353,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Temperature"
-                                        android:textColor="?attr/textcolor" />
+                                        android:textColor="?attr/attrsTextColor" />
 
                                     <TextView
                                         android:id="@+id/txtTemperature"
@@ -360,7 +362,7 @@
                                         android:layout_alignParentRight="true"
                                         android:layout_marginRight="0dp"
                                         android:text="33 C"
-                                        android:textColor="?attr/textcolor" />
+                                        android:textColor="?attr/attrsTextColor" />
                                 </RelativeLayout>
 
                             </LinearLayout>
@@ -385,7 +387,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Level"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
 
                                     <TextView
@@ -394,7 +396,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="71%"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
@@ -421,7 +423,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/ChargingSource"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
 
                                     <TextView
@@ -430,7 +432,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Source"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
@@ -564,7 +566,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
@@ -581,7 +583,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
@@ -596,7 +598,23 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
+                android:layout_margin="@dimen/dimen_10"
+                app:cardCornerRadius="@dimen/dimen_10">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView_Charts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 

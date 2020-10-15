@@ -10,6 +10,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -29,80 +30,85 @@ import java.io.InputStream;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class TestActivity extends AppCompatActivity{
-    private TextView temperaturelabel;
-    private SensorManager mSensorManager;
-    private Sensor mTemperature;
-    private final static String NOT_SUPPORTED_MESSAGE = "Sorry, sensor not available for this device.";
-    private TextView textView;
-    private Button button;
-    private EditText editText;
-    String edtname;
-    private SeekBar seekBarTest;
+public class TestActivity extends AppCompatActivity {
+    private Button[] btn_position_change_background = new Button[3];
+    private Button button_change_background;
+    private int[] btn_id_change_background = {
+            R.id.btntrang,
+            R.id.btnden,
+            R.id.btnvang};
+    private Button btntrang,btnden,btnvang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        btntrang = findViewById(R.id.btntrang);
+        btnden =findViewById(R.id.btnden);
+        btnvang =findViewById(R.id.btnvang);
+
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Intent i=new Intent(TestActivity.this,ServiceNotifi.class);
+//                startActivity(i);
+//            }
+//        }, 10000);
 
 
-        textView = (TextView) findViewById(R.id.myTemp);
-
-        seekBarTest = findViewById(R.id.seekBarTest);
-        seekBarTest.setMin(15000);
-        seekBarTest.setMax(1800000);
-        seekBarTest.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int seekBarProgress = 0;
+        btntrang.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                seekBarProgress = i;
-
+            public void onClick(View view) {
+                Toast.makeText(TestActivity.this, "1", Toast.LENGTH_SHORT).show();
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[0]);
             }
-
+        });
+        btnden.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+            public void onClick(View view) {
+                Toast.makeText(TestActivity.this, "2", Toast.LENGTH_SHORT).show();
 
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[1]);
             }
-
+        });
+        btnvang.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                setScreenTimeout(seekBarProgress);
-                textView.setText(seekBarProgress+"");
+            public void onClick(View view) {
+                Toast.makeText(TestActivity.this, "3", Toast.LENGTH_SHORT).show();
+
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[2]);
             }
         });
 
-
-
-
-
+        initGroupButtonChangeBackground();
+//        getIdButtonChangeBackgroundClick();
     }
-    private void setScreenTimeout(int millisecounds) {
-        android.provider.Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, millisecounds);
-    }
-    private void setScreen_Brightness(int screenBrightness) {
-        android.provider.Settings.System.putInt(
-               getContentResolver(),
-                android.provider.Settings.System.SCREEN_BRIGHTNESS, screenBrightness);
-    }
-    private String ReadCPUinfo()
-    {
-        ProcessBuilder cmd;
-        String result="";
 
-        try{
-            String[] args = {"/system/bin/cat", "/proc/cpuinfo"};
-            cmd = new ProcessBuilder(args);
-
-            Process process = cmd.start();
-            InputStream in = process.getInputStream();
-            byte[] re = new byte[1024];
-            while(in.read(re) != -1){
-                System.out.println(new String(re));
-                result = result + new String(re);
-            }
-            in.close();
-        } catch(IOException ex){
-            ex.printStackTrace();
+    private void initGroupButtonChangeBackground() {
+        for(int i = 0; i < btn_position_change_background.length; i++){
+            btn_position_change_background[i] = (Button) findViewById(btn_id_change_background[i]);
+//            btn_position_change_background[i].setOnClickListener(this);
         }
-        return result;
+        button_change_background = btn_position_change_background[0];
+    }
+//    private void getIdButtonChangeBackgroundClick() {
+//        int idButton = SettingSharedPreferences.getButtonChangeColorBackgroundSetting();
+//        if (idButton  != 0){
+//            Button btnColorF = (Button) findViewById(idButton);
+//            setFocusToGroupButtonChangeBackground(button_change_background,btnColorF);
+//        }
+//    }
+
+    private void setFocusToGroupButtonChangeBackground(Button btn_unfocus, Button btn_focus){
+        setFocus(btn_unfocus,btn_focus);
+//        SettingSharedPreferences.setButtonChangeColorBackgroundSetting(btn_focus.getId());
+        this.button_change_background = btn_focus;
+    }
+    private void setFocus(Button btn_unfocus, Button btn_focus){
+        btn_unfocus.setBackgroundResource(R.drawable.rounded_corners_blue_white);
+        btn_unfocus.setTextColor(getResources().getColor(R.color.colorBlack));
+        btn_focus.setBackgroundResource(R.drawable.rounded_corners_blue);
+        btn_focus.setTextColor(getResources().getColor(R.color.colorWhite));
+
     }
 }

@@ -43,7 +43,7 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         ////
-        Intent intent = getIntent();
+
 
         ///
         relativeLayout_Rate = findViewById(R.id.relativeLayout_Rate);
@@ -137,9 +137,15 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
+//                    Intent intentBr = getIntent();
+//                    float tess = intentBr.getFloatExtra("message",0);
+//                    Log.d("get_message",tess+"");
+
 //                    switchDesktopMode.setChecked(true);
+                    float tess = 35.1f;
                     sharePre.setSwitchNotification(true);
                     Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
+                    serviceIntent.putExtra("inputExtra",tess);
                     ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
                 }else {
 //                    switchDesktopMode.setChecked(false);

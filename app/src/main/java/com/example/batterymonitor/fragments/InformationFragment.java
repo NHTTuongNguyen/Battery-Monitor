@@ -1,12 +1,12 @@
 package com.example.batterymonitor.fragments;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -19,6 +19,8 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.Settings;
 import android.util.Log;
@@ -28,10 +30,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.adapters.ChartsAdapter;
 import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
@@ -41,7 +45,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -74,10 +81,13 @@ public class InformationFragment extends Fragment{
             linearLayout_Bluetooth,linearLayout_Brightness,linearLayout_Landscape,linearLayout_WifiOnOFF;
     private  final String url_Battery= Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS;
     private final String url_SettingWifi = Settings.ACTION_WIFI_SETTINGS;
-    SharedPreference_Utils sharedPreference_utils;
+    private SharedPreference_Utils sharedPreference_utils;
     private ImageView imageView_Bluetooth,imageView_Brightness,imageView_Landscape,imageView_WifiOnOff;
     private View view;
-    private TextView txtCurrentTimeThread,txtCurrentDaysThread,txtCurrentMemoryThread;
+    private TextView txtCurrentTimeThread;
+    private TextView txtCurrentDaysThread;
+    private TextView txtCurrentMemoryThread;
+    private TextView txtTemp;
     private BatteryReceiverClass batteryReceiverClass;
     private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,
             intentFilter_ACTION_STATE_CHANGED,
@@ -86,10 +96,15 @@ public class InformationFragment extends Fragment{
     private BarChart barChart;
     private LineChart lineChartTest;
     private int mFillColor = Color.argb(150,51,181,229);
-
+    private ListView listView;
+    private String curTimeSharePre;
+    private ArrayList<ChartsModel> chartsList;
+    private ChartsAdapter chartsAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        sharedPreference_utils = new SharedPreference_Utils(getActivity());
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         initView();
         batteryReceiverClass = new BatteryReceiverClass();
@@ -97,6 +112,7 @@ public class InformationFragment extends Fragment{
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         intentFilter_WIFI_STATE_CHANGED_ACTION = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+
         linearLayout_View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,19 +144,7 @@ public class InformationFragment extends Fragment{
                 }
 
 
-//                    if (trues) {
-////                        SharedPreference_Utils.setBluetooth_Turn_On(R.drawable.ic_baseline_bluetooth_24);
-////                        imageView_Bluetooth.setImageResource(sharedPreference_utils.getBluetooth_Turn_ON());
 //
-//                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24);
-//                    } else {
-//
-////                        SharedPreference_Utils.setBluetooth_OFF(R.drawable.ic_baseline_bluetooth_disabled_24);
-////                        imageView_Bluetooth.setImageResource(sharedPreference_utils.getBluetooth_Turn_Off());
-//
-//                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
-//
-//                    }
 
             }
         });
@@ -202,6 +206,27 @@ public class InformationFragment extends Fragment{
                 setActionIntent(url_Battery);
             }
         });
+
+        ///////////////
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SharedPreference_Utils.MyPREFERENCES, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(SharedPreference_Utils.SaveBattery, null);
+        Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();
+        chartsList = gson.fromJson(json, type);
+        Log.d("get_tasksssslist",String.valueOf(json));
+        if (chartsList == null) {
+            chartsList = new ArrayList<>();
+        }
+        chartsAdapter = new ChartsAdapter(getActivity(), chartsList);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(chartsAdapter);
+        chartsAdapter.notifyDataSetChanged();
+        for (int i = 0; i< chartsList.size(); i++){
+            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
+        }
+
         initChart2();
         chartTest();
         displayCurrentTime();
@@ -209,11 +234,41 @@ public class InformationFragment extends Fragment{
     }
     private void chartTest() {
         LineChartView lineChartView = view.findViewById(R.id.chart);
-        String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
-                "Oct", "Nov", "Dec"};
-//        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+//        sharedPreference_utils.getSaveHours();
+
+
+
+
+//        List<ChartsModel> axisData = new ArrayList<>();
+//        axisData.add(new ChartsModel("Jan"));
+//        axisData.add(new ChartsModel("Feb"));
+//        axisData.add(new ChartsModel("Mar"));
+//        axisData.add(new ChartsModel("Apr"));
+//        axisData.add(new ChartsModel("May"));
+//        axisData.add(new ChartsModel("June"));
+//        axisData.add(new ChartsModel("July"));
+//        axisData.add(new ChartsModel("Aug"));
+//        axisData.add(new ChartsModel("Sept"));
+//        axisData.add(new ChartsModel("Oct"));
+//        axisData.add(new ChartsModel("Nov"));
+//        axisData.add(new ChartsModel("Dec"));
+        List<String> axisData = new ArrayList<>();
+        axisData.add("Jan");
+        axisData.add("Feb");
+        axisData.add("Mar");
+        axisData.add("Apr");
+        axisData.add("May");
+        axisData.add("June");
+        axisData.add("July");
+        axisData.add("Aug");
+        axisData.add("Sept");
+        axisData.add("Oct");
+        axisData.add("Nov");
+        axisData.add("Dec");
+
+
         List<Integer> yAxisData = new ArrayList<>();
-        yAxisData.add(50);
+        yAxisData.add(70);
         yAxisData.add(20);
         yAxisData.add(15);
         yAxisData.add(30);
@@ -225,23 +280,18 @@ public class InformationFragment extends Fragment{
         yAxisData.add(10);
         yAxisData.add(90);
         yAxisData.add(18);
-        ////
+
         List yAxisValues = new ArrayList();
         List axisValues = new ArrayList();
 
-
-
         Line line = new Line(yAxisValues);
         line.setColor(Color.RED);
-
         line.setColor(R.color.colorGreen);
-        for(int i = 0; i < axisData.length; i++){
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+
+        for(int i = 0; i < axisData.size(); i++){
+            axisValues.add(i, new AxisValue(i).setLabel(axisData.get(i)));
         }
 
-//        for (int i = 0; i < yAxisData.length; i++){
-//            yAxisValues.add(new PointValue(i, yAxisData[i]));
-//        }
         for (int i = 0; i < yAxisData.size(); i++){
             yAxisValues.add(new PointValue(i, yAxisData.get(i)));
         }
@@ -251,41 +301,32 @@ public class InformationFragment extends Fragment{
 
         LineChartData data = new LineChartData();
         data.setLines(lines);
+
         lineChartView.setLineChartData(data);
         Axis axis = new Axis();
+
         axis.setValues(axisValues);
         data.setAxisXBottom(axis);
 
         Axis yAxis = new Axis();
         data.setAxisYLeft(yAxis);
-
-
-
-
     }
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
-//        List<ChartsModel> yValues = new ArrayList<>();
-//        yValues.add(10,50f);
-//        yValues.add(70f);
-//        yValues.add(30f);
-//        yValues.add(50f);
-//        yValues.add(60f);
-//        yValues.add(40f);
-//        yValues.add(new ChartsModel(10,50));
         List<Entry> yValues = new ArrayList<>();
-//        float [] toaDoX = {10,20,30,40,50,60};
-//        float [] toaDoY = {50f,70f,30f,50f,60f,40f};
-//        yValues.add(new Entry(toaDoX,50f));
 
-        yValues.add(new Entry(10,50f));
-        yValues.add(new Entry(20,70f));
-        yValues.add(new Entry(30,30f));
-        yValues.add(new Entry(40,50f));
-        yValues.add(new Entry(50,60f));
-        yValues.add(new Entry(60,40f));
+        for (int i = 0; i< chartsList.size(); i++){
+            Log.d("chartsModel_SIZE", chartsList.get(i).getLevelBattery()+"");
+            int Y = Integer.parseInt(chartsList.get(i).getHours());
+            int X = chartsList.get(i).getLevelBattery();
+            yValues.add(new Entry(Y,X));
 
+        }
+//        yValues.add(new Entry(17,100));
+//        yValues.add(new Entry(20,80));
+//        yValues.add(new Entry(24,60));
         LineDataSet set1 = new LineDataSet(yValues,"Data Battery");
+        set1.notifyDataSetChanged();
         set1.setLineWidth(3f);
         set1.setCircleRadius(5f);
         set1.setCircleHoleRadius(2.5f);
@@ -304,8 +345,11 @@ public class InformationFragment extends Fragment{
         LineData data  = new LineData(dataSets);
         Drawable drawable  = ContextCompat.getDrawable(getActivity(),R.drawable.gradient_charts);
         set1.setFillDrawable(drawable);
+        lineChart.setPinchZoom(false);
+        lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setData(data);
     }
+
     private void eventScreen_ORIENTATION() {
         int orient = getResources().getConfiguration().orientation;
         switch(orient) {
@@ -359,15 +403,15 @@ public class InformationFragment extends Fragment{
                     txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
                     txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
                     ////////////////////
-                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
-                    activityManager.getMemoryInfo(mi);
-                    long availableMegs = mi.availMem / 1048576L;
-                    long percentAvail = mi.availMem / mi.totalMem;
-                    Log.d("availableMegs",availableMegs+"");
-
-
-                    Log.d("percentAvail",percentAvail+"");
+//                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+//                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
+//                    activityManager.getMemoryInfo(mi);
+//                    long availableMegs = mi.availMem / 1048576L;
+//                    long percentAvail = mi.availMem / mi.totalMem;
+//                    Log.d("availableMegs",availableMegs+"");
+//
+//
+//                    Log.d("percentAvail",percentAvail+"");
 
 //                    txtCurrentMemoryThread.setText(availableMegs+"");
 
@@ -380,7 +424,10 @@ public class InformationFragment extends Fragment{
                     int minutes = dt.getMinutes();
                     int seconds = dt.getSeconds();
                     String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
+                    curTimeSharePre = hours+ "h"  + ":" + minutes+ "m";
                     txtCurrentTimeThread.setText(curTime);
+//                    sharedPreference_utils.setSaveHours(curTimeSharePre);
+
                 }catch (Exception e) {}
             }
         });
@@ -400,6 +447,7 @@ public class InformationFragment extends Fragment{
         }
     }
     private void initView() {
+        recyclerView = view.findViewById(R.id.recyclerView_Charts);
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
@@ -410,6 +458,8 @@ public class InformationFragment extends Fragment{
         linearLayout_Bluetooth = view.findViewById(R.id.linearLayout_Bluetooth);
         linearLayout_Brightness = view.findViewById(R.id.linearLayout_Brightness);
         linearLayout_WifiOnOFF = view.findViewById(R.id.linearLayout_WifiOnOFF);
+//        txtTemp = view.findViewById(R.id.txtNhietDoLon);
+
     }
 
     private void setActionIntent(String actionIntent) {
@@ -420,16 +470,11 @@ public class InformationFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-
-
-
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
-//        imageView_WifiOnOff.setImageResource(sharedPreference_utils.getWifi());
-
-
-
+//        int test =  sharedPreference_utils.getSaveBattery();
+//        Log.d("test",test+"");
     }
     @Override
     public void onPause() {

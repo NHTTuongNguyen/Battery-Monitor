@@ -43,9 +43,8 @@ public class ServiceNotifi extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        float input = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
-//        float input = intent.getFloatExtra("inputExtra",0);
-        float input = 31.1f;
+        float input = (float) intent.getFloatExtra("message",0);
+        Log.d("get_message",input+"");
         Intent notificationIntent = new Intent(this, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);

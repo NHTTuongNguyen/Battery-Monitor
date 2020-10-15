@@ -1,24 +1,40 @@
 package com.example.batterymonitor.receiver;
 
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.batterymonitor.MainActivity;
 import com.example.batterymonitor.activity.HomeActivity;
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.activity.SettingActivity;
+import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.service.ServiceNotifi;
+import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static com.example.batterymonitor.activity.App.CHANNEL_ID;
 
 public class BatteryReceiverClass extends BroadcastReceiver {
     TextView txtStatusLabel,
@@ -31,13 +47,18 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtChargingSource,
             txtPower,
             txtBigDOC,
+            txtCurrentTimeBroacat,
             txtChatHeadImage;
     ImageView imgBatteryImage,imageView_Bluetooth;
-    private Switch switchBluetoothCustomMode;
+    private Switch switchBluetoothCustomMode,switchNotification;
+    private SharedPreference_Utils sharedPreference_utils;
+    private  int percentage;
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-          txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
+    public void onReceive(final Context context, Intent intent) {
+        sharedPreference_utils = new SharedPreference_Utils(context);
+        txtCurrentTimeBroacat = ((HomeActivity)context).findViewById(R.id.txtCurrentTimeBroacat);
+        txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
           txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
          txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
          txtHealth = ((HomeActivity)context).findViewById(R.id.txtHealth);
@@ -51,6 +72,9 @@ public class BatteryReceiverClass extends BroadcastReceiver {
          imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
          imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
         switchBluetoothCustomMode = ((HomeActivity)context).findViewById(R.id.switchBluetoothCustomMode);
+        switchNotification = ((HomeActivity)context).findViewById(R.id.switchNotification);
+
+
         String action = intent.getAction();
 
         if (action != null && action.equals(Intent.ACTION_BATTERY_CHANGED)){
@@ -59,12 +83,42 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             // Percentage
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-            int percentage = level * 100 / scale;
+            percentage = level * 100 / scale;
+
+
 
             if (txtPercentageLabel!=null && txtLevel!=null) {
                 txtPercentageLabel.setText(percentage + "%");
                 txtLevel.setText(percentage + "%");
+//                sharedPreference_utils.setSaveBattery(percentage);
             }
+            Date dt = new Date();
+            int hours = dt.getHours();
+            int minutes = dt.getMinutes();
+
+//            String curTime = hours+ "h"  + ":" + minutes+ "m";
+            int currrrTime = minutes;
+            txtCurrentTimeBroacat.setText(currrrTime+"");
+
+//            SharedPreferences sharedPreferences =context.getSharedPreferences(SharedPreference_Utils.MyPREFERENCES, Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            Gson gson = new Gson();
+//            String jsonStoryWatched = sharedPreferences.getString(SharedPreference_Utils.SaveBattery, null);
+//            ArrayList<ChartsModel> stringArrayList = new ArrayList<>();
+//            if (jsonStoryWatched !=null){
+//                Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();/////luu mang
+//                stringArrayList = gson.fromJson(jsonStoryWatched,type);
+//
+//                    stringArrayList.add(new ChartsModel(percentage, currrrTime + ""));
+//
+//            }
+//            String json  =gson.toJson(stringArrayList);
+//            editor.putString(SharedPreference_Utils.SaveBattery,json);
+//            Log.d("set_task_list", json);
+//            editor.commit();
+
+
+            // [{"12:00", 90}, {13h:00, 80}]
             // Image
             if (imgBatteryImage!=null){
                 Resources res = context.getResources();
@@ -104,16 +158,21 @@ public class BatteryReceiverClass extends BroadcastReceiver {
 
             ////Temperature
             if (txtTemperature !=null && txtBigDOC !=null) {
-                float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
+                final float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
                 txtTemperature.setText(tempTemp + " °C");
                 txtBigDOC.setText(tempTemp + " °C");
-                //
-//                String tesst = "This is anh test";
-//                Intent i = new Intent(context, SettingActivity.class);
-//                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                i.putExtra("message", tesst);
-//                Log.d("set_message",tesst);
-//                context.startActivity(i);
+
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Intent i = new Intent(context, ServiceNotifi.class);
+//                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        i.putExtra("message", tempTemp);
+//                        Log.d("set_message",tempTemp+"");
+//                        context.startService(i);
+//                    }
+//                }, 5000);
+
             }
 
 

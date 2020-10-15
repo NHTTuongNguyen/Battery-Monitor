@@ -3,35 +3,23 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#16a085</color>
-
     <color name="colorGreen">#0F9D58</color>
-    <color name="colorBlueWhite">#c5cae9</color>
     <color name="colorRed">#E1180A</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorYellow">#FFFF00</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBlue">#1E90FF</color>
-    <color name="colorYellowReadStory">#fffde7</color>
-    <color name="colorBlue_1">#2c3258</color>
-
+    <color name="colorBackgroundLight">#fcfcfc</color>
+    <color name="colorBackgroundCardLight">#ffffff</color>
+    <color name="colorTextLight">#808080</color>
+    <color name="colorTintLight">#808080</color>
+    <color name="colorButtonLight">#2196F3</color>
+    <color name="colorPrimaryNight">#212121</color>
+    <color name="colorPrimaryDarkNight">#000000</color>
+    <color name="colorBackgroundNight">#303030</color>
+    <color name="colorBackgroundCardNight">#424242</color>
+    <color name="colorTextNight">#ffffff</color>
+    <color name="colorTintNight">#ffffff</color>
+    <color name="colorButtonNight">#2196F3</color>
     <color name="colorDefaultButton">#CFCFCF</color>
-    <color name="colorNau">#795548</color>
-    <color name="colorBlueGray">#fff</color>
-
-
-    <color name="backgroundColorBlack">#171820</color>
-    <color name="textColorBlack">#ffffff</color>
-    <color name="backgroundColor">#fff</color>
-    <color name="textColor">#000</color>
-    <color name="black">#000</color>
-
-
-
-    <color name="colorPrimaryNight">#16202c</color>
-    <color name="colorPrimaryDarkNight">#141d26</color>
-    <color name="colorAccentNight">#ffffff</color>
-
-    <color name="primaryTitleColor">#212121</color>
-    <color name="primaryTitleColorNight">#FFFFFF</color>
-
 </resources>

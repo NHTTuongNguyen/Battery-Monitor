@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="?attr/backgroundcolor"
+    android:background="?attr/attrsBackgroundColor"
     android:layout_height="match_parent"
     tools:context=".activity.SettingActivity">
     <androidx.cardview.widget.CardView
-        app:cardBackgroundColor="?attr/cardbackgroundcolor"
+        app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/dimen_10">
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:textColor="?attr/textcolor"
+                android:textColor="?attr/attrsTextColor"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:id="@+id/txtSetting"
                 android:layout_marginLeft="@dimen/dimen_10"
@@ -50,7 +50,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -77,7 +77,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/dimen_25"
                                 android:layout_marginLeft="@dimen/dimen_10"
@@ -117,7 +117,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:id="@+id/txtLongLifeMode"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -253,7 +253,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:id="@+id/txtDarktheme"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -264,13 +264,13 @@
                                 android:layout_height="wrap_content">
 
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:text="@string/Switchtolighttheme"
                                     android:layout_height="wrap_content"/>
                                 <Switch
                                     android:id="@+id/switchChangeDarkMode"
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"/>
@@ -282,7 +282,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -309,7 +309,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/dimen_25"
                                 android:layout_marginLeft="@dimen/dimen_10"
@@ -348,7 +348,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:id="@+id/txtNotificationSwitch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -357,12 +357,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/TapShowNotification" />
                                 <Switch
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:id="@+id/switchNotification"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -398,7 +398,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/DesktopFloatingWindow"/>
@@ -406,13 +406,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:text="@string/ShowFloatingWindowOnDesktop"
                                     android:layout_height="wrap_content"/>
                                 <Switch
                                     android:id="@+id/switchDesktopMode"
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"/>
@@ -425,7 +425,7 @@
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:visibility="gone"
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -452,7 +452,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/dimen_25"
                                 android:layout_marginLeft="@dimen/dimen_10"
@@ -490,7 +490,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/OverheatingAlarm"/>
@@ -498,12 +498,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/NotifyCpu" />
                                 <Switch
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"/>
@@ -535,7 +535,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/UseDegreesFahrenheit"/>
@@ -543,12 +543,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:text="@string/TapToUserDeGrees"
                                     android:layout_height="wrap_content"/>
                                 <Switch
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"/>
@@ -558,7 +558,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="?attr/cardbackgroundcolor"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
@@ -585,7 +585,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/dimen_25"
                                 android:layout_marginLeft="@dimen/dimen_10"
@@ -627,7 +627,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/Rate"/>
@@ -635,7 +635,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/Rateusontheplaystore" />
@@ -678,7 +678,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/MoreSystemTools"/>
@@ -686,7 +686,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:text="@string/PleaseVisit"
                                     android:layout_height="wrap_content"/>
@@ -726,7 +726,7 @@
                                 android:layout_marginBottom="@dimen/dimen_5"
                                 android:background="@color/colorGreen"/>
                             <TextView
-                                android:textColor="?attr/textcolor"
+                                android:textColor="?attr/attrsTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/About"/>
@@ -734,7 +734,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <TextView
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="?attr/attrsTextColor"
                                     android:layout_width="wrap_content"
                                     android:text="@string/Version"
                                     android:layout_height="wrap_content"/>

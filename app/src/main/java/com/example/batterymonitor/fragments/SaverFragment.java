@@ -109,6 +109,17 @@ public class SaverFragment extends Fragment {
     private SharedPreference_Utils sharedPreference_utils;
     private AlertDialog alertDialog;
 
+    Button[] btn_position_change_background = new Button[8];
+    Button button_change_background;
+    int[] btn_id_change_background = {
+            R.id.btn15s,
+            R.id.btn30s,
+            R.id.btn1m,
+            R.id.btn5m,
+            R.id.btn10m,
+            R.id.btn15m,
+            R.id.btn20m,
+            R.id.btn30m};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)  {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
@@ -156,160 +167,82 @@ public class SaverFragment extends Fragment {
         btnStartSleepMode  =view.findViewById(R.id.btnStartSleepMode);
         btnStopSleepMode = view.findViewById(R.id.btnStopSleepMode);
 
+
+//        int idButton = sharedPreference_utils.getButtonChangeColorBackgroundSetting();
+//        if (idButton  != 0){
+//            Button btnColorF = (Button) view.findViewById(idButton);
+//            setFocusToGroupButtonChangeBackground(button_change_background,btnColorF);
+//        }
+
         eventBtnStartSleepMode();
         eventBtnStopMode();
 
         radioButtonClassicMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdClassicMode) {
-                setEventradioButtonClassicMode(checkIdClassicMode);
+                setChoiceRadioButtonClassicMode(checkIdClassicMode);
             }
         });
         radioButtonLongLifeMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdLongLifeMode) {
-                setEventradioButtonLongLifeMode(checkIdLongLifeMode);
+                setChoiceRadioButtonLongLifeMode(checkIdLongLifeMode);
             }
         });
         radioButtonSleepMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdSleepMode) {
-                setEventradioButtonSleepMode(checkIdSleepMode);
+                setChoiceRadioButtonSleepMode(checkIdSleepMode);
             }
         });
-//        if (sharedPreference_utils.getRadioButtonCustomMode() == true){
-//            radioButtonCustomMode.setChecked(true);
-//            linearLayoutCustomMode_Line.setVisibility(View.GONE);
-//            linearLayoutCustomMode.setVisibility(View.VISIBLE);
-//        }
         radioButtonCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdCustomMode) {
-                setEventradioButtonCustomMode(checkIdCustomMode);
+                setChoiceRadioButtonCustomMode(checkIdCustomMode);
             }
         });
         setVisibilityLinearLayout();
         return view;
     }
-    private void setEventradioButtonClassicMode(Boolean checkId) {
+    private void setChoiceRadioButtonClassicMode(Boolean checkId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (Settings.System.canWrite(getActivity())){
                 if (checkId) {
-                    radioButtonLongLifeMode.setChecked(false);
-                    radioButtonSleepMode.setChecked(false);
-                    radioButtonCustomMode.setChecked(false);
-                    ////setColorTextView
-                    TypedValue typedValue = new TypedValue();
-                    getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
-                    int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
-                    txtClassicMode.setTextColor(getResources().getColor(R.color.colorGreen));
-                    txtLongLifeMode.setTextColor(color);
-                    txtSleepMode.setTextColor(color);
-                    txtCustomMode.setTextColor(color);
-                    ////setColorImageView
-                    imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_color_green);
-                    imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
-                    imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24);
-                    imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24);
-                    ///setVisibility
-                    linearLayoutClassMode_Line.setVisibility(View.GONE);
-                    linearLayoutClassMode.setVisibility(View.VISIBLE);
-                    ///setScreenTimeout
-                    setScreenTimeout(SizeNumber.Thirty_seconds);
-                    ////SCREEN_BRIGHTNESS
-                    setScreen_Brightness(SizeNumber.namnoiphantram);
-                    ////setAudioManager
-                    setVolumeTurnOff();
-                    ///setBluetoothDisable
-                    setBluetoothTurnOff();
+                    setEventRadioButtonClassicMode();
                 }
             }
             else {
                 radioButtonClassicMode.setChecked(false);
                 alertDialogPermission_WriteSettings();
             }
+        }else {
+            if (checkId){
+                setEventRadioButtonClassicMode();
+
+            }
         }
     }
-    private void setEventradioButtonLongLifeMode(Boolean checkIdLongLifeMode) {
+    private void setChoiceRadioButtonLongLifeMode(Boolean checkIdLongLifeMode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (Settings.System.canWrite(getActivity())){
                 if (checkIdLongLifeMode) {
-                    radioButtonClassicMode.setChecked(false);
-                    radioButtonSleepMode.setChecked(false);
-                    radioButtonCustomMode.setChecked(false);
-                    ////setColorTextView
-                    TypedValue typedValue = new TypedValue();
-                    getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
-                    int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
-                    txtLongLifeMode.setTextColor(getResources().getColor(R.color.colorGreen));
-                    txtClassicMode.setTextColor(color);
-                    txtSleepMode.setTextColor(color);
-                    txtCustomMode.setTextColor(color);
-                    ////setColorImageView
-                    imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_default);
-                    imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24_color_green);
-                    imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24);
-                    imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24);
-                    ///setVisibility
-                    linearLayoutLongLifeMode_Line.setVisibility(View.GONE);
-                    linearLayoutLongLifeMode.setVisibility(View.VISIBLE);
-                    ///setScreenTimeout
-                    setScreenTimeout(SizeNumber.Fifteen_seconds);
-                    ///setScreen_Brightness
-                    setScreen_Brightness(SizeNumber.haimuoiphantram);
-
-                    ////setAudioManager
-                    setVolumeTurnOff();
-                    ///setBluetoothDisable
-                    setBluetoothTurnOff();
-
-//                            WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//                            if(wifiManager.isWifiEnabled()){
-//                                wifiManager.setWifiEnabled(false);
-//                            }else{
-//                                wifiManager.setWifiEnabled(true);
-//                            }
+                    setEventRadioButtonLongLifeMode();
                 }
             }else {
                 radioButtonLongLifeMode.setChecked(false);
                 alertDialogPermission_WriteSettings();
             }
+        }else {
+            if (checkIdLongLifeMode){
+                setEventRadioButtonLongLifeMode();
+            }
         }
     }
-    private void setEventradioButtonSleepMode(Boolean checkIdSleepMode) {
+    private void setChoiceRadioButtonSleepMode(Boolean checkIdSleepMode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (Settings.System.canWrite(getActivity())){
                 if (checkIdSleepMode) {
-                    radioButtonClassicMode.setChecked(false);
-                    radioButtonLongLifeMode.setChecked(false);
-                    radioButtonCustomMode.setChecked(false);
-                    ////setColorTextView
-                    TypedValue typedValue = new TypedValue();
-                    getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
-                    int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
-                    txtSleepMode.setTextColor(getResources().getColor(R.color.colorGreen));
-                    txtClassicMode.setTextColor(color);
-                    txtLongLifeMode.setTextColor(color);
-                    txtCustomMode.setTextColor(color);
-                    ////setColorImageView
-                    imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_default);
-                    imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
-                    imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24_color_green);
-                    imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24);
-                    ///setVisibility
-                    linearLayoutSleepMode_Line.setVisibility(View.GONE);
-                    linearLayoutSleepMode.setVisibility(View.VISIBLE);
-                    setScreenTimeout(SizeNumber.Fifteen_seconds);
-                    ///setScreen_Brightness
-                    setScreen_Brightness(SizeNumber.haimuoiphantram);
-                    ////setAudioManager
-                    setVolumeTurnOff();
-                    ///setBluetoothDisable
-                    setBluetoothTurnOff();
-
-                    WifiManager wifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    wifi.setWifiEnabled(false);
-
+                    setEventRadioButtonSleepMode();
 
                 }
             }else {
@@ -317,79 +250,161 @@ public class SaverFragment extends Fragment {
                 alertDialogPermission_WriteSettings();
             }
 
+        }else {
+            if (checkIdSleepMode){
+                setEventRadioButtonSleepMode();
+            }
         }
 
     }
-    private void setEventradioButtonCustomMode(Boolean checkIdCustomMode) {
+    private void setChoiceRadioButtonCustomMode(Boolean checkIdCustomMode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (Settings.System.canWrite(getActivity())){
                 if (checkIdCustomMode) {
-//                            sharedPreference_utils.setRadioButtonCustomMode(true);
-//                            if (sharedPreference_utils.getRadioButtonCustomMode() == true)
-                    Toast.makeText(getActivity(), "das", Toast.LENGTH_SHORT).show();
-                    radioButtonClassicMode.setChecked(false);
-                    radioButtonLongLifeMode.setChecked(false);
-                    radioButtonSleepMode.setChecked(false);
-                    ////setColorTextView
-                    TypedValue typedValue = new TypedValue();
-                    getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
-                    int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
-                    txtCustomMode.setTextColor(getResources().getColor(R.color.colorGreen));
-                    txtClassicMode.setTextColor(color);
-                    txtLongLifeMode.setTextColor(color);
-                    txtSleepMode.setTextColor(color);
-                    ////setColorImageView
-                    imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_default);
-                    imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
-                    imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24);
-                    imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24_color_green);
-                    ///setVisibility
-                    linearLayoutCustomMode_Line.setVisibility(View.GONE);
-                    linearLayoutCustomMode.setVisibility(View.VISIBLE);
-                    ///setSwitchVolumeCustomMode
-                    switchVolumeCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                            if (b){
-                                setVolumeTurnOn();
-                            }else {
-                                setVolumeTurnOff();
-                            }
-                        }
-                    });
-                    ////setBluetooth
-                    switchBluetoothCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                            BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                            if (adapter == null){
-                                Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
-                            }else {
-                                if (b){
-                                    adapter.enable();
-                                }else {
-                                    adapter.disable();
-                                }
-                            }
-                        }
-                    });
-                    ///setButtonBrightnessCustomMode;
-                    btnBrightnessCustomMode.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showDialogBrightnessCustomMode();
+                    setEventRadioButtonCustomMode();
+                }
+            }else {
+                radioButtonCustomMode.setChecked(false);
+                alertDialogPermission_WriteSettings();
+            }
+        }else {
+            if (checkIdCustomMode){
+                setEventRadioButtonCustomMode();
+            }
+        }
+    }
 
-                        }
-                    });
-                    btnScreenTimeoutCustomMode.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showDialogScreenTimeoutCustomMode();
 
-                        }
-                    });
-                    ///wwifi
-                    wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    private void setEventRadioButtonLongLifeMode() {
+        radioButtonClassicMode.setChecked(false);
+        radioButtonSleepMode.setChecked(false);
+        radioButtonCustomMode.setChecked(false);
+        ////setColorTextView
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
+        txtLongLifeMode.setTextColor(getResources().getColor(R.color.colorGreen));
+        txtClassicMode.setTextColor(color);
+        txtSleepMode.setTextColor(color);
+        txtCustomMode.setTextColor(color);
+        ////setColorImageView
+        imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_default);
+        imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24_color_green);
+        imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24);
+        imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24);
+        ///setVisibility
+        linearLayoutLongLifeMode_Line.setVisibility(View.GONE);
+        linearLayoutLongLifeMode.setVisibility(View.VISIBLE);
+        ///setScreenTimeout
+        setScreenTimeout(SizeNumber.Fifteen_seconds);
+        ///setScreen_Brightness
+        setScreen_Brightness(SizeNumber.haimuoiphantrampercent);
+        ////setAudioManager
+        setVolumeTurnOff();
+        ///setBluetoothDisable
+        setBluetoothTurnOff();
+
+//                            WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//                            if(wifiManager.isWifiEnabled()){
+//                                wifiManager.setWifiEnabled(false);
+//                            }else{
+//                                wifiManager.setWifiEnabled(true);
+//                            }
+    }
+    private void setEventRadioButtonSleepMode() {
+        radioButtonClassicMode.setChecked(false);
+        radioButtonLongLifeMode.setChecked(false);
+        radioButtonCustomMode.setChecked(false);
+        ////setColorTextView
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
+        txtSleepMode.setTextColor(getResources().getColor(R.color.colorGreen));
+        txtClassicMode.setTextColor(color);
+        txtLongLifeMode.setTextColor(color);
+        txtCustomMode.setTextColor(color);
+        ////setColorImageView
+        imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_default);
+        imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
+        imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24_color_green);
+        imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24);
+        ///setVisibility
+        linearLayoutSleepMode_Line.setVisibility(View.GONE);
+        linearLayoutSleepMode.setVisibility(View.VISIBLE);
+        setScreenTimeout(SizeNumber.Fifteen_seconds);
+        ///setScreen_Brightness
+        setScreen_Brightness(SizeNumber.haimuoiphantrampercent);
+        ////setAudioManager
+        setVolumeTurnOff();
+        ///setBluetoothDisable
+        setBluetoothTurnOff();
+        WifiManager wifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifi.setWifiEnabled(false);
+    }
+    private void setEventRadioButtonCustomMode() {
+        radioButtonClassicMode.setChecked(false);
+        radioButtonLongLifeMode.setChecked(false);
+        radioButtonSleepMode.setChecked(false);
+        ////setColorTextView
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
+        txtCustomMode.setTextColor(getResources().getColor(R.color.colorGreen));
+        txtClassicMode.setTextColor(color);
+        txtLongLifeMode.setTextColor(color);
+        txtSleepMode.setTextColor(color);
+        ////setColorImageView
+        imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_default);
+        imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
+        imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24);
+        imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24_color_green);
+        ///setVisibility
+        linearLayoutCustomMode_Line.setVisibility(View.GONE);
+        linearLayoutCustomMode.setVisibility(View.VISIBLE);
+        ///setSwitchVolumeCustomMode
+        switchVolumeCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    setVolumeTurnOn();
+                }else {
+                    setVolumeTurnOff();
+                }
+            }
+        });
+        ////setBluetooth
+        switchBluetoothCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+                if (adapter == null){
+                    Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (b){
+                        adapter.enable();
+                    }else {
+                        adapter.disable();
+                    }
+                }
+            }
+        });
+        ///setButtonBrightnessCustomMode;
+        btnBrightnessCustomMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogBrightnessCustomMode();
+
+            }
+        });
+        btnScreenTimeoutCustomMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogScreenTimeoutCustomMode();
+
+            }
+        });
+        ///wwifi
+        wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
 //                    switchWifiCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //                        @Override
@@ -406,14 +421,38 @@ public class SaverFragment extends Fragment {
 //                    }else {
 //                        switchWifiCustomMode.setChecked(false);
 //                    }
-                }
-            }else {
-//                        sharedPreference_utils.setRadioButtonCustomMode(false);
-                radioButtonCustomMode.setChecked(false);
-                alertDialogPermission_WriteSettings();
-            }
-        }
     }
+    private void setEventRadioButtonClassicMode() {
+        radioButtonLongLifeMode.setChecked(false);
+        radioButtonSleepMode.setChecked(false);
+        radioButtonCustomMode.setChecked(false);
+        ////setColorTextView
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
+        txtClassicMode.setTextColor(getResources().getColor(R.color.colorGreen));
+        txtLongLifeMode.setTextColor(color);
+        txtSleepMode.setTextColor(color);
+        txtCustomMode.setTextColor(color);
+        ////setColorImageView
+        imgClassicMode.setImageResource(R.drawable.ic_baseline_offline_bolt_24_color_green);
+        imgLongLifeMode.setImageResource(R.drawable.ic_baseline_wb_sunny_24);
+        imgSleepMode.setImageResource(R.drawable.ic_baseline_nights_stay_24);
+        imgCusTomMode.setImageResource(R.drawable.ic_baseline_color_lens_24);
+        ///setVisibility
+        linearLayoutClassMode_Line.setVisibility(View.GONE);
+        linearLayoutClassMode.setVisibility(View.VISIBLE);
+        ///setScreenTimeout
+        setScreenTimeout(SizeNumber.Thirty_seconds);
+        ////SCREEN_BRIGHTNESS
+        setScreen_Brightness(SizeNumber.namnoiphantrampercent);
+        ////setAudioManager
+        setVolumeTurnOff();
+        ///setBluetoothDisable
+        setBluetoothTurnOff();
+    }
+
+
     private void showDialogScreenTimeoutCustomMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.ScreenTimeOut));
@@ -436,64 +475,101 @@ public class SaverFragment extends Fragment {
         btn15s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[0]);
                 setScreenTimeout(SizeNumber.Fifteen_seconds);
-
+                alertDialog.dismiss();
             }
         });
         btn30s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.Thirty_seconds);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[1]);
+                alertDialog.dismiss();
 
             }
         });
         btn1m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.One_minute);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[2]);
+                alertDialog.dismiss();
+
             }
         });
         btn5m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.Five_minute);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[3]);
+                alertDialog.dismiss();
 
             }
         });
         btn10m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.Ten_minute);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[4]);
+                alertDialog.dismiss();
+
             }
         });
         btn15m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.Fifteen_minute);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[5]);
+                alertDialog.dismiss();
+
             }
         });
         btn20m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.Twenty_minute);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[6]);
+                alertDialog.dismiss();
+
             }
         });
         btn30m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
                 setScreenTimeout(SizeNumber.Thirty_minute);
+                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[7]);
+                alertDialog.dismiss();
+
             }
         });
-    }
 
+        initGroupButtonChangeBackground();
+
+
+    }
+    private void initGroupButtonChangeBackground() {
+        for(int i = 0; i < btn_position_change_background.length; i++){
+            btn_position_change_background[i] = (Button) view.findViewById(btn_id_change_background[i]);
+//            btn_position_change_background[i].setOnClickListener(this);
+        }
+        button_change_background = btn_position_change_background[0];
+    }
+    private void setFocusToGroupButtonChangeBackground(Button btn_unfocus, Button btn_focus){
+        setFocus(btn_unfocus,btn_focus);
+//        sharedPreference_utils.setButtonChangeColorBackgroundSetting(btn_focus.getId());
+        this.button_change_background = btn_focus;
+    }
+    private void setFocus(Button btn_unfocus, Button btn_focus){
+
+            btn_unfocus.setBackgroundResource(R.drawable.rounded_corners_blue_white);
+            btn_unfocus.setTextColor(getResources().getColor(R.color.colorBlack));
+
+            btn_focus.setBackgroundResource(R.drawable.rounded_corners_blue);
+            btn_focus.setTextColor(getResources().getColor(R.color.colorWhite));
+
+
+    }
     private void showDialogBrightnessCustomMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.Brightness));
@@ -508,9 +584,7 @@ public class SaverFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
     private void setSeekBarForBrightness(SeekBar seekBar) {
-
         seekBar.setMax(255);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seekBar.setMin(0);
@@ -522,10 +596,8 @@ public class SaverFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 seekBarProgress = i;
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {

@@ -6,10 +6,14 @@ import android.util.Log;
 
 import com.example.batterymonitor.R;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class SharedPreference_Utils {
     private static  Context mcontext;
     private static SharedPreferences sharedPreferences;
-    private static final String MyPREFERENCES = "MyPrefsSetting" ;
+    public static final String MyPREFERENCES = "MyPrefsSetting" ;
     private static final String Bluetooth_ON = "bluetooth_turn_On_Key";
     private static final String Bluetooth_OFF = "bluetooth_turn_Off_Key";
     private static final String Wifi= "wifi_Key";
@@ -19,11 +23,36 @@ public class SharedPreference_Utils {
     private static final String RadioButtonCustomMode = "radioButtonCustomMode_Key";
     private static final String SeekBarBrightness = "seekBarBrightness_Key";
     private static final String NumberSeekBarBrightness = "numberSeekBarBrightness_Key";
+    private static final String ButtonChangeBackgroundColor = "button_color_Key";
+    public static final String SaveBattery = "save_Battery_Key1";
+    private static final String SaveHours = "saveHours_Key1";
 
     public SharedPreference_Utils(Context context){
-//        mcontext=context;
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
     }
+    public void setSaveHours(String saveHours){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SaveHours,saveHours);
+        editor.commit();
+    }
+    public String getSaveHours(){
+        String saveHours = sharedPreferences.getString(SaveHours,null);
+        Log.d("getSaveHours",saveHours);
+
+        return saveHours;
+    }
+    public void setSaveBattery(int saveBattery){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SaveBattery,saveBattery);
+        editor.commit();
+        Log.d("set_SaveBattery_set",saveBattery+"");
+    }
+    public int getSaveBattery(){
+        int save = sharedPreferences.getInt(SaveBattery, 0);
+        Log.d("get_SaveBattery_set",save+"");
+        return save;
+    }
+
     public void setNumberSeekBarBrightness(int numberSeekBarBrightness){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(NumberSeekBarBrightness,numberSeekBarBrightness);
@@ -33,6 +62,7 @@ public class SharedPreference_Utils {
         int state = sharedPreferences.getInt(NumberSeekBarBrightness,0);
         return state;
     }
+
     public void setSeekBarBrightness(int seekBarBrightness){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(SeekBarBrightness,seekBarBrightness);
@@ -42,15 +72,7 @@ public class SharedPreference_Utils {
         int state = sharedPreferences.getInt(SeekBarBrightness,0);
         return state;
     }
-    public void setDesktopFloating(Boolean state){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(DesktopFloating,state);
-        editor.commit();
-    }
-    public Boolean getDesktopFloating(){
-        Boolean state = sharedPreferences.getBoolean(DesktopFloating,false);
-        return state;
-    }
+
     public void setSwitchNotification(Boolean state){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SwitchNotification,state);
@@ -60,6 +82,7 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(SwitchNotification,false);
         return state;
     }
+
     public void setNightModeState(Boolean state){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(NightMode,state);
@@ -79,8 +102,24 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(RadioButtonCustomMode,false);
         return state;
     }
-
-
+    public void setDesktopFloating(Boolean state){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(DesktopFloating,state);
+        editor.commit();
+    }
+    public Boolean getDesktopFloating(){
+        Boolean state = sharedPreferences.getBoolean(DesktopFloating,false);
+        return state;
+    }
+    public void  setButtonChangeColorBackgroundSetting(int buttonColor){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ButtonChangeBackgroundColor,buttonColor);
+        editor.commit();
+    }
+    public int getButtonChangeColorBackgroundSetting(){
+        int state = sharedPreferences.getInt(ButtonChangeBackgroundColor,0);
+        return state;
+    }
     public static void setBluetooth_Turn_On(int bluetooth_Turn_On){
         setSharedPreferences_Int(Bluetooth_ON,bluetooth_Turn_On);
         Log.d("setBluetooth_Turn_On",bluetooth_Turn_On+"");

@@ -1,30 +1,38 @@
 package com.example.batterymonitor.models;
 
 public class ChartsModel {
-    int toaDox;
-    int toaDoy;
+    int levelBattery;
+    String hours;
 
     public ChartsModel() {
     }
 
-    public ChartsModel(int toaDox, int toaDoy) {
-        this.toaDox = toaDox;
-        this.toaDoy = toaDoy;
+    public ChartsModel(int levelBattery) {
+        this.levelBattery = levelBattery;
     }
 
-    public int getToaDox() {
-        return toaDox;
+    public ChartsModel(String hours) {
+        this.hours = hours;
     }
 
-    public void setToaDox(int toaDox) {
-        this.toaDox = toaDox;
+    public ChartsModel(int levelBattery, String hours) {
+        this.levelBattery = levelBattery;
+        this.hours = hours;
     }
 
-    public int getToaDoy() {
-        return toaDoy;
+    public int getLevelBattery() {
+        return levelBattery;
     }
 
-    public void setToaDoy(int toaDoy) {
-        this.toaDoy = toaDoy;
+    public void setLevelBattery(int levelBattery) {
+        this.levelBattery = levelBattery;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
     }
 }
