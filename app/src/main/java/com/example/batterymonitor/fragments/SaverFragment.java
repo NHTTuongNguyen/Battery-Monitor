@@ -109,9 +109,9 @@ public class SaverFragment extends Fragment {
     private SharedPreference_Utils sharedPreference_utils;
     private AlertDialog alertDialog;
 
-    Button[] btn_position_change_background = new Button[8];
-    Button button_change_background;
-    int[] btn_id_change_background = {
+    Button[] btn = new Button[8];
+    Button btn_unfocus;
+    int[] btn_id = {
             R.id.btn15s,
             R.id.btn30s,
             R.id.btn1m,
@@ -202,6 +202,7 @@ public class SaverFragment extends Fragment {
             }
         });
         setVisibilityLinearLayout();
+
         return view;
     }
     private void setChoiceRadioButtonClassicMode(Boolean checkId) {
@@ -442,6 +443,8 @@ public class SaverFragment extends Fragment {
         ///setVisibility
         linearLayoutClassMode_Line.setVisibility(View.GONE);
         linearLayoutClassMode.setVisibility(View.VISIBLE);
+        //////
+
         ///setScreenTimeout
         setScreenTimeout(SizeNumber.Thirty_seconds);
         ////SCREEN_BRIGHTNESS
@@ -457,7 +460,7 @@ public class SaverFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.ScreenTimeOut));
 //      builder.setMessage(getString(R.string.ChangeBrightness));
-        builder.setIcon(R.drawable.ic_baseline_android_24);
+        builder.setIcon(R.drawable.ic_baseline_brightness_1_24_green);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View viewLayout = inflater.inflate(R.layout.dialog_screentimeout,null);
         btn15s = viewLayout.findViewById(R.id.btn15s);
@@ -468,24 +471,41 @@ public class SaverFragment extends Fragment {
         btn15m = viewLayout.findViewById(R.id.btn15m);
         btn20m = viewLayout.findViewById(R.id.btn20m);
         btn30m = viewLayout.findViewById(R.id.btn30m);
+//
         builder.setView(viewLayout);
         builder.setCancelable(true);
         alertDialog = builder.create();
         alertDialog.show();
+        ////setFocus
+        for(int i = 0; i < btn.length; i++){
+            btn[i] = (Button) viewLayout.findViewById(btn_id[i]);
+        }
+        btn_unfocus = btn[0];
+        ///
+        int idButton = 0;
+        getFocusSharedPreCustomModel(idButton,viewLayout,btn_unfocus);
+    
+
+//        int idButton = sharedPreference_utils.getButtonFocusCustomMode();
+//        if (idButton  != 0){
+//            Button btnColorF = (Button)viewLayout.findViewById(idButton);
+//            setFocusToGroupButtonChangeBackground(btn_unfocus,btnColorF);
+//        }
+        ////
         btn15s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[0]);
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[0]);
                 setScreenTimeout(SizeNumber.Fifteen_seconds);
-                alertDialog.dismiss();
+//                alertDialog.dismiss();
             }
         });
         btn30s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.Thirty_seconds);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[1]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[1]);
+//                alertDialog.dismiss();
 
             }
         });
@@ -493,8 +513,8 @@ public class SaverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.One_minute);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[2]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[2]);
+//                alertDialog.dismiss();
 
             }
         });
@@ -502,8 +522,8 @@ public class SaverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.Five_minute);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[3]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[3]);
+//                alertDialog.dismiss();
 
             }
         });
@@ -511,8 +531,8 @@ public class SaverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.Ten_minute);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[4]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[4]);
+//                alertDialog.dismiss();
 
             }
         });
@@ -520,8 +540,8 @@ public class SaverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.Fifteen_minute);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[5]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[5]);
+//                alertDialog.dismiss();
 
             }
         });
@@ -529,8 +549,8 @@ public class SaverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.Twenty_minute);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[6]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[6]);
+//                alertDialog.dismiss();
 
             }
         });
@@ -538,34 +558,36 @@ public class SaverFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setScreenTimeout(SizeNumber.Thirty_minute);
-                setFocusToGroupButtonChangeBackground(button_change_background, btn_position_change_background[7]);
-                alertDialog.dismiss();
+                setFocusToGroupButtonChangeBackground(btn_unfocus, btn[7]);
+//                alertDialog.dismiss();
 
             }
         });
 
-        initGroupButtonChangeBackground();
+
 
 
     }
-    private void initGroupButtonChangeBackground() {
-        for(int i = 0; i < btn_position_change_background.length; i++){
-            btn_position_change_background[i] = (Button) view.findViewById(btn_id_change_background[i]);
-//            btn_position_change_background[i].setOnClickListener(this);
+
+    private void getFocusSharedPreCustomModel(int idButton, View viewLayout, Button btn_unfocus ) {
+        idButton = sharedPreference_utils.getButtonFocusCustomMode();
+        if (idButton  != 0){
+            Button btnColorF = (Button)viewLayout.findViewById(idButton);
+            setFocusToGroupButtonChangeBackground(btn_unfocus,btnColorF);
         }
-        button_change_background = btn_position_change_background[0];
     }
+
+
     private void setFocusToGroupButtonChangeBackground(Button btn_unfocus, Button btn_focus){
         setFocus(btn_unfocus,btn_focus);
-//        sharedPreference_utils.setButtonChangeColorBackgroundSetting(btn_focus.getId());
-        this.button_change_background = btn_focus;
+        sharedPreference_utils.setButtonFocusCustomMode(btn_focus.getId());
+        this.btn_unfocus = btn_focus;
     }
     private void setFocus(Button btn_unfocus, Button btn_focus){
-
-            btn_unfocus.setBackgroundResource(R.drawable.rounded_corners_blue_white);
+            btn_unfocus.setBackgroundResource(R.drawable.btn_unfocus);
             btn_unfocus.setTextColor(getResources().getColor(R.color.colorBlack));
 
-            btn_focus.setBackgroundResource(R.drawable.rounded_corners_blue);
+            btn_focus.setBackgroundResource(R.drawable.btn_focus);
             btn_focus.setTextColor(getResources().getColor(R.color.colorWhite));
 
 
@@ -574,7 +596,7 @@ public class SaverFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.Brightness));
 //      builder.setMessage(getString(R.string.ChangeBrightness));
-        builder.setIcon(R.drawable.ic_baseline_wb_sunny_24);
+        builder.setIcon(R.drawable.ic_baseline_brightness_7_24_green);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View viewLayout = inflater.inflate(R.layout.dialog_brightness,null);
         SeekBar seekBar = viewLayout.findViewById(R.id.seekBarBrightness);

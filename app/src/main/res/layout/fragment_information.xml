@@ -580,23 +580,6 @@
                         android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
-                android:layout_margin="@dimen/dimen_10"
-                app:cardCornerRadius="@dimen/dimen_10">
-                <LinearLayout
-                    android:layout_margin="@dimen/dimen_10"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <lecho.lib.hellocharts.view.LineChartView
-                        android:id="@+id/chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

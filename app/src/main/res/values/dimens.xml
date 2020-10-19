@@ -10,6 +10,7 @@
 
     <dimen name="dimen_5">5dp</dimen>
     <dimen name="dimen_10">10dp</dimen>
+    <dimen name="dimen_13">12dp</dimen>
     <dimen name="dimen_15">15dp</dimen>
     <dimen name="dimen_20">20dp</dimen>
     <dimen name="dimen_25">25dp</dimen>
@@ -41,4 +42,5 @@
     <dimen name="heading_2">18sp</dimen>
     <dimen name="heading_1">20sp</dimen>
     <dimen name="title">24sp</dimen>
+
 </resources>

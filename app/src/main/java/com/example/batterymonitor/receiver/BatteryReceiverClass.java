@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.wifi.WifiManager;
@@ -33,6 +34,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.batterymonitor.activity.App.CHANNEL_ID;
 
@@ -53,7 +56,8 @@ public class BatteryReceiverClass extends BroadcastReceiver {
     private Switch switchBluetoothCustomMode,switchNotification;
     private SharedPreference_Utils sharedPreference_utils;
     private  int percentage;
-
+    private ArrayList<ChartsModel> chartsModels;
+    int currrrTime;
     @Override
     public void onReceive(final Context context, Intent intent) {
         sharedPreference_utils = new SharedPreference_Utils(context);
@@ -84,41 +88,40 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
             percentage = level * 100 / scale;
-
-
-
             if (txtPercentageLabel!=null && txtLevel!=null) {
                 txtPercentageLabel.setText(percentage + "%");
                 txtLevel.setText(percentage + "%");
-//                sharedPreference_utils.setSaveBattery(percentage);
+                Date dt = new Date();
+                int hours = dt.getHours();
+                int minutes = dt.getMinutes();
+                int seconds = dt.getSeconds();
+                String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
+                String currentHoursAndMinutes = hours+ "h"  + ":" + minutes+ "m";
+                int currentTimeParseInt = Integer.parseInt(currentHoursAndMinutes);
+//                Log.d("Date", currentHoursAndMinutes+" levelBattery:"+percentage);
+                Log.d("currentTimeParseInt", currentTimeParseInt+" levelBattery:"+percentage);
+
+//                sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,asda);
+
             }
-            Date dt = new Date();
-            int hours = dt.getHours();
-            int minutes = dt.getMinutes();
-
-//            String curTime = hours+ "h"  + ":" + minutes+ "m";
-            int currrrTime = minutes;
-            txtCurrentTimeBroacat.setText(currrrTime+"");
-
-//            SharedPreferences sharedPreferences =context.getSharedPreferences(SharedPreference_Utils.MyPREFERENCES, Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            Gson gson = new Gson();
-//            String jsonStoryWatched = sharedPreferences.getString(SharedPreference_Utils.SaveBattery, null);
-//            ArrayList<ChartsModel> stringArrayList = new ArrayList<>();
-//            if (jsonStoryWatched !=null){
-//                Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();/////luu mang
-//                stringArrayList = gson.fromJson(jsonStoryWatched,type);
-//
-//                    stringArrayList.add(new ChartsModel(percentage, currrrTime + ""));
-//
-//            }
-//            String json  =gson.toJson(stringArrayList);
-//            editor.putString(SharedPreference_Utils.SaveBattery,json);
-//            Log.d("set_task_list", json);
-//            editor.commit();
+//            new Timer().scheduleAtFixedRate(new TimerTask(){
+////                @Override
+////                public void run(){
+////                    Date dt = new Date();
+////                    int hours = dt.getHours();
+////                    int minutes = dt.getMinutes();
+////                    int seconds = dt.getSeconds();
+////                    String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
+////
+////                    String currentHoursAndMinutes = hours+ "h"  + ":" + minutes+ "m";
+////
+////                    Log.d("Date", curTime+" levelBattery:"+percentage);
+//////                    sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,minutes);
+////                }
+////            },0,60*1000);
 
 
-            // [{"12:00", 90}, {13h:00, 80}]
+
             // Image
             if (imgBatteryImage!=null){
                 Resources res = context.getResources();
@@ -161,27 +164,29 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 final float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
                 txtTemperature.setText(tempTemp + " °C");
                 txtBigDOC.setText(tempTemp + " °C");
-
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Intent i = new Intent(context, ServiceNotifi.class);
-//                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        i.putExtra("message", tempTemp);
-//                        Log.d("set_message",tempTemp+"");
-//                        context.startService(i);
-//                    }
-//                }, 5000);
-
             }
-
-
         }
-
+        Date dt = new Date();
+        int hours = dt.getHours();
+        int minutes = dt.getMinutes();
+        int s = dt.getSeconds();
+        String curTime = minutes+ "m" + s +" s";
+        Log.d("BBB",curTime);
+        currrrTime = minutes;
+        if (txtCurrentTimeBroacat!=null) {
+            txtCurrentTimeBroacat.setText(currrrTime + "");
+        }
+        //////
+//        new Timer().scheduleAtFixedRate(new TimerTask(){
+//            @Override
+//            public void run(){
+//                Log.d("BBG","hello");
+//            }
+//        },0,5000);
+//            sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,currrrTime);
         ////BLUETOOTH
             if (action !=null && action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)){
             setChangeBluetooth(intent);
-
             ////wififf
                 int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN);
                 switch (wifiStateExtra){
@@ -201,11 +206,14 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                         Log.d("wifiStateExtra","K BIET");
                         break;
                 }
-
-
             }
+    }
+
+    private void setLevelPin(int percentage) {
 
     }
+
+
     private void setChangeBluetooth(Intent intent){
         int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
         switch(state) {

@@ -2,6 +2,7 @@ package com.example.batterymonitor.fragments;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,19 +42,26 @@ import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -98,10 +106,14 @@ public class InformationFragment extends Fragment{
     private int mFillColor = Color.argb(150,51,181,229);
     private ListView listView;
     private String curTimeSharePre;
-    private ArrayList<ChartsModel> chartsList;
+    private ArrayList<ChartsModel> chartsList,getChartsList;
     private ChartsAdapter chartsAdapter;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
+    private BroadcastReceiver broadcastReceiver_BatterySave;
+    private IntentFilter intentFilter_BatterySave;
+    private int level;
+    private LineDataSet lineDataSet;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
@@ -206,17 +218,8 @@ public class InformationFragment extends Fragment{
                 setActionIntent(url_Battery);
             }
         });
-
-        ///////////////
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SharedPreference_Utils.MyPREFERENCES, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(SharedPreference_Utils.SaveBattery, null);
-        Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();
-        chartsList = gson.fromJson(json, type);
-        Log.d("get_tasksssslist",String.valueOf(json));
-        if (chartsList == null) {
-            chartsList = new ArrayList<>();
-        }
+        displayCurrentTime();
+        chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
         chartsAdapter = new ChartsAdapter(getActivity(), chartsList);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -228,128 +231,68 @@ public class InformationFragment extends Fragment{
         }
 
         initChart2();
-        chartTest();
-        displayCurrentTime();
         return view;
     }
-    private void chartTest() {
-        LineChartView lineChartView = view.findViewById(R.id.chart);
-//        sharedPreference_utils.getSaveHours();
 
-
-
-
-//        List<ChartsModel> axisData = new ArrayList<>();
-//        axisData.add(new ChartsModel("Jan"));
-//        axisData.add(new ChartsModel("Feb"));
-//        axisData.add(new ChartsModel("Mar"));
-//        axisData.add(new ChartsModel("Apr"));
-//        axisData.add(new ChartsModel("May"));
-//        axisData.add(new ChartsModel("June"));
-//        axisData.add(new ChartsModel("July"));
-//        axisData.add(new ChartsModel("Aug"));
-//        axisData.add(new ChartsModel("Sept"));
-//        axisData.add(new ChartsModel("Oct"));
-//        axisData.add(new ChartsModel("Nov"));
-//        axisData.add(new ChartsModel("Dec"));
-        List<String> axisData = new ArrayList<>();
-        axisData.add("Jan");
-        axisData.add("Feb");
-        axisData.add("Mar");
-        axisData.add("Apr");
-        axisData.add("May");
-        axisData.add("June");
-        axisData.add("July");
-        axisData.add("Aug");
-        axisData.add("Sept");
-        axisData.add("Oct");
-        axisData.add("Nov");
-        axisData.add("Dec");
-
-
-        List<Integer> yAxisData = new ArrayList<>();
-        yAxisData.add(70);
-        yAxisData.add(20);
-        yAxisData.add(15);
-        yAxisData.add(30);
-        yAxisData.add(20);
-        yAxisData.add(60);
-        yAxisData.add(15);
-        yAxisData.add(40);
-        yAxisData.add(45);
-        yAxisData.add(10);
-        yAxisData.add(90);
-        yAxisData.add(18);
-
-        List yAxisValues = new ArrayList();
-        List axisValues = new ArrayList();
-
-        Line line = new Line(yAxisValues);
-        line.setColor(Color.RED);
-        line.setColor(R.color.colorGreen);
-
-        for(int i = 0; i < axisData.size(); i++){
-            axisValues.add(i, new AxisValue(i).setLabel(axisData.get(i)));
-        }
-
-        for (int i = 0; i < yAxisData.size(); i++){
-            yAxisValues.add(new PointValue(i, yAxisData.get(i)));
-        }
-
-        List lines = new ArrayList();
-        lines.add(line);
-
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-
-        lineChartView.setLineChartData(data);
-        Axis axis = new Axis();
-
-        axis.setValues(axisValues);
-        data.setAxisXBottom(axis);
-
-        Axis yAxis = new Axis();
-        data.setAxisYLeft(yAxis);
-    }
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
         List<Entry> yValues = new ArrayList<>();
-
+        int Y,X;
         for (int i = 0; i< chartsList.size(); i++){
-            Log.d("chartsModel_SIZE", chartsList.get(i).getLevelBattery()+"");
-            int Y = Integer.parseInt(chartsList.get(i).getHours());
-            int X = chartsList.get(i).getLevelBattery();
+            Y = Integer.parseInt(chartsList.get(i).getHours());
+            X = chartsList.get(i).getLevelBattery();
             yValues.add(new Entry(Y,X));
 
         }
 //        yValues.add(new Entry(17,100));
 //        yValues.add(new Entry(20,80));
 //        yValues.add(new Entry(24,60));
-        LineDataSet set1 = new LineDataSet(yValues,"Data Battery");
-        set1.notifyDataSetChanged();
-        set1.setLineWidth(3f);
-        set1.setCircleRadius(5f);
-        set1.setCircleHoleRadius(2.5f);
-        set1.setColor(Color.LTGRAY);
-        set1.setCircleColor(Color.WHITE);
-        set1.setHighLightColor(Color.WHITE);
-        set1.setDrawValues(false);
+        lineDataSet = new LineDataSet(yValues,"Data Battery");
+
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setCircleRadius(5f);
+        lineDataSet.setCircleHoleRadius(2.5f);
+        lineDataSet.setColor(Color.LTGRAY);
+        lineDataSet.setCircleColor(Color.WHITE);
+        lineDataSet.setHighLightColor(Color.WHITE);
+        lineDataSet.setDrawValues(false);
 //        set1.setDrawCircles(false);
-        set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set1.setCubicIntensity(0.2f);
-        set1.setDrawFilled(true);
-        set1.setFillColor(Color.CYAN);
-        set1.setFillAlpha(80);
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setCubicIntensity(0.2f);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFillColor(Color.CYAN);
+        lineDataSet.setFillAlpha(80);
+        lineDataSet.notifyDataSetChanged();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
+        dataSets.add(lineDataSet);
         LineData data  = new LineData(dataSets);
         Drawable drawable  = ContextCompat.getDrawable(getActivity(),R.drawable.gradient_charts);
-        set1.setFillDrawable(drawable);
+        lineDataSet.setFillDrawable(drawable);
         lineChart.setPinchZoom(false);
         lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setData(data);
-    }
+        lineChart.setVisibleXRangeMaximum(100);
+        lineChart.notifyDataSetChanged();
 
+        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
+        xAxis.setGranularity(1);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+
+
+//        lineChart.setVisibleYRangeMaximum(100f);
+    }
+    private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter{
+        ArrayList<ChartsModel> chartsModels;
+        private MyValueFormatter (ArrayList<ChartsModel> chartsModelArrayList){
+            this.chartsModels = chartsModelArrayList;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return String.valueOf(chartsModels.get((int) value));
+        }
+    }
     private void eventScreen_ORIENTATION() {
         int orient = getResources().getConfiguration().orientation;
         switch(orient) {
@@ -426,6 +369,17 @@ public class InformationFragment extends Fragment{
                     String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
                     curTimeSharePre = hours+ "h"  + ":" + minutes+ "m";
                     txtCurrentTimeThread.setText(curTime);
+                    int minute = minutes;
+//                    Log.d("FFF",minute+"");
+                    long mCurrentTime = System.currentTimeMillis();
+//                    if (minute >minute-1){
+//                        Log.d("FFF","pass");
+//
+//                    }else {
+//                        Log.d("FFF","fail");
+//
+//                    }
+
 //                    sharedPreference_utils.setSaveHours(curTimeSharePre);
 
                 }catch (Exception e) {}
@@ -473,12 +427,19 @@ public class InformationFragment extends Fragment{
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+//        getActivity().registerReceiver(broadcastReceiver_BatterySave,intentFilter_BatterySave);
+        if (lineDataSet != null && lineChart !=null){
+            lineDataSet.notifyDataSetChanged();
+            lineChart.notifyDataSetChanged();
+        }
+
 //        int test =  sharedPreference_utils.getSaveBattery();
 //        Log.d("test",test+"");
     }
     @Override
     public void onPause() {
         getActivity().unregisterReceiver(batteryReceiverClass);
+//        getActivity().unregisterReceiver(broadcastReceiver_BatterySave);
         super.onPause();
     }
 }

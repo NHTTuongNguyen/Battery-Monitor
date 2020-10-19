@@ -5,7 +5,12 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.models.ChartsModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +34,34 @@ public class SharedPreference_Utils {
 
     public SharedPreference_Utils(Context context){
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
+    }
+
+    public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, int percentage, int currrrTime) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String jsonStoryWatched = sharedPreferences.getString(SaveBattery, null);
+        chartsModelArrayList = new ArrayList<>();
+        if (jsonStoryWatched !=null){
+            Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();/////luu mang
+            chartsModelArrayList = gson.fromJson(jsonStoryWatched,type);
+            chartsModelArrayList.add(new ChartsModel(percentage,  String.valueOf(currrrTime)));
+
+        }
+        String json  =gson.toJson(chartsModelArrayList);
+        editor.putString(SharedPreference_Utils.SaveBattery,json);
+        Log.d("set_task_list", json);
+        editor.commit();
+    }
+    public ArrayList<ChartsModel> getSaveBatteryCharts(Context context,ArrayList<ChartsModel> chartsList) {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(SaveBattery, null);
+        Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();
+        chartsList = gson.fromJson(json, type);
+        Log.d("get_tasksssslist",String.valueOf(json));
+        if (chartsList == null) {
+            chartsList = new ArrayList<>();
+        }
+        return chartsList;
     }
     public void setSaveHours(String saveHours){
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -111,12 +144,13 @@ public class SharedPreference_Utils {
         Boolean state = sharedPreferences.getBoolean(DesktopFloating,false);
         return state;
     }
-    public void  setButtonChangeColorBackgroundSetting(int buttonColor){
+    public void setButtonFocusCustomMode(int buttonColor){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(ButtonChangeBackgroundColor,buttonColor);
         editor.commit();
+        Log.d("ButtonFous",buttonColor+"");
     }
-    public int getButtonChangeColorBackgroundSetting(){
+    public int getButtonFocusCustomMode(){
         int state = sharedPreferences.getInt(ButtonChangeBackgroundColor,0);
         return state;
     }

@@ -3,6 +3,7 @@ package com.example.batterymonitor.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.Utils.SizeNumber;
 import com.example.batterymonitor.service.ServiceNotifi;
+import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -38,23 +42,23 @@ public class TestActivity extends AppCompatActivity {
             R.id.btnden,
             R.id.btnvang};
     private Button btntrang,btnden,btnvang;
+
+    private SharedPreference_Utils sharedPreference_utils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        sharedPreference_utils = new SharedPreference_Utils(this);
         btntrang = findViewById(R.id.btntrang);
         btnden =findViewById(R.id.btnden);
         btnvang =findViewById(R.id.btnvang);
 
-//
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent i=new Intent(TestActivity.this,ServiceNotifi.class);
-//                startActivity(i);
-//            }
-//        }, 10000);
 
+        initGroupButtonChangeBackground();
+        if (sharedPreference_utils !=null) {
+            getIdButtonChangeBackgroundClick();
+        }
 
         btntrang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +84,9 @@ public class TestActivity extends AppCompatActivity {
             }
         });
 
-        initGroupButtonChangeBackground();
-//        getIdButtonChangeBackgroundClick();
+
+//
+
     }
 
     private void initGroupButtonChangeBackground() {
@@ -91,13 +96,13 @@ public class TestActivity extends AppCompatActivity {
         }
         button_change_background = btn_position_change_background[0];
     }
-//    private void getIdButtonChangeBackgroundClick() {
-//        int idButton = SettingSharedPreferences.getButtonChangeColorBackgroundSetting();
-//        if (idButton  != 0){
-//            Button btnColorF = (Button) findViewById(idButton);
-//            setFocusToGroupButtonChangeBackground(button_change_background,btnColorF);
-//        }
-//    }
+    private void getIdButtonChangeBackgroundClick() {
+        int idButton = sharedPreference_utils.getButtonFocusCustomMode();
+        if (idButton  != 0){
+            Button btnColorF = (Button) findViewById(idButton);
+            setFocusToGroupButtonChangeBackground(button_change_background,btnColorF);
+        }
+    }
 
     private void setFocusToGroupButtonChangeBackground(Button btn_unfocus, Button btn_focus){
         setFocus(btn_unfocus,btn_focus);
@@ -111,4 +116,5 @@ public class TestActivity extends AppCompatActivity {
         btn_focus.setTextColor(getResources().getColor(R.color.colorWhite));
 
     }
+
 }
