@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -211,27 +212,14 @@ public class InformationFragment extends Fragment{
             }
         });
         displayCurrentTime();
-
         chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
-        chartsAdapter = new ChartsAdapter(getActivity(), chartsList);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(chartsAdapter);
-        chartsAdapter.notifyDataSetChanged();
-//        for (int i = 0; i< chartsList.size(); i++){
-////            chartsList.remove(i);
-//            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
-//            final int finalI = i;
-//            new Timer().scheduleAtFixedRate(new TimerTask(){
-//                @Override
-//                public void run(){
-//                    Log.d("finalI", chartsList.get(finalI).getLevelBattery()+"");
-//
-////                    chartsList.remove(finalI);
-//                }
-//            },0,60*1000);
-//        }
+//        chartsAdapter = new ChartsAdapter(getActivity(), chartsList);
+//        linearLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setAdapter(chartsAdapter);
+//        chartsAdapter.notifyDataSetChanged();
+
         initChart2();
 
         return view;
@@ -400,7 +388,6 @@ public class InformationFragment extends Fragment{
         }
     }
     private void initView() {
-        recyclerView = view.findViewById(R.id.recyclerView_Charts);
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
