@@ -2,20 +2,9 @@ package com.example.batterymonitor.models;
 
 public class ChartsModel {
     int levelBattery;
-    String hours;
+    int hours;
 
-    public ChartsModel() {
-    }
-
-    public ChartsModel(int levelBattery) {
-        this.levelBattery = levelBattery;
-    }
-
-    public ChartsModel(String hours) {
-        this.hours = hours;
-    }
-
-    public ChartsModel(int levelBattery, String hours) {
+    public ChartsModel(int levelBattery, int hours) {
         this.levelBattery = levelBattery;
         this.hours = hours;
     }
@@ -28,11 +17,11 @@ public class ChartsModel {
         this.levelBattery = levelBattery;
     }
 
-    public String getHours() {
+    public int getHours() {
         return hours;
     }
 
-    public void setHours(String hours) {
+    public void setHours(int hours) {
         this.hours = hours;
     }
 }

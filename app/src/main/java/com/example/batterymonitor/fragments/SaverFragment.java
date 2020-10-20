@@ -484,14 +484,8 @@ public class SaverFragment extends Fragment {
         ///
         int idButton = 0;
         getFocusSharedPreCustomModel(idButton,viewLayout,btn_unfocus);
-    
 
-//        int idButton = sharedPreference_utils.getButtonFocusCustomMode();
-//        if (idButton  != 0){
-//            Button btnColorF = (Button)viewLayout.findViewById(idButton);
-//            setFocusToGroupButtonChangeBackground(btn_unfocus,btnColorF);
-//        }
-        ////
+        ///setEvent
         btn15s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

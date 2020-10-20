@@ -35,7 +35,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ChartsModel chartsModel = chartsModelArrayList.get(position);
         holder.txtLevelBattery.setText(chartsModel.getLevelBattery()+"");
-        holder.txtHoursBattery.setText(chartsModel.getHours());
+        holder.txtHoursBattery.setText(chartsModel.getHours()+"");
 
     }
 

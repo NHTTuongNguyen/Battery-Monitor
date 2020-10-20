@@ -31,9 +31,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -58,23 +61,24 @@ public class BatteryReceiverClass extends BroadcastReceiver {
     private  int percentage;
     private ArrayList<ChartsModel> chartsModels;
     int currrrTime;
+    private ChartsModel chartsModel;
     @Override
     public void onReceive(final Context context, Intent intent) {
         sharedPreference_utils = new SharedPreference_Utils(context);
         txtCurrentTimeBroacat = ((HomeActivity)context).findViewById(R.id.txtCurrentTimeBroacat);
         txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
-          txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
-         txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
-         txtHealth = ((HomeActivity)context).findViewById(R.id.txtHealth);
-         txtVoltage = ((HomeActivity)context).findViewById(R.id.txtVoltage);
-         txtTemperature = ((HomeActivity)context).findViewById(R.id.txtTemperature);
-         txtLevel = ((HomeActivity)context).findViewById(R.id.txtLevel);
-         txtBatteryType = ((HomeActivity)context).findViewById(R.id.txtBatteryType);
-         txtChargingSource = ((HomeActivity)context).findViewById(R.id.txtChargingSource);
-         txtPower = ((HomeActivity)context).findViewById(R.id.txtPower);
-         txtBigDOC = ((HomeActivity)context).findViewById(R.id.txtNhietDoLon);
-         imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
-         imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
+        txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
+        txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
+        txtHealth = ((HomeActivity)context).findViewById(R.id.txtHealth);
+        txtVoltage = ((HomeActivity)context).findViewById(R.id.txtVoltage);
+        txtTemperature = ((HomeActivity)context).findViewById(R.id.txtTemperature);
+        txtLevel = ((HomeActivity)context).findViewById(R.id.txtLevel);
+        txtBatteryType = ((HomeActivity)context).findViewById(R.id.txtBatteryType);
+        txtChargingSource = ((HomeActivity)context).findViewById(R.id.txtChargingSource);
+        txtPower = ((HomeActivity)context).findViewById(R.id.txtPower);
+        txtBigDOC = ((HomeActivity)context).findViewById(R.id.txtNhietDoLon);
+        imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
+        imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
         switchBluetoothCustomMode = ((HomeActivity)context).findViewById(R.id.switchBluetoothCustomMode);
         switchNotification = ((HomeActivity)context).findViewById(R.id.switchNotification);
 
@@ -97,11 +101,9 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 int seconds = dt.getSeconds();
                 String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
                 String currentHoursAndMinutes = hours+ "h"  + ":" + minutes+ "m";
-                int currentTimeParseInt = Integer.parseInt(currentHoursAndMinutes);
-//                Log.d("Date", currentHoursAndMinutes+" levelBattery:"+percentage);
-                Log.d("currentTimeParseInt", currentTimeParseInt+" levelBattery:"+percentage);
-
-//                sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,asda);
+                long savedMillis = System.currentTimeMillis();
+                Log.d("savedMillis", hours+" levelBattery:"+percentage);
+                sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,hours);
 
             }
 //            new Timer().scheduleAtFixedRate(new TimerTask(){
@@ -209,10 +211,19 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             }
     }
 
-    private void setLevelPin(int percentage) {
 
-    }
-
+//    public int hoursAgo(String datetime) {
+////        Date dt = new Date();
+////        int hours = dt.getHours();
+////        int minutes = dt.getMinutes();
+////        int seconds = dt.getSeconds();
+//
+//        Date date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(datetime); // Parse into Date object
+//        Date now = Calendar.getInstance().getTime(); // Get time now
+//        long differenceInMillis = now.getTime() - date.getTime();
+//        long differenceInHours = (differenceInMillis) / 1000L / 60L / 60L; // Divide by millis/sec, secs/min, mins/hr
+//        return (int)differenceInHours;
+//    }
 
     private void setChangeBluetooth(Intent intent){
         int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
@@ -262,7 +273,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtStatusLabel.setText(message);
         }
     }
-
     private void getChargingSource(Intent intent) {
         int sourceTemp = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,-1);
         String message="";
@@ -284,7 +294,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtPower.setText(message);
         }
     }
-
     private void setHealth(Intent intent) {
         int val = intent.getIntExtra(BatteryManager.EXTRA_HEALTH,-1);
         String message = "";

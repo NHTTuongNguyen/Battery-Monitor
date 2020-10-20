@@ -1,5 +1,6 @@
 package com.example.batterymonitor.fragments;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -94,25 +95,16 @@ public class InformationFragment extends Fragment{
     private View view;
     private TextView txtCurrentTimeThread;
     private TextView txtCurrentDaysThread;
-    private TextView txtCurrentMemoryThread;
-    private TextView txtTemp;
     private BatteryReceiverClass batteryReceiverClass;
     private IntentFilter intentFilter_ACTION_BATTERY_CHANGED,
             intentFilter_ACTION_STATE_CHANGED,
             intentFilter_WIFI_STATE_CHANGED_ACTION;
     private Button btnViewBattery;
-    private BarChart barChart;
-    private LineChart lineChartTest;
-    private int mFillColor = Color.argb(150,51,181,229);
-    private ListView listView;
     private String curTimeSharePre;
     private ArrayList<ChartsModel> chartsList,getChartsList;
     private ChartsAdapter chartsAdapter;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
-    private BroadcastReceiver broadcastReceiver_BatterySave;
-    private IntentFilter intentFilter_BatterySave;
-    private int level;
     private LineDataSet lineDataSet;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -219,6 +211,7 @@ public class InformationFragment extends Fragment{
             }
         });
         displayCurrentTime();
+
         chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
         chartsAdapter = new ChartsAdapter(getActivity(), chartsList);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -226,11 +219,21 @@ public class InformationFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(chartsAdapter);
         chartsAdapter.notifyDataSetChanged();
-        for (int i = 0; i< chartsList.size(); i++){
-            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
-        }
-
+//        for (int i = 0; i< chartsList.size(); i++){
+////            chartsList.remove(i);
+//            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
+//            final int finalI = i;
+//            new Timer().scheduleAtFixedRate(new TimerTask(){
+//                @Override
+//                public void run(){
+//                    Log.d("finalI", chartsList.get(finalI).getLevelBattery()+"");
+//
+////                    chartsList.remove(finalI);
+//                }
+//            },0,60*1000);
+//        }
         initChart2();
+
         return view;
     }
 
@@ -239,16 +242,18 @@ public class InformationFragment extends Fragment{
         List<Entry> yValues = new ArrayList<>();
         int Y,X;
         for (int i = 0; i< chartsList.size(); i++){
-            Y = Integer.parseInt(chartsList.get(i).getHours());
+            Y = chartsList.get(i).getHours();
             X = chartsList.get(i).getLevelBattery();
             yValues.add(new Entry(Y,X));
-
         }
-//        yValues.add(new Entry(17,100));
-//        yValues.add(new Entry(20,80));
-//        yValues.add(new Entry(24,60));
-        lineDataSet = new LineDataSet(yValues,"Data Battery");
+        for (int i = 0; i< chartsList.size(); i++){
+            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
+        }
+        Log.d("chartsSize", chartsList.size()+"");
+//        chartsList.remove(0);
+        Log.d("chartsSize", chartsList.size()+"");
 
+        lineDataSet = new LineDataSet(yValues,"Data Battery");
         lineDataSet.setLineWidth(3f);
         lineDataSet.setCircleRadius(5f);
         lineDataSet.setCircleHoleRadius(2.5f);
@@ -279,8 +284,6 @@ public class InformationFragment extends Fragment{
         xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
         xAxis.setGranularity(1);
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-
-
 //        lineChart.setVisibleYRangeMaximum(100f);
     }
     private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter{
@@ -345,20 +348,16 @@ public class InformationFragment extends Fragment{
                 try{
                     txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
                     txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
-                    ////////////////////
 //                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
 //                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
 //                    activityManager.getMemoryInfo(mi);
 //                    long availableMegs = mi.availMem / 1048576L;
 //                    long percentAvail = mi.availMem / mi.totalMem;
 //                    Log.d("availableMegs",availableMegs+"");
-//
-//
 //                    Log.d("percentAvail",percentAvail+"");
-
 //                    txtCurrentMemoryThread.setText(availableMegs+"");
 
-                    //////////////////
+
                     Calendar calendar = Calendar.getInstance();
                     String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                     txtCurrentDaysThread.setText(currentDate);
@@ -413,7 +412,6 @@ public class InformationFragment extends Fragment{
         linearLayout_Brightness = view.findViewById(R.id.linearLayout_Brightness);
         linearLayout_WifiOnOFF = view.findViewById(R.id.linearLayout_WifiOnOFF);
 //        txtTemp = view.findViewById(R.id.txtNhietDoLon);
-
     }
 
     private void setActionIntent(String actionIntent) {
@@ -427,19 +425,13 @@ public class InformationFragment extends Fragment{
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
-//        getActivity().registerReceiver(broadcastReceiver_BatterySave,intentFilter_BatterySave);
-        if (lineDataSet != null && lineChart !=null){
-            lineDataSet.notifyDataSetChanged();
-            lineChart.notifyDataSetChanged();
-        }
 
-//        int test =  sharedPreference_utils.getSaveBattery();
-//        Log.d("test",test+"");
+        lineDataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
     }
     @Override
     public void onPause() {
         getActivity().unregisterReceiver(batteryReceiverClass);
-//        getActivity().unregisterReceiver(broadcastReceiver_BatterySave);
         super.onPause();
     }
 }

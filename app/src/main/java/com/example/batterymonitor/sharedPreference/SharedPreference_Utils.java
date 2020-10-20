@@ -37,6 +37,26 @@ public class SharedPreference_Utils {
     }
 
     public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, int percentage, int currrrTime) {
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        Gson gson = new Gson();
+//        String jsonStoryWatched = sharedPreferences.getString(SaveBattery, null);
+//        chartsModelArrayList = new ArrayList<>();
+//        if (jsonStoryWatched !=null){
+//            Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();/////luu mang
+//            chartsModelArrayList = gson.fromJson(jsonStoryWatched,type);
+//            chartsModelArrayList.add(new ChartsModel(percentage,  currrrTime));
+//            for (int i = 0;i<chartsModelArrayList.size();i++){
+////                Log.d("ASDASD",chartsModel.getHours()+"");
+//                Log.d("ASDASD",chartsModelArrayList.get(i).getHours()+"");
+//
+//            }
+////            Log.d("ASDASD",chartsModel.getHours()+"");
+//        }
+//        String json  =gson.toJson(chartsModelArrayList);
+//        editor.putString(SharedPreference_Utils.SaveBattery,json);
+//        Log.d("set_chartsModelArrayList", json);
+//        editor.commit();
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String jsonStoryWatched = sharedPreferences.getString(SaveBattery, null);
@@ -44,20 +64,33 @@ public class SharedPreference_Utils {
         if (jsonStoryWatched !=null){
             Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();/////luu mang
             chartsModelArrayList = gson.fromJson(jsonStoryWatched,type);
-            chartsModelArrayList.add(new ChartsModel(percentage,  String.valueOf(currrrTime)));
+        }
+//        Log.d("ASDASD",chartsModel.getHours()+"");
+        if (!hasHourInLis(chartsModelArrayList,currrrTime)){
+            chartsModelArrayList.add(new ChartsModel(percentage,  currrrTime));
 
         }
         String json  =gson.toJson(chartsModelArrayList);
         editor.putString(SharedPreference_Utils.SaveBattery,json);
-        Log.d("set_task_list", json);
+        Log.d("set_chartsModelArrayList", json);
         editor.commit();
     }
+    private boolean hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, int idHour){
+        for (int i = 0;i<chartsModelArrayList.size();i++){
+            if (chartsModelArrayList.get(i).getHours() == idHour){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public ArrayList<ChartsModel> getSaveBatteryCharts(Context context,ArrayList<ChartsModel> chartsList) {
         Gson gson = new Gson();
         String json = sharedPreferences.getString(SaveBattery, null);
         Type type = new TypeToken<ArrayList<ChartsModel>>(){}.getType();
         chartsList = gson.fromJson(json, type);
-        Log.d("get_tasksssslist",String.valueOf(json));
+        Log.d("get_chartsModelArrayList",String.valueOf(json));
         if (chartsList == null) {
             chartsList = new ArrayList<>();
         }
