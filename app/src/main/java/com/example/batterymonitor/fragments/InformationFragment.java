@@ -41,6 +41,7 @@ import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapters.ChartsAdapter;
 import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
+import com.example.batterymonitor.service.ServiceNotifi;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -101,7 +102,6 @@ public class InformationFragment extends Fragment{
             intentFilter_ACTION_STATE_CHANGED,
             intentFilter_WIFI_STATE_CHANGED_ACTION;
     private Button btnViewBattery;
-    private String curTimeSharePre;
     private ArrayList<ChartsModel> chartsList,getChartsList;
     private ChartsAdapter chartsAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -111,13 +111,13 @@ public class InformationFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
         view =  inflater.inflate(R.layout.fragment_information, container, false);
+        chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
         initView();
         batteryReceiverClass = new BatteryReceiverClass();
         btnViewBattery = view.findViewById(R.id.btnViewBattery);
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         intentFilter_WIFI_STATE_CHANGED_ACTION = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
-
         linearLayout_View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,10 +147,6 @@ public class InformationFragment extends Fragment{
                         adapter.enable();
                     }
                 }
-
-
-//
-
             }
         });
         linearLayout_Brightness.setOnClickListener(new View.OnClickListener() {
@@ -176,14 +172,13 @@ public class InformationFragment extends Fragment{
             }
         });
         eventScreen_ORIENTATION();
-
         linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
             boolean landscape;
             @Override
             public void onClick(View view) {
                 landscape = !landscape;
                 if (landscape){
-                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
+                        imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
                     getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 }
                 else {
@@ -197,11 +192,16 @@ public class InformationFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 wifi = !wifi;
+                WifiManager wifiManager;
+                wifiManager = (WifiManager)getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 if (wifi){
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
 //                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
+                    wifiManager.setWifiEnabled(false);
                 }else {
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
+                    wifiManager.setWifiEnabled(true);
+
                 }
             }
         });
@@ -211,20 +211,52 @@ public class InformationFragment extends Fragment{
                 setActionIntent(url_Battery);
             }
         });
+
+        ///setBluetooth
+        setBluetooth();
         displayCurrentTime();
-        chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
-//        chartsAdapter = new ChartsAdapter(getActivity(), chartsList);
-//        linearLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setAdapter(chartsAdapter);
-//        chartsAdapter.notifyDataSetChanged();
-
+        for (int i = 0;i<chartsList.size();i++){
+            Log.d("chapterlistinformaiton", chartsList.get(i).getLevelBattery()+""+chartsList.get(i).getHours());
+        }
         initChart2();
-
+//        Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ServiceNotifi.class);
+//        getActivity().startService(serviceIntent);
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
 
+        lineDataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
+    }
+    private void setBluetooth() {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            // Device does not support Bluetooth
+        } else if (!mBluetoothAdapter.isEnabled()) {
+            // Bluetooth is not enabled :)
+            imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
+        } else {
+            // Bluetooth is enabled
+            imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
+
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.d("checkori","landscape");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Log.d("checkori","portrait");
+        }
+    }
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
         List<Entry> yValues = new ArrayList<>();
@@ -234,13 +266,6 @@ public class InformationFragment extends Fragment{
             X = chartsList.get(i).getLevelBattery();
             yValues.add(new Entry(Y,X));
         }
-        for (int i = 0; i< chartsList.size(); i++){
-            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
-        }
-        Log.d("chartsSize", chartsList.size()+"");
-//        chartsList.remove(0);
-        Log.d("chartsSize", chartsList.size()+"");
-
         lineDataSet = new LineDataSet(yValues,"Data Battery");
         lineDataSet.setLineWidth(3f);
         lineDataSet.setCircleRadius(5f);
@@ -249,7 +274,7 @@ public class InformationFragment extends Fragment{
         lineDataSet.setCircleColor(Color.WHITE);
         lineDataSet.setHighLightColor(Color.WHITE);
         lineDataSet.setDrawValues(false);
-//        set1.setDrawCircles(false);
+//        lineDataSet.setDrawCircles(false);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         lineDataSet.setCubicIntensity(0.2f);
         lineDataSet.setDrawFilled(true);
@@ -274,6 +299,7 @@ public class InformationFragment extends Fragment{
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
 //        lineChart.setVisibleYRangeMaximum(100f);
     }
+
     private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter{
         ArrayList<ChartsModel> chartsModels;
         private MyValueFormatter (ArrayList<ChartsModel> chartsModelArrayList){
@@ -284,6 +310,8 @@ public class InformationFragment extends Fragment{
             return String.valueOf(chartsModels.get((int) value));
         }
     }
+
+
     private void eventScreen_ORIENTATION() {
         int orient = getResources().getConfiguration().orientation;
         switch(orient) {
@@ -344,8 +372,6 @@ public class InformationFragment extends Fragment{
 //                    Log.d("availableMegs",availableMegs+"");
 //                    Log.d("percentAvail",percentAvail+"");
 //                    txtCurrentMemoryThread.setText(availableMegs+"");
-
-
                     Calendar calendar = Calendar.getInstance();
                     String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                     txtCurrentDaysThread.setText(currentDate);
@@ -354,21 +380,7 @@ public class InformationFragment extends Fragment{
                     int minutes = dt.getMinutes();
                     int seconds = dt.getSeconds();
                     String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
-                    curTimeSharePre = hours+ "h"  + ":" + minutes+ "m";
                     txtCurrentTimeThread.setText(curTime);
-                    int minute = minutes;
-//                    Log.d("FFF",minute+"");
-                    long mCurrentTime = System.currentTimeMillis();
-//                    if (minute >minute-1){
-//                        Log.d("FFF","pass");
-//
-//                    }else {
-//                        Log.d("FFF","fail");
-//
-//                    }
-
-//                    sharedPreference_utils.setSaveHours(curTimeSharePre);
-
                 }catch (Exception e) {}
             }
         });
@@ -406,16 +418,7 @@ public class InformationFragment extends Fragment{
         intent.setAction(actionIntent);
         getActivity().startActivity(intent);
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
 
-        lineDataSet.notifyDataSetChanged();
-        lineChart.notifyDataSetChanged();
-    }
     @Override
     public void onPause() {
         getActivity().unregisterReceiver(batteryReceiverClass);

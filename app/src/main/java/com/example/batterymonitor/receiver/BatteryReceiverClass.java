@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Handler;
@@ -27,6 +29,15 @@ import com.example.batterymonitor.activity.SettingActivity;
 import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.service.ServiceNotifi;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -53,19 +64,24 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtChargingSource,
             txtPower,
             txtBigDOC,
-            txtCurrentTimeBroacat,
             txtChatHeadImage;
-    ImageView imgBatteryImage,imageView_Bluetooth;
+    ImageView imgBatteryImage,imageView_Bluetooth,imageView_WifiOnOff;
     private Switch switchBluetoothCustomMode,switchNotification;
     private SharedPreference_Utils sharedPreference_utils;
     private  int percentage;
     private ArrayList<ChartsModel> chartsModels;
     int currrrTime;
     private ChartsModel chartsModel;
+    private LineChart lineChart;
+    private ArrayList<ChartsModel> chartsList,getChartsList;
+    private LineDataSet lineDataSet;
     @Override
     public void onReceive(final Context context, Intent intent) {
+
+
         sharedPreference_utils = new SharedPreference_Utils(context);
-        txtCurrentTimeBroacat = ((HomeActivity)context).findViewById(R.id.txtCurrentTimeBroacat);
+        lineChart  = ((HomeActivity)context).findViewById(R.id.line_Charts);
+
         txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
         txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
         txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
@@ -79,9 +95,9 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         txtBigDOC = ((HomeActivity)context).findViewById(R.id.txtNhietDoLon);
         imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
         imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
+        imageView_WifiOnOff = ((HomeActivity)context).findViewById(R.id.img_WifiOnOff);
         switchBluetoothCustomMode = ((HomeActivity)context).findViewById(R.id.switchBluetoothCustomMode);
         switchNotification = ((HomeActivity)context).findViewById(R.id.switchNotification);
-
 
         String action = intent.getAction();
 
@@ -104,26 +120,15 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 long savedMillis = System.currentTimeMillis();
                 Log.d("savedMillis", hours+" levelBattery:"+percentage);
                 sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,hours);
+//                chartsList =  sharedPreference_utils.getSaveBatteryCharts(context,getChartsList);
+//                for (int i = 0;i<chartsList.size();i++){
+//                    Log.d("chartsListadasd", chartsList.get(i).getLevelBattery()+""+chartsList.get(i).getHours());
+//
+//                }
+//                initChart2(context);
 
             }
-//            new Timer().scheduleAtFixedRate(new TimerTask(){
-////                @Override
-////                public void run(){
-////                    Date dt = new Date();
-////                    int hours = dt.getHours();
-////                    int minutes = dt.getMinutes();
-////                    int seconds = dt.getSeconds();
-////                    String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
-////
-////                    String currentHoursAndMinutes = hours+ "h"  + ":" + minutes+ "m";
-////
-////                    Log.d("Date", curTime+" levelBattery:"+percentage);
-//////                    sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,minutes);
-////                }
-////            },0,60*1000);
-
-
-
+//            initChart2(context);
             // Image
             if (imgBatteryImage!=null){
                 Resources res = context.getResources();
@@ -145,7 +150,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
 
                 }
             }
-
             ///txtVoltage
             if (txtVoltage!=null) {
                 float floatVoltage = (float) (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) * 0.001);
@@ -160,7 +164,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             }
             /////getChargingSource
             getChargingSource(intent);
-
             ////Temperature
             if (txtTemperature !=null && txtBigDOC !=null) {
                 final float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
@@ -168,77 +171,111 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 txtBigDOC.setText(tempTemp + " °C");
             }
         }
-        Date dt = new Date();
-        int hours = dt.getHours();
-        int minutes = dt.getMinutes();
-        int s = dt.getSeconds();
-        String curTime = minutes+ "m" + s +" s";
-        Log.d("BBB",curTime);
-        currrrTime = minutes;
-        if (txtCurrentTimeBroacat!=null) {
-            txtCurrentTimeBroacat.setText(currrrTime + "");
-        }
-        //////
-//        new Timer().scheduleAtFixedRate(new TimerTask(){
-//            @Override
-//            public void run(){
-//                Log.d("BBG","hello");
-//            }
-//        },0,5000);
-//            sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,currrrTime);
+
+
         ////BLUETOOTH
-            if (action !=null && action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)){
-            setChangeBluetooth(intent);
-            ////wififf
-                int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,WifiManager.WIFI_STATE_UNKNOWN);
-                switch (wifiStateExtra){
-                    case WifiManager.WIFI_STATE_ENABLED:
-//                        wifiSwitch.setChecked(true);
-//                        wifiSwitch.setText("WiFi is ON");
-                        Log.d("wifiStateExtra","On");
-                        break;
-                    case WifiManager.WIFI_STATE_DISABLED:
-//                        wifiSwitch.setChecked(false);
-//                        wifiSwitch.setText("WiFi is OFF");
-                        Log.d("wifiStateExtra","off");
-                        break;
-                    case WifiManager.WIFI_STATE_UNKNOWN:
-//                        wifiSwitch.setChecked(false);
-//                        wifiSwitch.setText("WiFi is OFF");
-                        Log.d("wifiStateExtra","K BIET");
-                        break;
-                }
-            }
+        setChangeBluetooth(intent);
+
+
+        setChangeWifi(intent);
+
     }
 
 
-//    public int hoursAgo(String datetime) {
-////        Date dt = new Date();
-////        int hours = dt.getHours();
-////        int minutes = dt.getMinutes();
-////        int seconds = dt.getSeconds();
-//
-//        Date date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH).parse(datetime); // Parse into Date object
-//        Date now = Calendar.getInstance().getTime(); // Get time now
-//        long differenceInMillis = now.getTime() - date.getTime();
-//        long differenceInHours = (differenceInMillis) / 1000L / 60L / 60L; // Divide by millis/sec, secs/min, mins/hr
-//        return (int)differenceInHours;
-//    }
+    private void initChart2(Context context) {
+        List<Entry> yValues = new ArrayList<>();
+        int Y,X;
+        for (int i = 0; i< chartsList.size(); i++){
+            Y = chartsList.get(i).getHours();
+            X = chartsList.get(i).getLevelBattery();
+            yValues.add(new Entry(Y,X));
+        }
+        for (int i = 0; i< chartsList.size(); i++){
+            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
+        }
+        Log.d("chartsSize", chartsList.size()+"");
+//        chartsList.remove(0);
+        Log.d("chartsSize", chartsList.size()+"");
 
+        lineDataSet = new LineDataSet(yValues,"Data Battery");
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setCircleRadius(5f);
+        lineDataSet.setCircleHoleRadius(2.5f);
+        lineDataSet.setColor(Color.LTGRAY);
+        lineDataSet.setCircleColor(Color.WHITE);
+        lineDataSet.setHighLightColor(Color.WHITE);
+        lineDataSet.setDrawValues(false);
+//        set1.setDrawCircles(false);
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setCubicIntensity(0.2f);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFillColor(Color.CYAN);
+        lineDataSet.setFillAlpha(80);
+        lineDataSet.notifyDataSetChanged();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSet);
+        LineData data  = new LineData(dataSets);
+        Drawable drawable  = ContextCompat.getDrawable(context,R.drawable.gradient_charts);
+        lineDataSet.setFillDrawable(drawable);
+        lineChart.setPinchZoom(false);
+        lineChart.setDoubleTapToZoomEnabled(false);
+        lineChart.setData(data);
+        lineChart.setVisibleXRangeMaximum(100);
+        lineChart.notifyDataSetChanged();
+
+        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
+        xAxis.setGranularity(1);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+//        lineChart.setVisibleYRangeMaximum(100f);
+    }
+
+    private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter {
+        ArrayList<ChartsModel> chartsModels;
+        private MyValueFormatter (ArrayList<ChartsModel> chartsModelArrayList){
+            this.chartsModels = chartsModelArrayList;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return String.valueOf(chartsModels.get((int) value));
+        }
+    }
+
+    private void setChangeWifi(Intent intent) {
+        int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
+                WifiManager.WIFI_STATE_UNKNOWN);
+        switch (wifiStateExtra) {
+            case WifiManager.WIFI_STATE_ENABLED:
+                Log.d("wifiStateExtra","On");
+                if (imageView_WifiOnOff!=null) {
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
+                }
+                break;
+            case WifiManager.WIFI_STATE_DISABLED:
+                Log.d("wifiStateExtra","off");
+                if (imageView_WifiOnOff!=null) {
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
+                }
+                break;
+        }
+    }
     private void setChangeBluetooth(Intent intent){
         int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
         switch(state) {
             case BluetoothAdapter.STATE_OFF:
-                imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
-//                switchBluetoothCustomMode.setChecked(false);
+                if (imageView_Bluetooth !=null) {
+                    imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
+                }
                 Log.d("BluetoothAdapter","Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
                 Log.d("BluetoothAdapter","Turning Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_ON:
-               imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
-//                switchBluetoothCustomMode.setChecked(true);
+                if (imageView_Bluetooth !=null) {
+                    imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
+                }
                 Log.d("BluetoothAdapter","Bluetooth on");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:

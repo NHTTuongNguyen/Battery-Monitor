@@ -57,4 +57,7 @@
     <string name="BatteryMonitorRunning">Battery Monitor is Running</string>
     <string name="Celsius">°C</string>
     <string name="ChangeBrightness">Change your brightness</string>
+    <string name="Notification">Notification</string>
+    <string name="OK">OK</string>
+    <string name="FromAndroid8">From Android 8 some functions cannot be used</string>
 </resources>

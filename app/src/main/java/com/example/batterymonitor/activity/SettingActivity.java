@@ -137,16 +137,19 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
-//                    Intent intentBr = getIntent();
-//                    float tess = intentBr.getFloatExtra("message",0);
-//                    Log.d("get_message",tess+"");
+//
+//                    float tess = 35.1f;
+//                    sharePre.setSwitchNotification(true);
+//                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
+////                    serviceIntent.putExtra("inputExtra",tess);
+//                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
 
-//                    switchDesktopMode.setChecked(true);
-                    float tess = 35.1f;
+
                     sharePre.setSwitchNotification(true);
                     Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
-                    serviceIntent.putExtra("inputExtra",tess);
-                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
+//                    serviceIntent.putExtra("inputExtra",tess);
+//                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
+                    startService(serviceIntent);
                 }else {
 //                    switchDesktopMode.setChecked(false);
                     sharePre.setSwitchNotification(false);

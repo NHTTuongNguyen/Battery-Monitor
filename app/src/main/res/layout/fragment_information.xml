@@ -77,13 +77,7 @@
                                     android:text="CurrentTime"
                                     android:textSize="@dimen/dimen_15"/>
 
-                                <TextView
-                                    android:textColor="?attr/attrsTextColor"
-                                    android:id="@+id/txtCurrentTimeBroacat"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="CurrentTime"
-                                    android:textSize="@dimen/dimen_15"/>
+
                                 <TextView
                                     android:textColor="?attr/attrsTextColor"
                                     android:id="@+id/txtCurrentDaysThread"
@@ -566,8 +560,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginBottom="@dimen/dimen_20"
                 app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
-                android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10">
                 <LinearLayout
                     android:layout_margin="@dimen/dimen_10"

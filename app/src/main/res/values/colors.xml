@@ -22,4 +22,5 @@
     <color name="colorTintNight">#ffffff</color>
     <color name="colorButtonNight">#2196F3</color>
     <color name="colorDefaultButton">#CFCFCF</color>
+    <color name="colorDivider">#ECECEC</color>
 </resources>

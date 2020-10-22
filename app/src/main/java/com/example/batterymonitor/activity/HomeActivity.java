@@ -10,16 +10,21 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapter.ViewPagerAdapter;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -31,8 +36,8 @@ public class HomeActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ImageView imgToSetting;
-    private SharedPreference_Utils sharedPreference_utils;
-
+    private SharedPreference_Utils  sharedPreference_utils;
+    private FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
@@ -46,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        floatingActionButton = findViewById(R.id.floatNoti);
         viewPager2 = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tabs);
         imgToSetting = findViewById(R.id.imgToSetting);
@@ -90,7 +96,54 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogNotification();
+            }
+        });
+    }
 
+//    private void showDialogNotification() {
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this,R.style.MyDialogTheme);
+////        alertDialogBuilder.setMessage(getString(R.string.FromAndroid8))
+////                .setCancelable(false)
+////                .setPositiveButton(getString(R.string.OK),
+////                        new DialogInterface.OnClickListener() {
+////                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+////                            public void onClick(DialogInterface dialog, int id) {
+////                                dialog.cancel();
+////
+////                            }
+////                        });
+//        alertDialogBuilder.setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+//                    }
+//                });
+//                LayoutInflater inflater = this.getLayoutInflater();
+//        View add_menu_layout = inflater.inflate(R.layout.dialog_noti,null);
+//        alertDialogBuilder.setView(add_menu_layout);
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
+
+    private void showDialogNotification() {
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(HomeActivity.this, R.style.BottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(getApplicationContext())
+                .inflate(
+                        R.layout.dialong_bottom,
+                        (LinearLayout)findViewById(R.id.bottomSheetContainer));
+        bottomSheetView.findViewById(R.id.button_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.cancel();
+            }
+        });
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
     }
 
 

@@ -24,6 +24,12 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.activity.HomeActivity;
+import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.batterymonitor.activity.App.CHANNEL_ID;
 
@@ -31,7 +37,9 @@ public class ServiceNotifi extends Service {
     private Context context;
     private WindowManager mWindowManager;
     private View mChatHeadView;
-
+    private ScheduledFuture mHandle;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private SharedPreference_Utils sharedPreference_utils;
     public ServiceNotifi() {
     }
 
@@ -43,22 +51,38 @@ public class ServiceNotifi extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        float input = (float) intent.getFloatExtra("message",0);
-        Log.d("get_message",input+"");
-        Intent notificationIntent = new Intent(this, HomeActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
-            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_circle)) // set a png or jpg images
-                    .setSmallIcon(R.drawable.ic_baseline_android_24)
-                    .setContentTitle("Battery: "+input+" °C")
-                    .setContentText(getString(R.string.BatteryMonitorRunning))
-                    .setContentIntent(pendingIntent)
-                    .build();
-            startForeground(1, notification);
-        //do heavy work on a background thread
-//        stopSelf();
-        return START_NOT_STICKY;
+//        float input = (float) intent.getFloatExtra("message",0);
+//        Log.d("get_message",input+"");
+//        Intent notificationIntent = new Intent(this, HomeActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+//                0, notificationIntent, 0);
+//            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_circle)) // set a png or jpg images
+//                    .setSmallIcon(R.drawable.ic_baseline_android_24)
+//                    .setContentTitle("Battery: "+input+" °C")
+//                    .setContentText(getString(R.string.BatteryMonitorRunning))
+//                    .setContentIntent(pendingIntent)
+//                    .build();
+//            startForeground(1, notification);
+//
+//
+//
+//        //do heavy work on a background thread
+////        stopSelf();
+//        return START_NOT_STICKY;
+        sharedPreference_utils = new SharedPreference_Utils(this);
+        final Runnable deleteIt = new Runnable() {
+            public void run() {
+
+                Log.d("timeDelay","run");
+                sharedPreference_utils.removeSaveBatteryThan24h();
+//                getSharedPreferences("pref_file", 0).edit().clear().commit();
+//                mHandle.cancel(false); //don't cancel here if you want it to run every 24 hours
+            }
+        };
+        if(mHandle == null)
+            mHandle = scheduler.scheduleAtFixedRate(deleteIt,  60 * 60 * 24, 60 * 60 * 24, TimeUnit.SECONDS);
+        return START_STICKY;
     }
     @Override
     public void onDestroy() {

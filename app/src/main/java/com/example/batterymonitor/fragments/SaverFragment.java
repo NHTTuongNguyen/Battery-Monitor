@@ -304,6 +304,8 @@ public class SaverFragment extends Fragment {
         setVolumeTurnOff();
         ///setBluetoothDisable
         setBluetoothTurnOff();
+        /////setWifiOff
+        setWifiTurnOff();
 
 //                            WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 //                            if(wifiManager.isWifiEnabled()){
@@ -312,6 +314,9 @@ public class SaverFragment extends Fragment {
 //                                wifiManager.setWifiEnabled(true);
 //                            }
     }
+
+
+
     private void setEventRadioButtonSleepMode() {
         radioButtonClassicMode.setChecked(false);
         radioButtonLongLifeMode.setChecked(false);
@@ -339,8 +344,7 @@ public class SaverFragment extends Fragment {
         setVolumeTurnOff();
         ///setBluetoothDisable
         setBluetoothTurnOff();
-        WifiManager wifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        wifi.setWifiEnabled(false);
+        setWifiTurnOff();
     }
     private void setEventRadioButtonCustomMode() {
         radioButtonClassicMode.setChecked(false);
@@ -362,6 +366,18 @@ public class SaverFragment extends Fragment {
         ///setVisibility
         linearLayoutCustomMode_Line.setVisibility(View.GONE);
         linearLayoutCustomMode.setVisibility(View.VISIBLE);
+        wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        switchWifiCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    wifiManager.setWifiEnabled(true);
+                }else {
+                    wifiManager.setWifiEnabled(false);
+                }
+            }
+        });
         ///setSwitchVolumeCustomMode
         switchVolumeCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -453,9 +469,20 @@ public class SaverFragment extends Fragment {
         setVolumeTurnOff();
         ///setBluetoothDisable
         setBluetoothTurnOff();
+        /////
+        setWifiTurnOn();
     }
 
+    private void setWifiTurnOn() {
+        wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(true);
 
+    }
+
+    private void setWifiTurnOff() {
+        wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(false);
+    }
     private void showDialogScreenTimeoutCustomMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.ScreenTimeOut));

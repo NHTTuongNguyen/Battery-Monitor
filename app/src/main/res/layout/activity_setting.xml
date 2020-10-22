@@ -34,7 +34,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_close_44"/>
+                android:src="@drawable/ic_baseline_close_34"/>
 
         </RelativeLayout>
 
@@ -282,6 +282,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
                 app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
