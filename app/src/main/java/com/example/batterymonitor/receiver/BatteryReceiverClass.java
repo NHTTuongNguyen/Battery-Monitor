@@ -77,11 +77,8 @@ public class BatteryReceiverClass extends BroadcastReceiver {
     private LineDataSet lineDataSet;
     @Override
     public void onReceive(final Context context, Intent intent) {
-
-
         sharedPreference_utils = new SharedPreference_Utils(context);
         lineChart  = ((HomeActivity)context).findViewById(R.id.line_Charts);
-
         txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
         txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
         txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
@@ -108,7 +105,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
             percentage = level * 100 / scale;
-            if (txtPercentageLabel!=null && txtLevel!=null) {
+            if (txtPercentageLabel !=null && txtLevel !=null) {
                 txtPercentageLabel.setText(percentage + "%");
                 txtLevel.setText(percentage + "%");
                 Date dt = new Date();
@@ -119,20 +116,28 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 String currentHoursAndMinutes = hours+ "h"  + ":" + minutes+ "m";
                 long savedMillis = System.currentTimeMillis();
                 Log.d("savedMillis", hours+" levelBattery:"+percentage);
-                sharedPreference_utils.setSaveBatteryCharts(context,chartsModels,percentage,hours);
-//                chartsList =  sharedPreference_utils.getSaveBatteryCharts(context,getChartsList);
-//                for (int i = 0;i<chartsList.size();i++){
-//                    Log.d("chartsListadasd", chartsList.get(i).getLevelBattery()+""+chartsList.get(i).getHours());
-//
+                int testt = minutes+59;
+//                if (minutes < 59) {
+//                    sharedPreference_utils.setSaveBatteryCharts(context, chartsModels, percentage, minutes);
+//                }else {
+//                    int minutesPass59 = minutes+59;
+//                    Log.d("testt", testt+"");
+//                    sharedPreference_utils.setSaveBatteryCharts(context, chartsModels, percentage, minutesPass59);
 //                }
-//                initChart2(context);
-
+                if (hours < 23) {
+                    sharedPreference_utils.setSaveBatteryCharts(context, chartsModels, percentage, hours);
+                }else {
+                    sharedPreference_utils.setSaveBatteryCharts(context, chartsModels, percentage, hours+23);
+                }
+                if (lineChart !=null && lineDataSet !=null) {
+                    lineDataSet.notifyDataSetChanged();
+                    lineChart.notifyDataSetChanged();
+                }
             }
-//            initChart2(context);
+//
             // Image
             if (imgBatteryImage!=null){
                 Resources res = context.getResources();
-
                 if (percentage >= 90) {
                     imgBatteryImage.setImageDrawable(res.getDrawable(R.drawable.b100));
 
@@ -171,65 +176,15 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 txtBigDOC.setText(tempTemp + " °C");
             }
         }
-
-
         ////BLUETOOTH
         setChangeBluetooth(intent);
-
 
         setChangeWifi(intent);
 
     }
 
 
-    private void initChart2(Context context) {
-        List<Entry> yValues = new ArrayList<>();
-        int Y,X;
-        for (int i = 0; i< chartsList.size(); i++){
-            Y = chartsList.get(i).getHours();
-            X = chartsList.get(i).getLevelBattery();
-            yValues.add(new Entry(Y,X));
-        }
-        for (int i = 0; i< chartsList.size(); i++){
-            Log.d("chartsModel", chartsList.get(i).getLevelBattery()+"");
-        }
-        Log.d("chartsSize", chartsList.size()+"");
-//        chartsList.remove(0);
-        Log.d("chartsSize", chartsList.size()+"");
 
-        lineDataSet = new LineDataSet(yValues,"Data Battery");
-        lineDataSet.setLineWidth(3f);
-        lineDataSet.setCircleRadius(5f);
-        lineDataSet.setCircleHoleRadius(2.5f);
-        lineDataSet.setColor(Color.LTGRAY);
-        lineDataSet.setCircleColor(Color.WHITE);
-        lineDataSet.setHighLightColor(Color.WHITE);
-        lineDataSet.setDrawValues(false);
-//        set1.setDrawCircles(false);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        lineDataSet.setCubicIntensity(0.2f);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillColor(Color.CYAN);
-        lineDataSet.setFillAlpha(80);
-        lineDataSet.notifyDataSetChanged();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet);
-        LineData data  = new LineData(dataSets);
-        Drawable drawable  = ContextCompat.getDrawable(context,R.drawable.gradient_charts);
-        lineDataSet.setFillDrawable(drawable);
-        lineChart.setPinchZoom(false);
-        lineChart.setDoubleTapToZoomEnabled(false);
-        lineChart.setData(data);
-        lineChart.setVisibleXRangeMaximum(100);
-        lineChart.notifyDataSetChanged();
-
-        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
-        xAxis.setGranularity(1);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-//        lineChart.setVisibleYRangeMaximum(100f);
-    }
 
     private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter {
         ArrayList<ChartsModel> chartsModels;
@@ -361,4 +316,56 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtHealth.setText(message);
         }
     }
+
+
+//    private void initChart2(Context context) {
+//        List<Entry> yValues = new ArrayList<>();
+//        int Y,X;
+//        for (int i = 0; i< chartsList.size(); i++){
+//            Y = chartsList.get(i).getHours();
+//            X = chartsList.get(i).getLevelBattery();
+//            yValues.add(new Entry(Y,X));
+//        }
+//
+//        lineDataSet = new LineDataSet(yValues,"Data Battery");
+//        lineDataSet.setLineWidth(3f);
+//        lineDataSet.setCircleRadius(5f);
+//        lineDataSet.setCircleHoleRadius(2.5f);
+//        lineDataSet.setColor(Color.LTGRAY);
+//        lineDataSet.setCircleColor(Color.WHITE);
+//        lineDataSet.setHighLightColor(Color.WHITE);
+//        lineDataSet.setDrawValues(false);
+////        lineDataSet.setDrawCircles(false);
+//        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+//        lineDataSet.setCubicIntensity(0.2f);
+//        lineDataSet.setDrawFilled(true);
+//        lineDataSet.setFillColor(Color.CYAN);
+//        lineDataSet.setFillAlpha(80);
+//        lineDataSet.notifyDataSetChanged();
+//        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+//        dataSets.add(lineDataSet);
+//        LineData data  = new LineData(dataSets);
+//        Drawable drawable  = ContextCompat.getDrawable(context,R.drawable.gradient_charts);
+//        lineDataSet.setFillDrawable(drawable);
+////        lineChart.setVerticalScrollBarEnabled(false);
+//
+//        lineChart.getDescription().setEnabled(false);
+//        lineChart.setDrawGridBackground(false);
+//        lineChart.setTouchEnabled(false);
+////        lineChart.setDragEnabled(true);
+////        lineChart.setViewPortOffsets(50,0,0,0);
+//        lineChart.setPinchZoom(false);
+////        lineChart.setEnabled(true);
+//        lineChart.setDoubleTapToZoomEnabled(false);
+//        lineChart.setData(data);
+////        lineChart.setVisibleXRangeMaximum(100);
+//        lineChart.notifyDataSetChanged();
+//
+////        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
+////        XAxis xAxis = lineChart.getXAxis();
+////        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
+////        xAxis.setGranularity(1);
+////        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+////        lineChart.setVisibleYRangeMaximum(100f);
+//    }
 }

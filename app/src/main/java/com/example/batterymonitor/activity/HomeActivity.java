@@ -6,30 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapter.ViewPagerAdapter;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 public class HomeActivity extends AppCompatActivity {
     private String tabTitles[] = new String[] { "Information", "Saver"};
@@ -41,14 +36,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
-
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
-
         }else {
             setTheme(R.style.DarkTheme);
         }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         floatingActionButton = findViewById(R.id.floatNoti);
@@ -86,7 +78,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
         imgToSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,8 +85,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,33 +92,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void showDialogNotification() {
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(HomeActivity.this,R.style.MyDialogTheme);
-////        alertDialogBuilder.setMessage(getString(R.string.FromAndroid8))
-////                .setCancelable(false)
-////                .setPositiveButton(getString(R.string.OK),
-////                        new DialogInterface.OnClickListener() {
-////                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-////                            public void onClick(DialogInterface dialog, int id) {
-////                                dialog.cancel();
-////
-////                            }
-////                        });
-//        alertDialogBuilder.setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.cancel();
-//                    }
-//                });
-//                LayoutInflater inflater = this.getLayoutInflater();
-//        View add_menu_layout = inflater.inflate(R.layout.dialog_noti,null);
-//        alertDialogBuilder.setView(add_menu_layout);
-//
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//        alertDialog.show();
-//    }
-
     private void showDialogNotification() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(HomeActivity.this, R.style.BottomSheetDialogTheme);
         View bottomSheetView = LayoutInflater.from(getApplicationContext())
@@ -145,8 +107,6 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
-
-
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

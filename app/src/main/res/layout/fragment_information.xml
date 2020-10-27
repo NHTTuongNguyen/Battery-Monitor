@@ -29,6 +29,7 @@
                     android:weightSum="2"
                     android:padding="@dimen/dimen_10">
                     <LinearLayout
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -556,10 +557,22 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
+            <androidx.cardview.widget.CardView
+                android:layout_margin="@dimen/dimen_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/attrsCardBackgroundColor"
+                app:cardCornerRadius="@dimen/dimen_10">
+                   <com.google.android.ads.nativetemplates.TemplateView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/my_template"
+                       app:gnt_template_type="@layout/gnt_small_template_view"
+                       />
+            </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="@dimen/dimen_250"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginRight="@dimen/dimen_10"
                 android:layout_marginLeft="@dimen/dimen_10"
@@ -571,7 +584,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BatteryLevelGraph"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/dimen_15"/>
                     <com.github.mikephil.charting.charts.LineChart
+                        android:layout_margin="@dimen/dimen_10"
                         android:id="@+id/line_Charts"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>

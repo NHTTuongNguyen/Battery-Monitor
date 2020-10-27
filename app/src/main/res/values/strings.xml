@@ -60,4 +60,7 @@
     <string name="Notification">Notification</string>
     <string name="OK">OK</string>
     <string name="FromAndroid8">From Android 8 some functions cannot be used</string>
+    <string name="DataBattery">Data Battery</string>
+    <string name="BatteryLevelGraph">Battery Level Graph</string>
+    <string name="Ads_appId">ca-app-pub-3940256099942544/2247696110</string>
 </resources>

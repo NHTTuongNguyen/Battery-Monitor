@@ -47,6 +47,9 @@
     <dimen name="dimen_1">1dp</dimen>
     <dimen name="dimen_17">17dp</dimen>
     <dimen name="dimen_3">3dp</dimen>
+    <dimen name="dimen_200">200dp</dimen>
+    <dimen name="dimen_170">170dp</dimen>
+    <dimen name="dimen_250">250dp</dimen>
 
 
 </resources>

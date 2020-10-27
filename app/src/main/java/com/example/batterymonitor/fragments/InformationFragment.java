@@ -43,6 +43,7 @@ import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
 import com.example.batterymonitor.service.ServiceNotifi;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
+import com.facebook.ads.Ad;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -53,6 +54,17 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.NativeAdOptions;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -107,6 +119,8 @@ public class InformationFragment extends Fragment{
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
     private LineDataSet lineDataSet;
+    private AdView adView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
@@ -131,10 +145,8 @@ public class InformationFragment extends Fragment{
             }
         });
         linearLayout_Bluetooth.setOnClickListener(new View.OnClickListener() {
-            boolean trues;
             @Override
             public void onClick(View view) {
-//                trues = !trues;
                 BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
                 if (adapter == null){
                     Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
@@ -211,7 +223,6 @@ public class InformationFragment extends Fragment{
                 setActionIntent(url_Battery);
             }
         });
-
         ///setBluetooth
         setBluetooth();
         displayCurrentTime();
@@ -219,17 +230,36 @@ public class InformationFragment extends Fragment{
             Log.d("chapterlistinformaiton", chartsList.get(i).getLevelBattery()+""+chartsList.get(i).getHours());
         }
         initChart2();
-//        Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ServiceNotifi.class);
-//        getActivity().startService(serviceIntent);
+        setAdsView();
+
         return view;
     }
+
+    private void setAdsView() {
+        MobileAds.initialize(getActivity(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdLoader.Builder builder = new AdLoader.Builder(getActivity(),getString(R.string.Ads_appId));
+        builder.forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+            @Override
+            public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                TemplateView templateView = getActivity().findViewById(R.id.my_template);
+                templateView.setNativeAd(unifiedNativeAd);
+            }
+        });
+        AdLoader adLoader  = builder.build();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adLoader.loadAd(adRequest);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-
         lineDataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
     }
@@ -247,16 +277,6 @@ public class InformationFragment extends Fragment{
         }
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.d("checkori","landscape");
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Log.d("checkori","portrait");
-        }
-    }
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
         List<Entry> yValues = new ArrayList<>();
@@ -266,7 +286,8 @@ public class InformationFragment extends Fragment{
             X = chartsList.get(i).getLevelBattery();
             yValues.add(new Entry(Y,X));
         }
-        lineDataSet = new LineDataSet(yValues,"Data Battery");
+
+        lineDataSet = new LineDataSet(yValues,getString(R.string.DataBattery));
         lineDataSet.setLineWidth(3f);
         lineDataSet.setCircleRadius(5f);
         lineDataSet.setCircleHoleRadius(2.5f);
@@ -286,17 +307,23 @@ public class InformationFragment extends Fragment{
         LineData data  = new LineData(dataSets);
         Drawable drawable  = ContextCompat.getDrawable(getActivity(),R.drawable.gradient_charts);
         lineDataSet.setFillDrawable(drawable);
+//        lineChart.setVerticalScrollBarEnabled(false);
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setDrawGridBackground(false);
+        lineChart.setTouchEnabled(false);
+//        lineChart.setDragEnabled(true);
+//        lineChart.setViewPortOffsets(10,0,10,0);
         lineChart.setPinchZoom(false);
+//        lineChart.setEnabled(true);
         lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setData(data);
-        lineChart.setVisibleXRangeMaximum(100);
+//        lineChart.setVisibleXRangeMaximum(100);
         lineChart.notifyDataSetChanged();
-
-        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
-        xAxis.setGranularity(1);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+//        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
+//        XAxis xAxis = lineChart.getXAxis();
+//        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
+//        xAxis.setGranularity(1);
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
 //        lineChart.setVisibleYRangeMaximum(100f);
     }
 
