@@ -51,38 +51,43 @@ public class ServiceNotifi extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        float input = (float) intent.getFloatExtra("message",0);
-//        Log.d("get_message",input+"");
-//        Intent notificationIntent = new Intent(this, HomeActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-//                0, notificationIntent, 0);
-//            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_circle)) // set a png or jpg images
-//                    .setSmallIcon(R.drawable.ic_baseline_android_24)
-//                    .setContentTitle("Battery: "+input+" °C")
-//                    .setContentText(getString(R.string.BatteryMonitorRunning))
-//                    .setContentIntent(pendingIntent)
-//                    .build();
-//            startForeground(1, notification);
-//
-//
-//
-//        //do heavy work on a background thread
-////        stopSelf();
-//        return START_NOT_STICKY;
-        sharedPreference_utils = new SharedPreference_Utils(this);
-        final Runnable deleteIt = new Runnable() {
-            public void run() {
-
-                Log.d("timeDelay","run");
-                sharedPreference_utils.removeSaveBatteryThan24h();
-//                getSharedPreferences("pref_file", 0).edit().clear().commit();
-//                mHandle.cancel(false); //don't cancel here if you want it to run every 24 hours
+        int input = intent.getIntExtra("message",0);
+        Log.d("get_message",input+"");
+        sharedPreference_utils= new SharedPreference_Utils(this);
+        if (sharedPreference_utils != null) {
+            if (input == 59) {
             }
-        };
-        if(mHandle == null)
-            mHandle = scheduler.scheduleAtFixedRate(deleteIt,  60 * 60 * 24, 60 * 60 * 24, TimeUnit.SECONDS);
-        return START_STICKY;
+        }
+        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_android_circle)) // set a png or jpg images
+                    .setSmallIcon(R.drawable.ic_baseline_android_24)
+                    .setContentTitle(input+"h")
+                    .setContentText(getString(R.string.BatteryMonitorRunning))
+                    .setContentIntent(pendingIntent)
+                    .build();
+            startForeground(1, notification);
+
+
+
+        //do heavy work on a background thread
+//        stopSelf();
+        return START_NOT_STICKY;
+//        sharedPreference_utils = new SharedPreference_Utils(this);
+//        final Runnable deleteIt = new Runnable() {
+//            public void run() {
+//
+//                Log.d("timeDelay","run");
+//                sharedPreference_utils.removeSaveBatteryThan24h();
+////                getSharedPreferences("pref_file", 0).edit().clear().commit();
+////                mHandle.cancel(false); //don't cancel here if you want it to run every 24 hours
+//            }
+//        };
+//        if(mHandle == null)
+//            mHandle = scheduler.scheduleAtFixedRate(deleteIt,  60 * 60 * 24, 60 * 60 * 24, TimeUnit.SECONDS);
+//        return START_STICKY;
     }
     @Override
     public void onDestroy() {

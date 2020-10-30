@@ -1,15 +1,15 @@
 package com.example.batterymonitor.models;
 
 public class ChartsModel {
-    int levelBattery;
-    int hours;
+    float levelBattery;
+    float hours;
 
-    public ChartsModel(int levelBattery, int hours) {
+    public ChartsModel(float levelBattery, float hours) {
         this.levelBattery = levelBattery;
         this.hours = hours;
     }
 
-    public int getLevelBattery() {
+    public float getLevelBattery() {
         return levelBattery;
     }
 
@@ -17,7 +17,7 @@ public class ChartsModel {
         this.levelBattery = levelBattery;
     }
 
-    public int getHours() {
+    public float getHours() {
         return hours;
     }
 

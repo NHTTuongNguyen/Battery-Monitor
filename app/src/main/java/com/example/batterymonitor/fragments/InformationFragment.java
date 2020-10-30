@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.batterymonitor.Common.Common;
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapters.ChartsAdapter;
 import com.example.batterymonitor.models.ChartsModel;
@@ -62,6 +64,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.formats.NativeAdOptions;
+import com.google.android.gms.ads.formats.NativeAppInstallAd;
+import com.google.android.gms.ads.formats.NativeContentAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -77,6 +81,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -120,7 +127,8 @@ public class InformationFragment extends Fragment{
     private RecyclerView recyclerView;
     private LineDataSet lineDataSet;
     private AdView adView;
-
+    private int hours;
+    private TemplateView templateView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
@@ -132,6 +140,7 @@ public class InformationFragment extends Fragment{
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         intentFilter_WIFI_STATE_CHANGED_ACTION = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+
         linearLayout_View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,8 +186,6 @@ public class InformationFragment extends Fragment{
                        }
                    }else {
                        alertDialogPermission();
-
-
                    }
                }
             }
@@ -213,7 +220,6 @@ public class InformationFragment extends Fragment{
                 }else {
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
                     wifiManager.setWifiEnabled(true);
-
                 }
             }
         });
@@ -226,13 +232,28 @@ public class InformationFragment extends Fragment{
         ///setBluetooth
         setBluetooth();
         displayCurrentTime();
-        for (int i = 0;i<chartsList.size();i++){
-            Log.d("chapterlistinformaiton", chartsList.get(i).getLevelBattery()+""+chartsList.get(i).getHours());
-        }
-        initChart2();
-        setAdsView();
 
+        for (int i = 0;i<chartsList.size();i++){
+            Log.d("chapterlistinformaiton", "Phần Trăm Pin :"+chartsList.get(i).getLevelBattery()+" Giờ :"+chartsList.get(i).getHours());
+        }
+
+        initChart2();
+        checkConnectionAds();
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
+        lineDataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
         return view;
+    }
+
+    private void checkConnectionAds() {
+        if (Common.isConnectedtoInternet(getActivity())){
+            setAdsView();
+        }else {
+            templateView.setVisibility(View.GONE);
+
+        }
     }
 
     private void setAdsView() {
@@ -240,28 +261,46 @@ public class InformationFragment extends Fragment{
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
+
         });
         AdLoader.Builder builder = new AdLoader.Builder(getActivity(),getString(R.string.Ads_appId));
-        builder.forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+        builder.forUnifiedNativeAd(
+                new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
             @Override
             public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
-                TemplateView templateView = getActivity().findViewById(R.id.my_template);
-                templateView.setNativeAd(unifiedNativeAd);
+                if (templateView!=null) {
+                    templateView.setNativeAd(unifiedNativeAd);
+                }
+            }
+
+        }).withAdListener(new AdListener(){
+            @Override
+            public void onAdFailedToLoad(LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                Log.d("loadADS","onAdFailedToLoad");
+            }
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+//                templateView.setVisibility(View.GONE);
+
+                Log.d("loadADS","onAdClosed");
             }
         });
         AdLoader adLoader  = builder.build();
         AdRequest adRequest = new AdRequest.Builder().build();
         adLoader.loadAd(adRequest);
     }
-
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-        lineDataSet.notifyDataSetChanged();
-        lineChart.notifyDataSetChanged();
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
+//        lineDataSet.notifyDataSetChanged();
+//        lineChart.notifyDataSetChanged();
+        checkConnectionAds();
+
     }
     private void setBluetooth() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -280,13 +319,21 @@ public class InformationFragment extends Fragment{
     private void initChart2() {
         lineChart  = view.findViewById(R.id.line_Charts);
         List<Entry> yValues = new ArrayList<>();
-        int Y,X;
+        float Y,X;
+        float sum = 0;
         for (int i = 0; i< chartsList.size(); i++){
-            Y = chartsList.get(i).getHours();
+            sum++;
+            Y= chartsList.get(i).getHours();
             X = chartsList.get(i).getLevelBattery();
-            yValues.add(new Entry(Y,X));
+            yValues.add(new Entry(sum,X));
         }
 
+        for (int i = 0;i<chartsList.size();i++){
+            Log.d("lisstTest","Hours: "+chartsList.get(i).getHours()+" Battery"+chartsList.get(i).getLevelBattery());
+        }
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
         lineDataSet = new LineDataSet(yValues,getString(R.string.DataBattery));
         lineDataSet.setLineWidth(3f);
         lineDataSet.setCircleRadius(5f);
@@ -302,6 +349,7 @@ public class InformationFragment extends Fragment{
         lineDataSet.setFillColor(Color.CYAN);
         lineDataSet.setFillAlpha(80);
         lineDataSet.notifyDataSetChanged();
+
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet);
         LineData data  = new LineData(dataSets);
@@ -311,14 +359,15 @@ public class InformationFragment extends Fragment{
         lineChart.getDescription().setEnabled(false);
         lineChart.setDrawGridBackground(false);
         lineChart.setTouchEnabled(false);
-//        lineChart.setDragEnabled(true);
-//        lineChart.setViewPortOffsets(10,0,10,0);
+        lineChart.setDragEnabled(true);
+        lineChart.setViewPortOffsets(10,0,10,0);
         lineChart.setPinchZoom(false);
 //        lineChart.setEnabled(true);
         lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setData(data);
 //        lineChart.setVisibleXRangeMaximum(100);
         lineChart.notifyDataSetChanged();
+
 //        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
 //        XAxis xAxis = lineChart.getXAxis();
 //        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
@@ -391,14 +440,7 @@ public class InformationFragment extends Fragment{
                 try{
                     txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
                     txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
-//                    ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-//                    ActivityManager activityManager = (ActivityManager)getActivity(). getSystemService(Context.ACTIVITY_SERVICE);
-//                    activityManager.getMemoryInfo(mi);
-//                    long availableMegs = mi.availMem / 1048576L;
-//                    long percentAvail = mi.availMem / mi.totalMem;
-//                    Log.d("availableMegs",availableMegs+"");
-//                    Log.d("percentAvail",percentAvail+"");
-//                    txtCurrentMemoryThread.setText(availableMegs+"");
+
                     Calendar calendar = Calendar.getInstance();
                     String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                     txtCurrentDaysThread.setText(currentDate);
@@ -408,6 +450,12 @@ public class InformationFragment extends Fragment{
                     int seconds = dt.getSeconds();
                     String curTime = hours+ "h"  + ":" + minutes+ "m" + ":" + seconds+ "s";
                     txtCurrentTimeThread.setText(curTime);
+
+
+//                    initChart2();
+                    lineDataSet.notifyDataSetChanged();
+                    lineChart.notifyDataSetChanged();
+
                 }catch (Exception e) {}
             }
         });
@@ -427,6 +475,7 @@ public class InformationFragment extends Fragment{
         }
     }
     private void initView() {
+        templateView = view.findViewById(R.id.my_template);
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
@@ -448,7 +497,14 @@ public class InformationFragment extends Fragment{
 
     @Override
     public void onPause() {
-        getActivity().unregisterReceiver(batteryReceiverClass);
+//        getActivity().unregisterReceiver(batteryReceiverClass);
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(batteryReceiverClass);
+
     }
 }

@@ -20,17 +20,21 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
                 app:cardCornerRadius="@dimen/dimen_10">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
                     <LinearLayout
+                        android:id="@+id/linearLayoutClassMode_Line"
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-                            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_10"
-                android:orientation="horizontal">
-
-                <ImageView
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_10"
+                        android:orientation="horizontal">
+                            <ImageView
                     android:layout_marginTop="@dimen/dimen_5"
                     android:id="@+id/img_ClassicMode"
                     android:layout_width="44dp"
@@ -38,8 +42,7 @@
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
                     android:src="@drawable/ic_baseline_offline_bolt_24_default" />
-
-                <LinearLayout
+                            <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_toRightOf="@id/img_ClassicMode"
                     android:layout_width="match_parent"
@@ -70,20 +73,20 @@
                             android:layout_marginRight="2dp" />
                     </RelativeLayout>
                 </LinearLayout>
-            </RelativeLayout>
+                    </RelativeLayout>
                     <LinearLayout
                         android:layout_marginBottom="@dimen/dimen_10"
-                        android:id="@+id/linearLayoutClassMode_Line"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <View
+                            android:id="@+id/viewClassicModel"
                             android:layout_gravity="center"
                             android:background="@color/colorGreen"
                             android:layout_width="@dimen/dimen_50"
                             android:layout_height="5dp"/>
                     </LinearLayout>
-
+                    </LinearLayout>
                     <LinearLayout
                             android:visibility="gone"
                             android:id="@+id/linearLayoutClassMode"
@@ -153,7 +156,6 @@
                                 />
 
                             <TextView
-                                android:id="@+id/txtHealth"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -164,6 +166,7 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/dimen_5"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -186,7 +189,6 @@
                                 />
 
                             <TextView
-                                android:id="@+id/txtPower"
                                 android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -231,7 +233,6 @@
                                 />
 
                             <TextView
-                                android:id="@+id/txtVoltage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
@@ -277,6 +278,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <RelativeLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
@@ -318,14 +320,17 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/linearLayoutLongLifeMode_Line">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_10"
                 android:orientation="horizontal">
-
                 <ImageView
-
                     android:layout_marginTop="@dimen/dimen_5"
                     android:id="@+id/img_LongLifeMode"
                     android:layout_width="44dp"
@@ -366,19 +371,18 @@
             </RelativeLayout>
              <LinearLayout
                  android:layout_marginBottom="@dimen/dimen_10"
-
-                 android:id="@+id/linearLayoutLongLifeMode_Line"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:orientation="vertical">
 
                  <View
+                     android:id="@+id/viewLongLifeMode"
                      android:layout_gravity="center"
                      android:background="@color/colorGreen"
                      android:layout_width="@dimen/dimen_50"
                      android:layout_height="5dp"/>
              </LinearLayout>
-
+            </LinearLayout>
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/linearLayoutLongLifeMode"
@@ -460,6 +464,7 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/dimen_5"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -575,6 +580,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <RelativeLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
@@ -617,6 +623,11 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/linearLayoutSleepMode_Line">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -665,21 +676,18 @@
             </RelativeLayout>
             <LinearLayout
                 android:layout_marginBottom="@dimen/dimen_10"
-
-                android:id="@+id/linearLayoutSleepMode_Line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <View
+                    android:id="@+id/viewSleepModel"
                     android:layout_gravity="center"
                     android:background="@color/colorGreen"
                     android:layout_width="@dimen/dimen_50"
                     android:layout_height="5dp"/>
             </LinearLayout>
-
+            </LinearLayout>
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -706,8 +714,8 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/linearLayoutSleepMode"
                     android:visibility="gone"
+                    android:id="@+id/linearLayoutSleepMode"
                     android:theme="@style/TextViewSize"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -787,6 +795,7 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/dimen_5"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
@@ -902,6 +911,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <RelativeLayout
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
@@ -942,6 +952,12 @@
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/linearLayoutCustomMode_Line"
+                       >
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -990,17 +1006,17 @@
                         </RelativeLayout>
                         <LinearLayout
                             android:layout_marginBottom="@dimen/dimen_10"
-                            android:id="@+id/linearLayoutCustomMode_Line"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
                             <View
+                                android:id="@+id/viewCustomMode"
                                 android:layout_gravity="center"
                                 android:background="@color/colorGreen"
                                 android:layout_width="@dimen/dimen_50"
                                 android:layout_height="5dp"/>
                         </LinearLayout>
+                    </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -1105,6 +1121,7 @@
 
                                     </LinearLayout>
                                     <LinearLayout
+                                        android:visibility="gone"
                                         android:layout_marginBottom="@dimen/dimen_5"
                                         android:orientation="vertical"
                                         android:layout_width="match_parent"
@@ -1216,6 +1233,7 @@
                                         </RelativeLayout>
                                     </LinearLayout>
                                     <LinearLayout
+                                        android:visibility="gone"
                                         android:layout_marginBottom="@dimen/dimen_5"
                                         android:orientation="vertical"
                                         android:layout_width="match_parent"

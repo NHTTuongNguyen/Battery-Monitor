@@ -35,7 +35,7 @@ public class SharedPreference_Utils {
     public SharedPreference_Utils(Context context){
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
     }
-    public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, int percentage, int currrrTime) {
+    public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, float percentage, float currrrTime) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String jsonStoryWatched = sharedPreferences.getString(SaveBattery, null);
@@ -46,10 +46,14 @@ public class SharedPreference_Utils {
         }
         if (!hasHourInLis(chartsModelArrayList,currrrTime)){
             chartsModelArrayList.add(new ChartsModel(percentage,  currrrTime));
+
+//            Log.d("set_chartArrayList",percentage+"  "+ currrrTime);
+
         }
+//        chartsModelArrayList.add(new ChartsModel(percentage,  currrrTime));
         String json  =gson.toJson(chartsModelArrayList);
         editor.putString(SharedPreference_Utils.SaveBattery,json);
-        Log.d("set_chartArrayList", json);
+        Log.d("set_chartArrayList",json);
         editor.commit();
     }
     public ArrayList<ChartsModel> getSaveBatteryCharts(Context context,ArrayList<ChartsModel> chartsList) {
@@ -68,7 +72,7 @@ public class SharedPreference_Utils {
         editor.remove(SaveBattery);
         editor.commit();
     }
-    private boolean hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, int idHour){
+    private boolean hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, float idHour){
         for (int i = 0;i<chartsModelArrayList.size();i++){
             if (chartsModelArrayList.get(i).getHours() == idHour){
                 return true;
