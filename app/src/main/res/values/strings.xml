@@ -25,6 +25,7 @@
     <string name="Volume">Volume</string>
     <string name="ClassicModel">Classic Model</string>
     <string name="LowPower">Low power consumption, intelligent\nprovince electricity.</string>
+    <string name="LowPowerHdpi">Low power consumption,\nintelligent province electricity.</string>
     <string name="LongLifeMode">Long Life Mode</string>
     <string name="SleepMode">Sleep Mode</string>
     <string name="CustomMode">Custom Mode</string>

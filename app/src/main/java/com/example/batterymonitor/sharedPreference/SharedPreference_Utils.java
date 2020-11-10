@@ -72,7 +72,7 @@ public class SharedPreference_Utils {
         editor.remove(SaveBattery);
         editor.commit();
     }
-    private boolean hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, float idHour){
+    private boolean     hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, float idHour){
         for (int i = 0;i<chartsModelArrayList.size();i++){
             if (chartsModelArrayList.get(i).getHours() == idHour){
                 return true;

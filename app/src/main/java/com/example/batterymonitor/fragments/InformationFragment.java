@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -244,9 +245,37 @@ public class InformationFragment extends Fragment{
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
         lineDataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
+
+        int batterySize = 0;
+        batterySize= (int)  getBatteryCapacity(getActivity());
+        Log.d("12213",batterySize+"");
         return view;
     }
+    public double getBatteryCapacity(Context context) {
+        Object mPowerProfile;
+        Object power;
+        double batteryCapacity = 0;
+        final String POWER_PROFILE_CLASS = "com.android.internal.os.PowerProfile";
 
+        try {
+            mPowerProfile = Class.forName(POWER_PROFILE_CLASS)
+                    .getConstructor(Context.class)
+                    .newInstance(context);
+
+            batteryCapacity = (double) Class
+                    .forName(POWER_PROFILE_CLASS)
+                    .getMethod("getBatteryCapacity")
+                    .invoke(mPowerProfile);
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return batteryCapacity;
+
+    }
     private void checkConnectionAds() {
         if (Common.isConnectedtoInternet(getActivity())){
             setAdsView();
@@ -291,17 +320,7 @@ public class InformationFragment extends Fragment{
         AdRequest adRequest = new AdRequest.Builder().build();
         adLoader.loadAd(adRequest);
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
-//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
-//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-//        lineDataSet.notifyDataSetChanged();
-//        lineChart.notifyDataSetChanged();
-        checkConnectionAds();
 
-    }
     private void setBluetooth() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -342,7 +361,7 @@ public class InformationFragment extends Fragment{
         lineDataSet.setCircleColor(Color.WHITE);
         lineDataSet.setHighLightColor(Color.WHITE);
         lineDataSet.setDrawValues(false);
-//        lineDataSet.setDrawCircles(false);
+        lineDataSet.setDrawCircles(false);//
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         lineDataSet.setCubicIntensity(0.2f);
         lineDataSet.setDrawFilled(true);
@@ -499,12 +518,28 @@ public class InformationFragment extends Fragment{
     public void onPause() {
 //        getActivity().unregisterReceiver(batteryReceiverClass);
         super.onPause();
+
+        Log.d("ActivityLifeCycler","onPause");
     }
 
     @Override
     public void onDestroy() {
+        Log.d("ActivityLifeCycler","onDestroy");
         super.onDestroy();
         getActivity().unregisterReceiver(batteryReceiverClass);
+
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
+//        lineDataSet.notifyDataSetChanged();
+//        lineChart.notifyDataSetChanged();
+        checkConnectionAds();
+        Log.d("ActivityLifeCycler","onResume");
 
     }
 }

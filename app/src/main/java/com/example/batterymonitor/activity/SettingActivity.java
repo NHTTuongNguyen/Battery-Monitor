@@ -55,9 +55,8 @@ public class SettingActivity extends AppCompatActivity {
         imgSettingCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
+
             }
         });
         relativeLayout_Rate.setOnClickListener(new View.OnClickListener() {
