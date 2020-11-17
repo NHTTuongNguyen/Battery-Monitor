@@ -110,7 +110,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         if (action != null && action.equals(Intent.ACTION_BATTERY_CHANGED)){
             ///Status
 //            ACTION_BATTERY_CHANGED
-           setCharingStatus(intent);
+           setCharingStatus(intent,context);
             // Percentage
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
@@ -158,12 +158,12 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 float floatVoltage = (float) (intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) * 0.001);
                 txtVoltage.setText(floatVoltage + " V");
             }
-            setHealth(intent);
+            setHealth(intent,context);
             if (txtBatteryType !=null) {
                 String typeBattery = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
                 txtBatteryType.setText(typeBattery);
             }
-            getChargingSource(intent);
+            getChargingSource(intent,context);
             if (txtTemperature !=null && txtBigDOC !=null) {
                 final float tempTemp = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10;
                 txtTemperature.setText(tempTemp + " °C");
@@ -250,13 +250,11 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 WifiManager.WIFI_STATE_UNKNOWN);
         switch (wifiStateExtra) {
             case WifiManager.WIFI_STATE_ENABLED:
-                Log.d("wifiStateExtra","On");
                 if (imageView_WifiOnOff!=null) {
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
                 }
                 break;
             case WifiManager.WIFI_STATE_DISABLED:
-                Log.d("wifiStateExtra","off");
                 if (imageView_WifiOnOff!=null) {
                     imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
                 }
@@ -270,94 +268,88 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 if (imageView_Bluetooth !=null) {
                     imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
                 }
-                Log.d("BluetoothAdapter","Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
-                Log.d("BluetoothAdapter","Turning Bluetooth off");
                 break;
             case BluetoothAdapter.STATE_ON:
                 if (imageView_Bluetooth !=null) {
                     imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
                 }
-                Log.d("BluetoothAdapter","Bluetooth on");
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:
-                Log.d("BluetoothAdapter","Turning Bluetooth on");
                 break;
             default:
-                Log.d("BluetoothAdapter","sai het roi");
         }
     }
-    private void setCharingStatus(Intent intent) {
+    private void setCharingStatus(Intent intent,Context context) {
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS,-1);
         String message="";
         switch (status){
             case BatteryManager.BATTERY_STATUS_FULL:
-                message = "Full";
+                message = context.getString(R.string.Full);
                 break;
             case BatteryManager.BATTERY_STATUS_CHARGING:
-                Log.d("GGG","Dansaccs");
-                message = "Charging";
+                message = context.getString(R.string.Charging);
                 break;
             case BatteryManager.BATTERY_STATUS_DISCHARGING:
-                message = "Discharging";
+                message = context.getString(R.string.Discharging);
                 break;
             case BatteryManager.BATTERY_STATUS_NOT_CHARGING:
-                message = "Not charging";
+                message = context.getString(R.string.Notcharging);
                 break;
             case BatteryManager.BATTERY_STATUS_UNKNOWN:
-                message = "Unknown";
+                message = context.getString(R.string.Unknown);
                 break;
         }
         if (txtStatusLabel!=null) {
             txtStatusLabel.setText(message);
         }
     }
-    private void getChargingSource(Intent intent) {
+    private void getChargingSource(Intent intent,Context context) {
         int sourceTemp = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED,-1);
         String message="";
         switch (sourceTemp){
             case BatteryManager.BATTERY_PLUGGED_AC:
-                message = "AC";
+                message = context.getString(R.string.AC);
                 break;
             case BatteryManager.BATTERY_PLUGGED_USB:
-                message = "USB";
+                message = context.getString(R.string.USB);
                 break;
             case BatteryManager.BATTERY_PLUGGED_WIRELESS:
-                message = "WIRELESS";
+                message = context.getString(R.string.WIRELESS);
                 break;
             default:
-                message = "Unplugged";
+                message = context.getString(R.string.Unplugged);
         }
         if (txtChargingSource!=null && txtPower !=null) {
             txtChargingSource.setText(message);
             txtPower.setText(message);
         }
     }
-    private void setHealth(Intent intent) {
+    private void setHealth(Intent intent,Context context) {
         int val = intent.getIntExtra(BatteryManager.EXTRA_HEALTH,-1);
         String message = "";
         switch (val){
             case BatteryManager.BATTERY_HEALTH_UNKNOWN:
-                message = "Unknown";
+                message = context.getString(R.string.Unknown);
                 break;
             case BatteryManager.BATTERY_HEALTH_GOOD:
-                message = "Good";
+                message = context.getString(R.string.Good);
                 break;
             case BatteryManager.BATTERY_HEALTH_OVERHEAT:
-                message = "Overheat";
+                message = context.getString(R.string.Overheat);
                 break;
             case BatteryManager.BATTERY_HEALTH_DEAD:
-                message = "Dead";
+                message = context.getString(R.string.Dead);
                 break;
             case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
-                message = "Over Voltage";
+                message = context.getString(R.string.OverVoltage);
                 break;
             case BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE:
-                message = "Failure";
+                message = context.getString(R.string.Failure);
                 break;
             case BatteryManager.BATTERY_HEALTH_COLD:
-                message = "Cold";
+                message = context.getString(R.string.Cold);
                 break;
         }
         if (txtHealth != null) {

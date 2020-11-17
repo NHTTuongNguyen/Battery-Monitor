@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.example.batterymonitor.Common.Common;
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.activity.HomeActivity;
 import com.example.batterymonitor.adapters.ChartsAdapter;
 import com.example.batterymonitor.models.ChartsModel;
 import com.example.batterymonitor.receiver.BatteryReceiverClass;
@@ -133,6 +134,8 @@ public class InformationFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
+//        sharedPreference_utils.getChangeLanguage(getActivity());
+
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
         initView();
@@ -191,7 +194,6 @@ public class InformationFragment extends Fragment{
                }
             }
         });
-        eventScreen_ORIENTATION();
         linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
             boolean landscape;
             @Override
@@ -249,6 +251,10 @@ public class InformationFragment extends Fragment{
         int batterySize = 0;
         batterySize= (int)  getBatteryCapacity(getActivity());
         Log.d("12213",batterySize+"");
+
+//        String locale = java.util.Locale.getDefault().getDisplayName();
+//        Log.d("localelocale",locale+"");
+
         return view;
     }
     public double getBatteryCapacity(Context context) {
@@ -407,21 +413,7 @@ public class InformationFragment extends Fragment{
     }
 
 
-    private void eventScreen_ORIENTATION() {
-        int orient = getResources().getConfiguration().orientation;
-        switch(orient) {
-            case Configuration.ORIENTATION_LANDSCAPE:
-                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
-                Log.d("YYY","ORIENTATION_LANDSCAPE:");
-                break;
-            case Configuration.ORIENTATION_PORTRAIT:
-                imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
-                Log.d("YYY","ORIENTATION_PORTRAIT:");
-                // handle portrait here
-                break;
-            default:
-        }
-    }
+
     private  void alertDialogPermission() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Permission write settings !");

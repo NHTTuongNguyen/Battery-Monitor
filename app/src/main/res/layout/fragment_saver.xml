@@ -42,19 +42,31 @@
                     android:background="@drawable/cercleshape"
                     android:padding="10dp"
                     android:src="@drawable/ic_baseline_offline_bolt_24_default" />
-                            <LinearLayout
+                        <LinearLayout
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_toRightOf="@id/img_ClassicMode"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="?attr/attrsTextColor"
-                        android:textStyle="bold"
-                        android:id="@+id/txtClassicMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ClassicModel"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_marginTop="@dimen/dimen_10"
+                                    android:textColor="?attr/attrsTextColor"
+                                    android:textStyle="bold"
+                                    android:id="@+id/txtClassicMode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/ClassicModel"/>
+                                <RadioButton
+                                    android:layout_alignParentRight="true"
+                                    android:id="@+id/radioButtonClassicMode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="2dp" />
+                            </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -65,12 +77,7 @@
                             android:text="@string/LowPower"
                             android:layout_height="wrap_content"/>
 
-                        <RadioButton
-                            android:id="@+id/radioButtonClassicMode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="2dp" />
+
                     </RelativeLayout>
                 </LinearLayout>
                     </RelativeLayout>
@@ -345,13 +352,24 @@
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="?attr/attrsTextColor"
-                        android:textStyle="bold"
-                        android:id="@+id/txtLongLifeMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/LongLifeMode"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:textColor="?attr/attrsTextColor"
+                            android:textStyle="bold"
+                            android:id="@+id/txtLongLifeMode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/LongLifeMode"/>
+                        <RadioButton
+                            android:id="@+id/radioButtonLongLifeMode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -360,11 +378,7 @@
                             android:layout_width="wrap_content"
                             android:text="@string/CloseEverything"
                             android:layout_height="wrap_content"/>
-                        <RadioButton
-                            android:id="@+id/radioButtonLongLifeMode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"/>
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -649,27 +663,32 @@
                     android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="?attr/attrsTextColor"
-                        android:textStyle="bold"
-                        android:id="@+id/txtSleepMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/SleepMode"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
                         <TextView
+                            android:layout_marginTop="@dimen/dimen_10"
                             android:textColor="?attr/attrsTextColor"
+                            android:textStyle="bold"
+                            android:id="@+id/txtSleepMode"
                             android:layout_width="wrap_content"
-                            android:text="@string/Automatically"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:text="@string/SleepMode"/>
                         <RadioButton
                             android:id="@+id/radioButtonSleepMode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="?attr/attrsTextColor"
+                            android:layout_width="wrap_content"
+                            android:text="@string/Automatically"
+                            android:layout_height="wrap_content"/>
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -979,13 +998,25 @@
                                 android:layout_width="match_parent"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
-                                <TextView
-                                    android:textColor="?attr/attrsTextColor"
-                                    android:textStyle="bold"
-                                    android:id="@+id/txtCustomMode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/CustomMode"/>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_marginTop="@dimen/dimen_10"
+                                        android:textColor="?attr/attrsTextColor"
+                                        android:textStyle="bold"
+                                        android:id="@+id/txtCustomMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/CustomMode"/>
+                                    <RadioButton
+                                        android:id="@+id/radioButtonCustomMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"/>
+                                </RelativeLayout>
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
@@ -995,11 +1026,7 @@
                                         android:layout_width="wrap_content"
                                         android:text="@string/EnterUsing"
                                         android:layout_height="wrap_content"/>
-                                    <RadioButton
-                                        android:id="@+id/radioButtonCustomMode"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"/>
+
                                 </RelativeLayout>
                             </LinearLayout>
 
@@ -1043,7 +1070,6 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:visibility="gone"
                                 android:id="@+id/linearLayoutCustomMode"
                                 android:theme="@style/TextViewSize"
                                 android:layout_width="match_parent"
@@ -1215,9 +1241,10 @@
                                             <TextView
                                                 android:layout_toRightOf="@+id/img_Temperature"
                                                 android:layout_marginLeft="10dp"
-                                                android:layout_width="wrap_content"
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:text="@string/ScreenTimeOut"
+                                                android:maxLines="2"
                                                 android:textColor="?attr/attrsTextColor" />
 
                                             <Button

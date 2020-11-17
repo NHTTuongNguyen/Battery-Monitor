@@ -1,10 +1,13 @@
 package com.example.batterymonitor.sharedPreference;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.util.Log;
 
 import com.example.batterymonitor.R;
+import com.example.batterymonitor.activity.SettingActivity;
 import com.example.batterymonitor.models.ChartsModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class SharedPreference_Utils {
@@ -31,9 +35,26 @@ public class SharedPreference_Utils {
     private static final String ButtonChangeBackgroundColor = "button_color_Key";
     public static final String SaveBattery = "save_Battery_Key1";
     private static final String SaveHours = "saveHours_Key1";
+    public static final String ChangeLanguage = "Language_Key1";
+
 
     public SharedPreference_Utils(Context context){
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
+    }
+    public void  setChangeLanguage(String language,Context context){
+        Locale locale  = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration confi = new Configuration();
+        confi.locale=locale;
+        context.getResources().updateConfiguration(confi,context.getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ChangeLanguage,language);
+        editor.commit();
+    }
+    public String getChangeLanguage(Context context){
+        String saveHours = sharedPreferences.getString(ChangeLanguage,"");
+        setChangeLanguage(saveHours,context);
+        return saveHours;
     }
     public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, float percentage, float currrrTime) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -102,6 +123,7 @@ public class SharedPreference_Utils {
         Log.d("get_SaveBattery_set",save+"");
         return save;
     }
+
 
     public void setNumberSeekBarBrightness(int numberSeekBarBrightness){
         SharedPreferences.Editor editor = sharedPreferences.edit();

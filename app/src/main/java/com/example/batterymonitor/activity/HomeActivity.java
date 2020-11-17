@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,8 +28,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
-    private String tabTitles[] = new String[] { "Information", "Saver"};
+//    private String tabTitles[] = new String[] {this.getResources().getString(R.string.Information),this.getResources().getString(R.string.Saver)};
+    //private String tabTitles[] = new String[] {"Information","Saver"};
+//    private String tabTitles [];
+    ArrayList<String> tabTitles;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ImageView imgToSetting;
@@ -36,11 +43,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
+//        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
         }else {
             setTheme(R.style.DarkTheme);
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         floatingActionButton = findViewById(R.id.floatNoti);
@@ -49,12 +58,17 @@ public class HomeActivity extends AppCompatActivity {
         imgToSetting = findViewById(R.id.imgToSetting);
         final ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager2.setAdapter(adapter);
-
+        tabTitles = new ArrayList<>();
+        tabTitles.add(getString(R.string.Information));
+        tabTitles.add(getString(R.string.Saver));
         // Setup Tab Layout with View Pager 2
         new TabLayoutMediator(tabLayout, viewPager2,
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        tab.setText(tabTitles[position]);
+//                        tab.setText(tabTitles[position]);
+
+                        tab.setText(tabTitles.get(position));
+
                     }
                 }).attach();
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
@@ -114,7 +128,7 @@ public class HomeActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage("Do you really want to exit?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
+                .setPositiveButton(getString(R.string.OK),
                         new DialogInterface.OnClickListener() {
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                             public void onClick(DialogInterface dialog, int id) {
@@ -129,4 +143,11 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+//    private String getLanguage (){
+//        SharedPreferences sharedPreferences  = getSharedPreferences(SharedPreference_Utils.MyPREFERENCES, Context.MODE_PRIVATE);
+//        String getChangeLanguage = sharedPreferences.getString(SharedPreference_Utils.ChangeLanguage,"");
+//        ((SettingActivity)).setLocale(getChangeLanguage);
+//        return getChangeLanguage;
+//
+//    }
 }

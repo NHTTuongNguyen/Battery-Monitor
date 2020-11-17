@@ -16,10 +16,12 @@ import com.example.batterymonitor.fragments.InformationFragment;
 import com.example.batterymonitor.fragments.SaverFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private static final int CARD_ITEM_SIZE = 2;
-    private String tabTitles[] = new String[] { "Information", "Saver"};
-
+//    private String tabTitles[] = new String[] { "Information", "Saver"};
+    private ArrayList<String> tabTitles;
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -36,8 +38,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     public View getTabView(int position, Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null);
+        tabTitles = new ArrayList<>();
+        tabTitles.add(context.getString(R.string.Information));
+        tabTitles.add(context.getString(R.string.Saver));
         TextView textView = view.findViewById(R.id.tabText);
-        textView.setText(tabTitles[position]);
+        textView.setText(tabTitles.get(position));
         textView.setTextSize(15);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         if(position == 0)

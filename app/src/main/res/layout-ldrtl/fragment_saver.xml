@@ -43,18 +43,30 @@
                                 android:padding="10dp"
                                 android:src="@drawable/ic_baseline_offline_bolt_24_default" />
                             <LinearLayout
-                                android:layout_marginLeft="@dimen/dimen_10"
-                                android:layout_toRightOf="@id/img_ClassicMode"
+                                android:layout_marginRight="@dimen/dimen_10"
+                                android:layout_toLeftOf="@id/img_ClassicMode"
                                 android:layout_width="match_parent"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
-                                <TextView
-                                    android:textColor="?attr/attrsTextColor"
-                                    android:textStyle="bold"
-                                    android:id="@+id/txtClassicMode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/ClassicModel"/>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:layout_marginTop="@dimen/dimen_10"
+                                        android:textColor="?attr/attrsTextColor"
+                                        android:textStyle="bold"
+                                        android:id="@+id/txtClassicMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/ClassicModel"/>
+                                    <RadioButton
+                                        android:layout_alignParentLeft="true"
+                                        android:id="@+id/radioButtonClassicMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="2dp" />
+                                </RelativeLayout>
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
@@ -62,15 +74,10 @@
                                     <TextView
                                         android:textColor="?attr/attrsTextColor"
                                         android:layout_width="wrap_content"
-                                        android:text="Low power consumption,\nintelligent province electricity."
+                                        android:text="@string/LowPower"
                                         android:layout_height="wrap_content"/>
 
-                                    <RadioButton
-                                        android:id="@+id/radioButtonClassicMode"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginRight="2dp" />
+
                                 </RelativeLayout>
                             </LinearLayout>
                         </RelativeLayout>
@@ -115,8 +122,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_signal_wifi_4_bar_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Status"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Status"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Wifi"
@@ -124,7 +131,7 @@
                                         />
 
                                     <TextView
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="On"
@@ -147,8 +154,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_bluetooth_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Health"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Health"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Bluetooth"
@@ -156,7 +163,7 @@
                                         />
 
                                     <TextView
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Off"
@@ -224,8 +231,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_brightness_7_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Voltage"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Voltage"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Brightness"
@@ -235,7 +242,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:text="50%"
                                         android:textColor="?attr/attrsTextColor" />
                                 </RelativeLayout>
@@ -255,18 +262,17 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_brightness_1_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Temperature"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Temperature"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/ScreenTimeOut"
                                         android:textColor="?attr/attrsTextColor" />
-
                                     <TextView
                                         android:id="@+id/txtTemperature"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_marginRight="0dp"
                                         android:text="30s"
                                         android:textColor="?attr/attrsTextColor" />
@@ -340,18 +346,29 @@
                                 android:src="@drawable/ic_baseline_wb_sunny_24" />
 
                             <LinearLayout
-                                android:layout_marginLeft="@dimen/dimen_10"
-                                android:layout_toRightOf="@id/img_LongLifeMode"
+                                android:layout_marginRight="@dimen/dimen_10"
+                                android:layout_toLeftOf="@id/img_LongLifeMode"
                                 android:layout_width="match_parent"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
-                                <TextView
-                                    android:textColor="?attr/attrsTextColor"
-                                    android:textStyle="bold"
-                                    android:id="@+id/txtLongLifeMode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/LongLifeMode"/>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:layout_marginTop="@dimen/dimen_10"
+                                        android:textColor="?attr/attrsTextColor"
+                                        android:textStyle="bold"
+                                        android:id="@+id/txtLongLifeMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/LongLifeMode"/>
+                                    <RadioButton
+                                        android:id="@+id/radioButtonLongLifeMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"/>
+                                </RelativeLayout>
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
@@ -360,11 +377,7 @@
                                         android:layout_width="wrap_content"
                                         android:text="@string/CloseEverything"
                                         android:layout_height="wrap_content"/>
-                                    <RadioButton
-                                        android:id="@+id/radioButtonLongLifeMode"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"/>
+
                                 </RelativeLayout>
                             </LinearLayout>
 
@@ -411,8 +424,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_signal_wifi_4_bar_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Status"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Status"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Wifi"
@@ -421,7 +434,7 @@
 
                                     <TextView
                                         android:id="@+id/txttrangthai"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Off"
@@ -444,8 +457,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_bluetooth_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Health"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Health"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Bluetooth"
@@ -454,7 +467,7 @@
 
                                     <TextView
                                         android:id="@+id/txtHealth"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Off"
@@ -523,8 +536,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_brightness_7_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Voltage"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Voltage"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Brightness"
@@ -535,7 +548,7 @@
                                         android:id="@+id/txtVoltage"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:text="20%"
                                         android:textColor="?attr/attrsTextColor"
 
@@ -557,8 +570,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_brightness_1_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Temperature"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Temperature"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/ScreenTimeOut"
@@ -568,7 +581,7 @@
                                         android:id="@+id/txtTemperature"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_marginRight="0dp"
                                         android:text="15s"
                                         android:textColor="?attr/attrsTextColor"/>
@@ -644,32 +657,37 @@
                                 android:src="@drawable/ic_baseline_nights_stay_24" />
 
                             <LinearLayout
-                                android:layout_marginLeft="@dimen/dimen_10"
-                                android:layout_toRightOf="@id/imgSleepMode"
+                                android:layout_marginRight="@dimen/dimen_10"
+                                android:layout_toLeftOf="@id/imgSleepMode"
                                 android:layout_width="match_parent"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
-                                <TextView
-                                    android:textColor="?attr/attrsTextColor"
-                                    android:textStyle="bold"
-                                    android:id="@+id/txtSleepMode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/SleepMode"/>
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
-
+                                    <TextView
+                                        android:layout_marginTop="@dimen/dimen_10"
+                                        android:textColor="?attr/attrsTextColor"
+                                        android:textStyle="bold"
+                                        android:id="@+id/txtSleepMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/SleepMode"/>
+                                    <RadioButton
+                                        android:id="@+id/radioButtonSleepMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"/>
+                                </RelativeLayout>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
                                     <TextView
                                         android:textColor="?attr/attrsTextColor"
                                         android:layout_width="wrap_content"
                                         android:text="@string/Automatically"
                                         android:layout_height="wrap_content"/>
-                                    <RadioButton
-                                        android:id="@+id/radioButtonSleepMode"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"/>
+
                                 </RelativeLayout>
                             </LinearLayout>
 
@@ -742,8 +760,8 @@
                                             android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"/>
                                         <TextView
                                             android:textColor="?attr/attrsTextColor"
-                                            android:layout_toRightOf="@+id/img_Status"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Status"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Wifi"
@@ -752,7 +770,7 @@
 
                                         <TextView
                                             android:id="@+id/txttrangthai"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Off"
@@ -775,8 +793,8 @@
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_baseline_bluetooth_24" />
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Health"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Health"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Bluetooth"
@@ -785,7 +803,7 @@
 
                                         <TextView
                                             android:id="@+id/txtHealth"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Off"
@@ -809,8 +827,8 @@
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_baseline_power_24" />
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Power"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Power"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/HapticFeedback"
@@ -819,7 +837,7 @@
 
                                         <TextView
                                             android:id="@+id/txtPower"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Off"
@@ -854,8 +872,8 @@
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_baseline_brightness_7_24"/>
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Voltage"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Voltage"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Brightness"
@@ -866,7 +884,7 @@
                                             android:id="@+id/txtVoltage"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:text="15%"
                                             android:textColor="?attr/attrsTextColor"
 
@@ -888,8 +906,8 @@
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_baseline_brightness_1_24"  />
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Temperature"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Temperature"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/ScreenTimeOut"
@@ -899,7 +917,7 @@
                                             android:id="@+id/txtTemperature"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_marginRight="0dp"
                                             android:text="30s"
                                             android:textColor="?attr/attrsTextColor" />
@@ -974,18 +992,30 @@
                                 android:src="@drawable/ic_baseline_color_lens_24" />
 
                             <LinearLayout
-                                android:layout_marginLeft="@dimen/dimen_10"
-                                android:layout_toRightOf="@id/imgCusTomMode"
+                                android:layout_marginRight="@dimen/dimen_10"
+                                android:layout_toLeftOf="@id/imgCusTomMode"
                                 android:layout_width="match_parent"
                                 android:orientation="vertical"
                                 android:layout_height="wrap_content">
-                                <TextView
-                                    android:textColor="?attr/attrsTextColor"
-                                    android:textStyle="bold"
-                                    android:id="@+id/txtCustomMode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/CustomMode"/>
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_marginTop="@dimen/dimen_10"
+                                        android:textColor="?attr/attrsTextColor"
+                                        android:textStyle="bold"
+                                        android:id="@+id/txtCustomMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/CustomMode"/>
+                                    <RadioButton
+                                        android:id="@+id/radioButtonCustomMode"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"/>
+                                </RelativeLayout>
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
@@ -995,11 +1025,7 @@
                                         android:layout_width="wrap_content"
                                         android:text="@string/EnterUsing"
                                         android:layout_height="wrap_content"/>
-                                    <RadioButton
-                                        android:id="@+id/radioButtonCustomMode"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"/>
+
                                 </RelativeLayout>
                             </LinearLayout>
 
@@ -1071,8 +1097,8 @@
                                             android:src="@drawable/ic_baseline_signal_wifi_4_bar_24"
                                             />
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Status"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Status"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Wifi"
@@ -1081,7 +1107,7 @@
 
                                         <Switch
                                             android:id="@+id/switchWifiCustomMode"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:textColor="?attr/attrsTextColor" />
@@ -1102,8 +1128,8 @@
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_baseline_bluetooth_24" />
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Health"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Health"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Bluetooth"
@@ -1114,7 +1140,7 @@
                                             android:id="@+id/switchBluetoothCustomMode"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             android:layout_marginRight="0dp"
                                             android:textColor="?attr/attrsTextColor" />
                                     </RelativeLayout>
@@ -1178,8 +1204,8 @@
                                             android:src="@drawable/ic_baseline_brightness_7_24"/>
                                         <TextView
                                             android:id="@+id/txtCustomModeBrightness"
-                                            android:layout_toRightOf="@+id/img_Voltage"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Voltage"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/Brightness"
@@ -1194,7 +1220,7 @@
                                             android:text="..."
                                             android:textSize="12dp"
                                             android:textColor="?attr/attrsTextColor"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             />
                                     </RelativeLayout>
 
@@ -1213,8 +1239,8 @@
                                             android:layout_height="wrap_content"
                                             android:src="@drawable/ic_baseline_brightness_1_24"  />
                                         <TextView
-                                            android:layout_toRightOf="@+id/img_Temperature"
-                                            android:layout_marginLeft="10dp"
+                                            android:layout_toLeftOf="@+id/img_Temperature"
+                                            android:layout_marginRight="10dp"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="@string/ScreenTimeOut"
@@ -1228,7 +1254,7 @@
                                             android:text="..."
                                             android:textSize="12dp"
                                             android:textColor="?attr/attrsTextColor"
-                                            android:layout_alignParentRight="true"
+                                            android:layout_alignParentLeft="true"
                                             />
                                     </RelativeLayout>
                                 </LinearLayout>

@@ -37,7 +37,6 @@
     <string name="Switchtolighttheme">Switch to light theme</string>
     <string name="Switch">Switch</string>
     <string name="NotificationSwitch">Notification Switch</string>
-
     <string name="TapShowNotification">Tap to show the information in\nnotification drawer</string>
     <string name="DesktopFloatingWindow">Desktop Floating Window</string>
     <string name="ShowFloatingWindowOnDesktop">Show floating window on the desktop</string>
@@ -64,4 +63,23 @@
     <string name="DataBattery">Data Battery</string>
     <string name="BatteryLevelGraph">Battery Level Graph</string>
     <string name="Ads_appId">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="Language">Language</string>
+    <string name="ChoiseLanguage">Select language</string>
+    <string name="AC">AC</string>
+    <string name="USB">USB</string>
+    <string name="WIRELESS">WIRELESS</string>
+    <string name="Unplugged">Unplugged</string>
+    <string name="Unknown">Unknown</string>
+    <string name="Good">Good</string>
+    <string name="Overheat">Overheat</string>
+    <string name="Dead">Dead</string>
+    <string name="OverVoltage">Over Voltage</string>
+    <string name="Failure">Failure</string>
+    <string name="Cold">Cold</string>
+    <string name="Full">Full</string>
+    <string name="Charging">Charging</string>
+    <string name="Discharging">Discharging</string>
+    <string name="Notcharging">Not charging</string>
+    <string name="Information">Information</string>
+    <string name="Saver">Saver</string>
 </resources>

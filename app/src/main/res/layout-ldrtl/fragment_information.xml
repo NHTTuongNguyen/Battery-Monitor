@@ -76,11 +76,11 @@
                                     android:text="CurrentTime"
                                     android:textSize="@dimen/dimen_15"/>
 
+
                                 <TextView
-                                    android:maxLines="2"
                                     android:textColor="?attr/attrsTextColor"
                                     android:id="@+id/txtCurrentDaysThread"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="CurrentDays"
                                     android:textSize="13dp"/>
@@ -161,53 +161,58 @@
                                         android:src="@drawable/ic_baseline_status_24" />
                                     <TextView
                                         android:textColor="?attr/attrsTextColor"
-                                        android:layout_toRightOf="@+id/img_Status"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Status"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Status"
+
                                         />
 
                                     <TextView
                                         android:id="@+id/txttrangthai"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:text="Charging"
                                         android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
 
                             </LinearLayout>
+
                             <LinearLayout
-                                android:layout_marginBottom="@dimen/dimen_5"
-                                android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:orientation="vertical">
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:baselineAligned="false">
+
                                     <ImageView
-                                        android:id="@+id/img_Health"
+                                        android:id="@+id/img_Healths"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_health_24" />
+
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Health"
-                                        android:layout_marginLeft="10dp"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_toLeftOf="@+id/img_Healths"
                                         android:text="@string/Health"
-                                        android:textColor="?attr/attrsTextColor"
-                                        />
+                                        android:layout_marginRight="10dp"
+                                        android:textColor="?attr/attrsTextColor" />
 
                                     <TextView
                                         android:id="@+id/txtHealth"
-                                        android:layout_alignParentRight="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
                                         android:text="Good"
-                                        android:textColor="?attr/attrsTextColor"
-                                        />
+                                        android:textColor="?attr/attrsTextColor" />
                                 </RelativeLayout>
 
                             </LinearLayout>
@@ -225,8 +230,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_power_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Power"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Power"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Power"
@@ -235,7 +240,7 @@
 
                                     <TextView
                                         android:id="@+id/txtPower"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="USB Port"
@@ -305,8 +310,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_offline_bolt_24" />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Voltage"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Voltage"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Voltage"
@@ -317,7 +322,7 @@
                                         android:id="@+id/txtVoltage"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:text="4000 mv"
                                         android:textColor="?attr/attrsTextColor"
 
@@ -339,8 +344,8 @@
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/ic_baseline_whatshot_24"  />
                                     <TextView
-                                        android:layout_toRightOf="@+id/img_Temperature"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Temperature"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Temperature"
@@ -350,7 +355,7 @@
                                         android:id="@+id/txtTemperature"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentLeft="true"
                                         android:layout_marginRight="0dp"
                                         android:text="33 C"
                                         android:textColor="?attr/attrsTextColor" />
@@ -373,8 +378,8 @@
                                         android:src="@drawable/ic_baseline_battery_full_24" />
                                     <TextView
                                         android:id="@+id/txtLevelPin"
-                                        android:layout_toRightOf="@+id/img_Level"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_toLeftOf="@+id/img_Level"
+                                        android:layout_marginRight="10dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/Level"
@@ -382,8 +387,7 @@
                                         />
 
                                     <TextView
-                                        android:layout_marginLeft="@dimen/dimen_20"
-                                        android:layout_toRightOf="@id/txtLevelPin"
+                                        android:layout_alignParentLeft="true"
                                         android:id="@+id/txtLevel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
