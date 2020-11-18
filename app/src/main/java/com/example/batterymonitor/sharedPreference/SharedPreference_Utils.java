@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,6 +19,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -63,17 +65,50 @@ public class SharedPreference_Utils {
     public void  setChangeLanguage(String language,Context context){
         if (language!=null) {
             Locale locale = new Locale(language);
-            Locale.setDefault(locale);
-            Configuration confi = new Configuration();
-            confi.locale = locale;
-            context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ChangeLanguage, language);
-            editor.commit();
+            //get list ngon ngu ho tro
+            List<String> listLanguage = getLanguages();
+            if(isLanguageInList(listLanguage, locale)){
+                Locale.setDefault(locale);
+                Configuration confi = new Configuration();
+                confi.locale = locale;
+                context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(ChangeLanguage, language);
+                editor.commit();
+            }
+
         }
     }
+    private List<String> getLanguages() {
+        String[] locales = Resources.getSystem().getAssets().getLocales();
+        List<String> list = new ArrayList<>();
+
+        for (Locale locale : Locale.getAvailableLocales()) {
+            if (locale.getLanguage().length() == 2) {
+                if (!isLanguageInList(list, locale)) {
+                    list.add(locale.getDisplayLanguage());
+                }
+            }
+        }
+        Collections.sort(list);
+        return list;
+    }
+
+    private boolean isLanguageInList(List<String> list, Locale locale) {
+        if (list == null) {
+            return false;
+        }
+        for (String item: list) {
+            Log.d("list language", item);
+            if (item.equalsIgnoreCase(locale.getDisplayLanguage())){
+                return true;
+            }
+        }
+        return false;
+    }
     public String getChangeLanguage(Context context){
-        String saveHours = sharedPreferences.getString(ChangeLanguage,null);
+        String languageSystem= Resources.getSystem().getConfiguration().locale.getLanguage();
+        String saveHours = sharedPreferences.getString(ChangeLanguage,languageSystem);
         setChangeLanguage(saveHours,context);
         return saveHours;
     }

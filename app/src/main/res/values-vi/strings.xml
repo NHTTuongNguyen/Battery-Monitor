@@ -59,7 +59,7 @@
     <string name="ChangeBrightness">Thay đổi độ sáng của bạn</string>
     <string name="Notification">Thông báo</string>
     <string name="OK">OK</string>
-    <string name="FromAndroid8">Từ Android 8 không thể sử dụng một số chức năng</string>
+    <string name="FromAndroid8">Từ Android 8 hạn chế sử dụng một số chức năng</string>
     <string name="DataBattery">Pin dữ liệu</string>
     <string name="BatteryLevelGraph">Biểu đồ mức pin</string>
     <string name="Ads_appId">ca-app-pub-3940256099942544/2247696110</string>

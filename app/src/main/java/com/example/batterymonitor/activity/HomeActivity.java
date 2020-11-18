@@ -22,9 +22,6 @@ import android.widget.LinearLayout;
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapter.ViewPagerAdapter;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -119,11 +116,11 @@ public class HomeActivity extends AppCompatActivity {
 //        Log.d("GGGG",oo+"");
 //        Log.d("AAAAAAA","HELLO");
 
-        String languageSystem= Resources.getSystem().getConfiguration().locale.getLanguage();
-        String keySaveShare = sharedPreference_utils.getChangeLanguage(this);
+
+//        String keySaveShare = sharedPreference_utils.getChangeLanguage(this);
 //        sharedPreference_utils.setChangeLanguage(languageSystem,HomeActivity.this);
-        Log.d("languageSystem",languageSystem+"");
-        Log.d("keySaveShare",keySaveShare+"");
+//        Log.d("languageSystem",languageSystem+"");
+//        Log.d("keySaveShare",keySaveShare+"");
 //        if (keySaveShare!=null) {
 //            if (languageSystem.contains(keySaveShare) == false) {
 //                sharedPreference_utils.removeChangeButtonRadioLanguage();
