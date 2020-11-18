@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioGroup">
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="English"
+                            android:id="@+id/radioButtonEnglish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Vietnam"
+                            android:id="@+id/radioButtonVietnam"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Spanish"
+                            android:id="@+id/radioButtonSpanish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Portuguese"
+                            android:id="@+id/radioButtonPortuguese"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="French"
+                            android:id="@+id/radioButtonFrench"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Russian"
+                            android:id="@+id/radioButtonRussian"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="German"
+                            android:id="@+id/radioButtonGerman"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Korean"
+                            android:id="@+id/radioButtonKorean"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Arabic"
+                            android:id="@+id/radioButtonArabic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_margin="@dimen/dimen_10"
+                            android:text="Japanese"
+                            android:id="@+id/radioButtonJapanese"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <RadioButton
+                            android:layout_marginLeft="@dimen/dimen_10"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginBottom="20dp"
+                            android:text="Italian"
+                            android:id="@+id/radioButtonItalian"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                </RadioGroup>
+
+
+        </LinearLayout>
+
+</ScrollView>

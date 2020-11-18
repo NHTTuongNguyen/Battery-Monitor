@@ -23,10 +23,10 @@
     <string name="Brightness">Độ sáng</string>
     <string name="ScreenTimeOut">Thời gian chờ\nmàn hình</string>
     <string name="Volume">Âm lượng</string>
-    <string name="ClassicModel">Mô hình cổ điển</string>
+    <string name="ClassicModel">Chế độ cổ điển</string>
     <string name="LowPower">Tiêu thụ điện năng thấp, thông minh \ n tiết kiệm điện.</string>
     <string name="LowPowerHdpi">Tiêu thụ điện năng thấp, điện tỉnh không thông minh.</string>
-    <string name="LongLifeMode">Chế độ sống lâu</string>
+    <string name="LongLifeMode">Chế độ tiết kiệm lâu</string>
     <string name="SleepMode">Chế độ ngủ</string>
     <string name="CustomMode">Chế độ tùy chỉnh</string>
     <string name="Menu">Menu</string>

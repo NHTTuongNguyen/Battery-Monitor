@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.util.Log;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.activity.SettingActivity;
@@ -37,22 +39,41 @@ public class SharedPreference_Utils {
     private static final String SaveHours = "saveHours_Key1";
     public static final String ChangeLanguage = "Language_Key1";
 
-
+    public static final String ChangeRadioButton = "ChangeRadioButton_Key1";
     public SharedPreference_Utils(Context context){
         sharedPreferences  = context.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
     }
-    public void  setChangeLanguage(String language,Context context){
-        Locale locale  = new Locale(language);
-        Locale.setDefault(locale);
-        Configuration confi = new Configuration();
-        confi.locale=locale;
-        context.getResources().updateConfiguration(confi,context.getResources().getDisplayMetrics());
+
+    public void setChangeButtonRadioLanguage(int state){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(ChangeLanguage,language);
+        editor.putInt(ChangeRadioButton,state);
         editor.commit();
     }
+    public int getChangeButtonRadioLanguage(RadioGroup radioGroup){
+        int state = sharedPreferences.getInt(ChangeRadioButton,0);
+        RadioButton savedCheckedRadioButton = (RadioButton)radioGroup.getChildAt(state);
+        savedCheckedRadioButton.setChecked(true);
+        return state;
+    }
+    public void removeChangeButtonRadioLanguage(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(ChangeRadioButton);
+        editor.commit();
+    }
+    public void  setChangeLanguage(String language,Context context){
+        if (language!=null) {
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+            Configuration confi = new Configuration();
+            confi.locale = locale;
+            context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ChangeLanguage, language);
+            editor.commit();
+        }
+    }
     public String getChangeLanguage(Context context){
-        String saveHours = sharedPreferences.getString(ChangeLanguage,"");
+        String saveHours = sharedPreferences.getString(ChangeLanguage,null);
         setChangeLanguage(saveHours,context);
         return saveHours;
     }

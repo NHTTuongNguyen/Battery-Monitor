@@ -10,8 +10,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
 //    private String tabTitles[] = new String[] {this.getResources().getString(R.string.Information),this.getResources().getString(R.string.Saver)};
@@ -43,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
-//        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
         }else {
@@ -102,9 +105,37 @@ public class HomeActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogNotification();
+//                showDialogNotification();
+                ExampleBottomSheetDialog bottomSheet = new ExampleBottomSheetDialog();
+                bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
             }
         });
+
+//       String oo = Locale.getDefault().getLanguage();
+//        String locale = getResources().getConfiguration().locale.getLanguage();
+//        if (oo==null){
+//            sharedPreference_utils.setChangeLanguage(oo,HomeActivity.this);
+//        }
+//        Log.d("GGGG",oo+"");
+//        Log.d("AAAAAAA","HELLO");
+
+        String languageSystem= Resources.getSystem().getConfiguration().locale.getLanguage();
+        String keySaveShare = sharedPreference_utils.getChangeLanguage(this);
+//        sharedPreference_utils.setChangeLanguage(languageSystem,HomeActivity.this);
+        Log.d("languageSystem",languageSystem+"");
+        Log.d("keySaveShare",keySaveShare+"");
+//        if (keySaveShare!=null) {
+//            if (languageSystem.contains(keySaveShare) == false) {
+//                sharedPreference_utils.removeChangeButtonRadioLanguage();
+//            }
+//        }
+//        sharedPreference_utils.setChangeLanguage(languageSystem,this);
+//        if (!languageSystem.equals(sharedPreference_utils.getChangeLanguage(this))){
+//            sharedPreference_utils.removeChangeButtonRadioLanguage();
+//        }
+//        sharedPreference_utils.setChangeLanguage(languageSystem,this);
+
+
     }
     private void showDialogNotification() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(HomeActivity.this, R.style.BottomSheetDialogTheme);

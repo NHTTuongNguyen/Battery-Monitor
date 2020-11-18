@@ -74,7 +74,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
     ImageView imgBatteryImage,imageView_Bluetooth,imageView_WifiOnOff;
     private Switch switchBluetoothCustomMode,switchNotification;
     private SharedPreference_Utils sharedPreference_utils;
-    private  float percentage;
+    private  int percentage;
     private ArrayList<ChartsModel> chartsModels;
     int currrrTime;
     private ChartsModel chartsModel;

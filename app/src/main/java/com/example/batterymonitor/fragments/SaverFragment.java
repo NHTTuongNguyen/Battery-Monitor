@@ -547,9 +547,9 @@ public class SaverFragment extends Fragment {
     }
     private void showDialogScreenTimeoutCustomMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.ScreenTimeOut));
-//      builder.setMessage(getString(R.string.ChangeBrightness));
-        builder.setIcon(R.drawable.ic_baseline_brightness_1_24_green);
+//        builder.setTitle(getString(R.string.ScreenTimeOut));
+////      builder.setMessage(getString(R.string.ChangeBrightness));
+//        builder.setIcon(R.drawable.ic_baseline_brightness_1_24_green);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View viewLayout = inflater.inflate(R.layout.dialog_screentimeout,null);
         btn15s = viewLayout.findViewById(R.id.btn15s);
@@ -580,7 +580,7 @@ public class SaverFragment extends Fragment {
             public void onClick(View view) {
                 setFocusToGroupButtonChangeBackground(btn_unfocus, btn[0]);
                 setScreenTimeout(SizeNumber.Fifteen_seconds);
-//                alertDialog.dismiss();
+                alertDialog.dismiss();
             }
         });
         btn30s.setOnClickListener(new View.OnClickListener() {
@@ -674,9 +674,9 @@ public class SaverFragment extends Fragment {
     }
     private void showDialogBrightnessCustomMode() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.Brightness));
-//      builder.setMessage(getString(R.string.ChangeBrightness));
-        builder.setIcon(R.drawable.ic_baseline_brightness_7_24_green);
+//        builder.setTitle(getString(R.string.Brightness));
+////      builder.setMessage(getString(R.string.ChangeBrightness));
+//        builder.setIcon(R.drawable.ic_baseline_brightness_7_24_green);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View viewLayout = inflater.inflate(R.layout.dialog_brightness,null);
         SeekBar seekBar = viewLayout.findViewById(R.id.seekBarBrightness);

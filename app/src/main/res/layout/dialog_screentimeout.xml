@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/attrsCardBackgroundColor"
     android:orientation="vertical">
     <LinearLayout
         android:layout_margin="@dimen/dimen_10"
@@ -11,6 +12,13 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:textSize="@dimen/dimen_20"
+            android:textColor="?attr/attrsTextColor"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ScreenTimeOut"/>
         <LinearLayout
 
             android:weightSum="4"
