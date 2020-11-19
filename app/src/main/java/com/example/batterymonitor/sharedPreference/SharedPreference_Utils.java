@@ -52,9 +52,12 @@ public class SharedPreference_Utils {
         editor.commit();
     }
     public int getChangeButtonRadioLanguage(RadioGroup radioGroup){
-        int state = sharedPreferences.getInt(ChangeRadioButton,0);
-        RadioButton savedCheckedRadioButton = (RadioButton)radioGroup.getChildAt(state);
-        savedCheckedRadioButton.setChecked(true);
+        int state = sharedPreferences.getInt(ChangeRadioButton,-1);
+        if(state != -1){
+            RadioButton savedCheckedRadioButton = (RadioButton)radioGroup.getChildAt(state);
+            savedCheckedRadioButton.setChecked(true);
+        }
+
         return state;
     }
     public void removeChangeButtonRadioLanguage(){
