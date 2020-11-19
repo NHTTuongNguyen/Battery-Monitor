@@ -82,4 +82,10 @@
     <string name="Notcharging">Pas de charge</string>
     <string name="Information">Information</string>
     <string name="Saver">sauvegarder</string>
+    <string name="Exit">Sortie</string>
+    <string name="No">Non</string>
+    <string name="Out">Voulez-vous vraiment sortir?</string>
+    <string name="ChangeLanguage">Changer de langue</string>
+    <string name="Permissionwritesettings">Paramètres d\'écriture des autorisations!</string>
+    <string name="Allowpermissionwrite">Autoriser les paramètres d\'écriture des autorisations pour votre système?</string>
 </resources>

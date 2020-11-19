@@ -82,4 +82,10 @@
     <string name="Notcharging">충전되지 않음</string>
     <string name="Information">정보</string>
     <string name="Saver">저장</string>
+    <string name="Exit">출구</string>
+    <string name="No">아니</string>
+    <string name="Out">정말 종료 하시겠습니까?</string>
+    <string name="ChangeLanguage">언어 변경</string>
+    <string name="Permissionwritesettings">권한 쓰기 설정!</string>
+    <string name="Allowpermissionwrite">시스템에 대한 쓰기 권한 설정을 허용 하시겠습니까?</string>
 </resources>

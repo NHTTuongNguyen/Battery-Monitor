@@ -134,6 +134,43 @@ public class SaverFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_saver, container, false);
 
+       initView();
+
+
+
+        radioButtonClassicMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdClassicMode) {
+                setChoiceRadioButtonClassicMode(checkIdClassicMode);
+            }
+        });
+        radioButtonLongLifeMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdLongLifeMode) {
+                setChoiceRadioButtonLongLifeMode(checkIdLongLifeMode);
+            }
+        });
+        radioButtonSleepMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdSleepMode) {
+                setChoiceRadioButtonSleepMode(checkIdSleepMode);
+            }
+        });
+        radioButtonCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdCustomMode) {
+                setChoiceRadioButtonCustomMode(checkIdCustomMode);
+            }
+        });
+        setVisibilityLinearLayout();
+///////////////////////////////////////////////////////////
+        eventBtnStartSleepMode();
+        eventBtnStopMode();
+///////////////////////////////////////////////////////
+        return view;
+    }
+
+    private void initView() {
         viewClassicModel = view.findViewById(R.id.viewClassicModel);
         viewLongLifeMode = view.findViewById(R.id.viewLongLifeMode);
         viewSleepModel = view.findViewById(R.id.viewSleepModel);
@@ -174,46 +211,13 @@ public class SaverFragment extends Fragment {
 
         btnStartSleepMode  =view.findViewById(R.id.btnStartSleepMode);
         btnStopSleepMode = view.findViewById(R.id.btnStopSleepMode);
-
-
-
-        radioButtonClassicMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdClassicMode) {
-                setChoiceRadioButtonClassicMode(checkIdClassicMode);
-            }
-        });
-        radioButtonLongLifeMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdLongLifeMode) {
-                setChoiceRadioButtonLongLifeMode(checkIdLongLifeMode);
-            }
-        });
-        radioButtonSleepMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdSleepMode) {
-                setChoiceRadioButtonSleepMode(checkIdSleepMode);
-            }
-        });
-        radioButtonCustomMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checkIdCustomMode) {
-                setChoiceRadioButtonCustomMode(checkIdCustomMode);
-            }
-        });
-        setVisibilityLinearLayout();
-///////////////////////////////////////////////////////////
-        eventBtnStartSleepMode();
-        eventBtnStopMode();
-///////////////////////////////////////////////////////
-        return view;
     }
+
     private void setChoiceRadioButtonClassicMode(Boolean checkId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (Settings.System.canWrite(getActivity())){
                 if (checkId) {
                     setEventRadioButtonClassicMode();
-
                 }
             }
             else {
@@ -223,7 +227,6 @@ public class SaverFragment extends Fragment {
         }else {
             if (checkId){
                 setEventRadioButtonClassicMode();
-
             }
         }
     }
@@ -373,12 +376,12 @@ public class SaverFragment extends Fragment {
         /////setWifiOff
         setWifiTurnOff();
 
-//                            WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//                            if(wifiManager.isWifiEnabled()){
-//                                wifiManager.setWifiEnabled(false);
-//                            }else{
-//                                wifiManager.setWifiEnabled(true);
-//                            }
+//        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        if(wifiManager.isWifiEnabled()){
+//            wifiManager.setWifiEnabled(false);
+//        }else{
+//            wifiManager.setWifiEnabled(true);
+//        }
     }
     private void setEventRadioButtonSleepMode() {
         radioButtonClassicMode.setChecked(false);
@@ -856,11 +859,11 @@ public class SaverFragment extends Fragment {
 
     private  void alertDialogPermission_WriteSettings() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle("Permission write settings !");
+        alertDialogBuilder.setTitle(getString(R.string.Permissionwritesettings));
         alertDialogBuilder
-                .setMessage("Allow permission write settings for your system ?")
+                .setMessage(getString(R.string.Allowpermissionwrite))
                 .setCancelable(false)
-                .setPositiveButton("ALLOW",
+                .setPositiveButton(getString(R.string.OK),
                         new DialogInterface.OnClickListener() {
                             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                             public void onClick(DialogInterface dialog, int id) {
@@ -870,7 +873,7 @@ public class SaverFragment extends Fragment {
                                 startActivity(intent);
                             }
                         })
-                .setNegativeButton("DENY", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.No), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }

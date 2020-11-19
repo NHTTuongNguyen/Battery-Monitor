@@ -82,5 +82,11 @@
     <string name="Notcharging">Không sạc</string>
     <string name="Information">Thông Tin</string>
     <string name="Saver">Tiết kiệm</string>
+    <string name="Exit">Thoát</string>
+    <string name="No">Không</string>
+    <string name="Out">Bạn có thực sự muốn thoát ra?</string>
+    <string name="ChangeLanguage">Thay đổi ngôn ngữ</string>
+    <string name="Permissionwritesettings">Quyền ghi cài đặt!</string>
+    <string name="Allowpermissionwrite">Cho phép cài đặt ghi quyền cho hệ thống của bạn?</string>
 
 </resources>

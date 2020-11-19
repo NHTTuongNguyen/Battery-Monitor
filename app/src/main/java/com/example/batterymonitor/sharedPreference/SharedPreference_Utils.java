@@ -111,9 +111,9 @@ public class SharedPreference_Utils {
     }
     public String getChangeLanguage(Context context){
         String languageSystem= Resources.getSystem().getConfiguration().locale.getLanguage();
-        String saveHours = sharedPreferences.getString(ChangeLanguage,languageSystem);
-        setChangeLanguage(saveHours,context);
-        return saveHours;
+        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,languageSystem);
+        setChangeLanguage(getChangeLanguage,context);
+        return getChangeLanguage;
     }
     public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, float percentage, float currrrTime) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -127,7 +127,6 @@ public class SharedPreference_Utils {
         if (!hasHourInLis(chartsModelArrayList,currrrTime)){
             chartsModelArrayList.add(new ChartsModel(percentage,  currrrTime));
 
-//            Log.d("set_chartArrayList",percentage+"  "+ currrrTime);
 
         }
 //        chartsModelArrayList.add(new ChartsModel(percentage,  currrrTime));
@@ -152,7 +151,7 @@ public class SharedPreference_Utils {
         editor.remove(SaveBattery);
         editor.commit();
     }
-    private boolean     hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, float idHour){
+    private boolean  hasHourInLis(ArrayList<ChartsModel> chartsModelArrayList, float idHour){
         for (int i = 0;i<chartsModelArrayList.size();i++){
             if (chartsModelArrayList.get(i).getHours() == idHour){
                 return true;

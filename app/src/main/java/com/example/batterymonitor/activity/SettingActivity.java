@@ -64,7 +64,7 @@ public class SettingActivity extends AppCompatActivity {
         imgSettingCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
         relativeLayout_Rate.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +88,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         setEventSwitchNotification();
-        setEventSwitchDesktopMode();
         setEventSwitchChangeDarkMode();
         checkConnectionAds();
 
@@ -97,15 +96,12 @@ public class SettingActivity extends AppCompatActivity {
 
     private void showDialogChangeLanguage() {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-        builder.setTitle("Change Language");
+        builder.setTitle(getString(R.string.ChangeLanguage));
         LayoutInflater inflater = this.getLayoutInflater();
         View viewLayout = inflater.inflate(R.layout.dialog_changelanguage,null);
         ////init
         radioGroup = viewLayout.findViewById(R.id.radioGroup);
         sharedPreference_utils.getChangeButtonRadioLanguage(radioGroup);
-
-//        int checkId = radioGroup.getCheckedRadioButtonId();
-//        findViewGroupButton(checkId);
         ///// lưu radiobutton đã nhấn
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -121,9 +117,7 @@ public class SettingActivity extends AppCompatActivity {
         builder.setCancelable(true);
         alertDialog = builder.create();
         alertDialog.show();
-
     }
-
     private void findViewGroupButton(int checkId) {
         switch (checkId){
             case R.id.radioButtonEnglish:
@@ -183,15 +177,11 @@ public class SettingActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-
     private void checkConnectionAds() {
         if (Common.isConnectedtoInternet(this)){
             setAdsView();
         }else {
             templateView.setVisibility(View.GONE);
-
         }
     }
     private void setAdsView() {
@@ -239,39 +229,6 @@ public class SettingActivity extends AppCompatActivity {
         switchDesktopMode = findViewById(R.id.switchDesktopMode);
         templateView = findViewById(R.id.my_template_Setting);
     }
-
-
-
-    private void setEventSwitchDesktopMode() {
-
-        switchDesktopMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b){
-//                    sharePre.setDesktopFloating(true);
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(SettingActivity.this)) {
-//
-//                        //If the draw over permission is not available open the settings screen
-//                        //to grant the permission.
-//                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-//                                Uri.parse("package:" + getPackageName()));
-//                        startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
-//                    } else {
-//                        initializeView();
-//                    }
-//
-//                }else {
-//                    sharePre.setDesktopFloating(false);
-//                }
-            }
-        });
-    }
-
-    private void initializeView() {
-//        startService(new Intent(SettingActivity.this, ServiceNotifi.class));
-        switchNotification.setChecked(true);
-    }
-
     private void setEventSwitchChangeDarkMode() {
         if (sharedPreference_utils.getNightModeState() == true){
             switchChangeDarkMode.setChecked(true);
@@ -298,24 +255,16 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
-//
-//                    float tess = 35.1f;
-//                    sharePre.setSwitchNotification(true);
-//                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
-////                    serviceIntent.putExtra("inputExtra",tess);
-//                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
-
-
                     sharedPreference_utils.setSwitchNotification(true);
-                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
+//                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
 //                    serviceIntent.putExtra("inputExtra",tess);
 //                    ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
-                    startService(serviceIntent);
+//                    startService(serviceIntent);
                 }else {
 //                    switchDesktopMode.setChecked(false);
                     sharedPreference_utils.setSwitchNotification(false);
-                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
-                    stopService(serviceIntent);
+//                    Intent serviceIntent = new Intent(getApplicationContext(), ServiceNotifi.class);
+//                    stopService(serviceIntent);
                 }
             }
         });
@@ -337,27 +286,4 @@ public class SettingActivity extends AppCompatActivity {
         i.setData(Uri.parse(actionIntent));
         startActivity(i);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
-
-            //Check if the permission is granted or not.
-            // Settings activity never returns proper value so instead check with following method
-            if (Settings.canDrawOverlays(this)) {
-                initializeView();
-            } else { //Permission is not available
-                Toast.makeText(this,
-                        "Draw over other app permission not available. Closing the application",
-                        Toast.LENGTH_SHORT).show();
-
-                finish();
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-//
-
 }

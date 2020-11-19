@@ -82,4 +82,10 @@
     <string name="Notcharging">Не заряжается</string>
     <string name="Information">Информация</string>
     <string name="Saver">Сохранить</string>
+    <string name="Exit">Выход</string>
+    <string name="No">Нет</string>
+    <string name="Out">Вы действительно хотите выйти?</string>
+    <string name="ChangeLanguage">Изменить язык</string>
+    <string name="Permissionwritesettings">Разрешение записи настроек!</string>
+    <string name="Allowpermissionwrite">Разрешить разрешение на запись в вашей системе?</string>
 </resources>

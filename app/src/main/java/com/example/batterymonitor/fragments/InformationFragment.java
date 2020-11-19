@@ -162,7 +162,7 @@ public class InformationFragment extends Fragment{
             public void onClick(View view) {
                 BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
                 if (adapter == null){
-                    Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
                 }else {
                     if (adapter.isEnabled()){
                         imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
@@ -236,24 +236,19 @@ public class InformationFragment extends Fragment{
         setBluetooth();
         displayCurrentTime();
 
-        for (int i = 0;i<chartsList.size();i++){
-            Log.d("chapterlistinformaiton", "Phần Trăm Pin :"+chartsList.get(i).getLevelBattery()+" Giờ :"+chartsList.get(i).getHours());
-        }
 
-        initChart2();
+//        initChart2();
         checkConnectionAds();
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-        lineDataSet.notifyDataSetChanged();
-        lineChart.notifyDataSetChanged();
+//        lineDataSet.notifyDataSetChanged();
+//        lineChart.notifyDataSetChanged();
 
         int batterySize = 0;
         batterySize= (int)  getBatteryCapacity(getActivity());
         Log.d("12213",batterySize+"");
 
-//        String locale = java.util.Locale.getDefault().getDisplayName();
-//        Log.d("localelocale",locale+"");
 
         return view;
     }
@@ -508,7 +503,6 @@ public class InformationFragment extends Fragment{
 
     @Override
     public void onPause() {
-//        getActivity().unregisterReceiver(batteryReceiverClass);
         super.onPause();
 
         Log.d("ActivityLifeCycler","onPause");
@@ -525,11 +519,6 @@ public class InformationFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
-//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
-//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-//        lineDataSet.notifyDataSetChanged();
-//        lineChart.notifyDataSetChanged();
         checkConnectionAds();
         Log.d("ActivityLifeCycler","onResume");
 
