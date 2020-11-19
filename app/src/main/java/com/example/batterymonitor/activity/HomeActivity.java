@@ -31,9 +31,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
-//    private String tabTitles[] = new String[] {this.getResources().getString(R.string.Information),this.getResources().getString(R.string.Saver)};
-    //private String tabTitles[] = new String[] {"Information","Saver"};
-//    private String tabTitles [];
     ArrayList<String> tabTitles;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
@@ -108,31 +105,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-//       String oo = Locale.getDefault().getLanguage();
-//        String locale = getResources().getConfiguration().locale.getLanguage();
-//        if (oo==null){
-//            sharedPreference_utils.setChangeLanguage(oo,HomeActivity.this);
-//        }
-//        Log.d("GGGG",oo+"");
-//        Log.d("AAAAAAA","HELLO");
-
-
-//        String keySaveShare = sharedPreference_utils.getChangeLanguage(this);
-//        sharedPreference_utils.setChangeLanguage(languageSystem,HomeActivity.this);
-//        Log.d("languageSystem",languageSystem+"");
-//        Log.d("keySaveShare",keySaveShare+"");
-//        if (keySaveShare!=null) {
-//            if (languageSystem.contains(keySaveShare) == false) {
-//                sharedPreference_utils.removeChangeButtonRadioLanguage();
-//            }
-//        }
-//        sharedPreference_utils.setChangeLanguage(languageSystem,this);
-//        if (!languageSystem.equals(sharedPreference_utils.getChangeLanguage(this))){
-//            sharedPreference_utils.removeChangeButtonRadioLanguage();
-//        }
-//        sharedPreference_utils.setChangeLanguage(languageSystem,this);
-
-
     }
     private void showDialogNotification() {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(HomeActivity.this, R.style.BottomSheetDialogTheme);
@@ -149,33 +121,27 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Exit");
-        alertDialogBuilder
-                .setMessage("Do you really want to exit?")
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.OK),
-                        new DialogInterface.OnClickListener() {
-                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                            public void onClick(DialogInterface dialog, int id) {
-                                finishAffinity();
-                            }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-//    private String getLanguage (){
-//        SharedPreferences sharedPreferences  = getSharedPreferences(SharedPreference_Utils.MyPREFERENCES, Context.MODE_PRIVATE);
-//        String getChangeLanguage = sharedPreferences.getString(SharedPreference_Utils.ChangeLanguage,"");
-//        ((SettingActivity)).setLocale(getChangeLanguage);
-//        return getChangeLanguage;
-//
+//    @Override
+//    public void onBackPressed() {
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
+//        alertDialogBuilder.setTitle(getString(R.string.Exit));
+//        alertDialogBuilder
+//                .setMessage(getString(R.string.Out))
+//                .setCancelable(false)
+//                .setPositiveButton(getString(R.string.OK),
+//                        new DialogInterface.OnClickListener() {
+//                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                finishAffinity();
+//                            }
+//                })
+//                .setNegativeButton(getString(R.string.No), new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//                    }
+//                });
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
 //    }
+
 }

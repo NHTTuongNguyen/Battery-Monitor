@@ -82,4 +82,10 @@
     <string name="Notcharging">充電していません</string>
     <string name="Information">情報</string>
     <string name="Saver">セーブ</string>
+    <string name="Exit">出口</string>
+    <string name="No">番号</string>
+    <string name="Out">本当に終了しますか？</string>
+    <string name="ChangeLanguage">言語を変えてください</string>
+    <string name="Permissionwritesettings">権限書き込み設定！</string>
+    <string name="Allowpermissionwrite">システムの権限書き込み設定を許可しますか？</string>
 </resources>

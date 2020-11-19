@@ -117,22 +117,13 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             percentage = level * 100 / scale;
             if (txtPercentageLabel !=null && txtLevel !=null) {
                 txtPercentageLabel.setText(percentage + "%");
-//                txtLevel.setText(percentage + "%");
-//
-                Log.d("txtPercentageLabel","run");
-
                 Date dt = new Date();
                 int hours = dt.getHours();
                 int minutes = dt.getMinutes();
                 int seconds = dt.getSeconds();
                 Log.d("minutes",minutes+"");
-//                chartsList =  sharedPreference_utils.getSaveBatteryCharts(context,getChartsList);
+//                sharedPreference_utils.setSaveBatteryCharts(context, chartsModels, percentage, minutes);
 
-                sharedPreference_utils.setSaveBatteryCharts(context, chartsModels, percentage, minutes);
-//                initChart2(context,chartsList);
-//                for (int i = 0;i<chartsList.size();i++){
-//                    Log.d("getSaveBatteryCharts",chartsList.get(i).getHours()+"   "+chartsList.get(i).getLevelBattery() );
-//                }
             }
             // Image
             if (imgBatteryImage!=null){
@@ -174,77 +165,6 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         setChangeBluetooth(intent);
         setChangeWifi(intent);
     }
-
-
-    private void initChart2(Context context,ArrayList<ChartsModel>chartsList) {
-        List<Entry> yValues = new ArrayList<>();
-        float Y,X;
-        float sum = 0;
-        for (int i = 0; i< chartsList.size(); i++){
-//            sum++;
-            Y= chartsList.get(i).getHours();
-            X = chartsList.get(i).getLevelBattery();
-            yValues.add(new Entry(Y,X));
-        }
-
-        for (int i = 0;i<chartsList.size();i++){
-            Log.d("lisstTest","Hours: "+chartsList.get(i).getHours()+" Battery"+chartsList.get(i).getLevelBattery());
-        }
-
-        lineDataSet = new LineDataSet(yValues,context.getString(R.string.DataBattery));
-        lineDataSet.setLineWidth(3f);
-        lineDataSet.setCircleRadius(5f);
-        lineDataSet.setCircleHoleRadius(2.5f);
-        lineDataSet.setColor(Color.LTGRAY);
-        lineDataSet.setCircleColor(Color.WHITE);
-        lineDataSet.setHighLightColor(Color.WHITE);
-        lineDataSet.setDrawValues(false);
-//        lineDataSet.setDrawCircles(false);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        lineDataSet.setCubicIntensity(0.2f);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillColor(Color.CYAN);
-        lineDataSet.setFillAlpha(80);
-        lineDataSet.notifyDataSetChanged();
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet);
-        LineData data  = new LineData(dataSets);
-        Drawable drawable  = ContextCompat.getDrawable(context,R.drawable.gradient_charts);
-        lineDataSet.setFillDrawable(drawable);
-//        lineChart.setVerticalScrollBarEnabled(false);
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setDrawGridBackground(false);
-        lineChart.setTouchEnabled(false);
-        lineChart.setDragEnabled(true);
-//        lineChart.setViewPortOffsets(10,0,10,0);
-        lineChart.setPinchZoom(false);
-//        lineChart.setEnabled(true);
-        lineChart.setDoubleTapToZoomEnabled(false);
-        lineChart.setData(data);
-//        lineChart.setVisibleXRangeMaximum(100);
-        lineChart.notifyDataSetChanged();
-
-//        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
-//        XAxis xAxis = lineChart.getXAxis();
-//        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
-//        xAxis.setGranularity(1);
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-//        lineChart.setVisibleYRangeMaximum(100f);
-    }
-
-
-    private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter {
-        ArrayList<ChartsModel> chartsModels;
-        private MyValueFormatter (ArrayList<ChartsModel> chartsModelArrayList){
-            this.chartsModels = chartsModelArrayList;
-        }
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-            return String.valueOf(chartsModels.get((int) value));
-        }
-    }
-
     private void setChangeWifi(Intent intent) {
         int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
                 WifiManager.WIFI_STATE_UNKNOWN);

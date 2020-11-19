@@ -82,4 +82,10 @@
     <string name="Notcharging">لا يشحن</string>
     <string name="Information">معلومات</string>
     <string name="Saver">حفظ</string>
+    <string name="Exit">خروج</string>
+    <string name="No">لا</string>
+    <string name="Out">هل حقا تريد الخروج؟</string>
+    <string name="ChangeLanguage">تغيير اللغة</string>
+    <string name="Permissionwritesettings">إعدادات كتابة الإذن!</string>
+    <string name="Allowpermissionwrite">السماح بإعدادات كتابة الإذن لنظامك؟</string>
 </resources>

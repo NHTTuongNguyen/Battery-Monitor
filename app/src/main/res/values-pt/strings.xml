@@ -82,4 +82,10 @@
     <string name="Notcharging">Não está carregando</string>
     <string name="Information">Em formação</string>
     <string name="Saver">Salve</string>
+    <string name="Exit">Saída</string>
+        <string name="No">Não</string>
+    <string name="Out">Você realmente quer sair?</string>
+    <string name="ChangeLanguage">Mudar idioma</string>
+    <string name="Permissionwritesettings">Configurações de permissão de gravação!</string>
+    <string name="Allowpermissionwrite">Permitir configurações de permissão de gravação para o seu sistema?</string>
 </resources>

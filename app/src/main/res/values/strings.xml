@@ -82,4 +82,10 @@
     <string name="Notcharging">Not charging</string>
     <string name="Information">Information</string>
     <string name="Saver">Saver</string>
+    <string name="Exit">Exit</string>
+    <string name="No">No</string>
+    <string name="Out">Do you really want to exit?</string>
+    <string name="ChangeLanguage">Change Language</string>
+    <string name="Permissionwritesettings">Permission write settings !</string>
+    <string name="Allowpermissionwrite">Allow permission write settings for your system ?</string>
 </resources>
