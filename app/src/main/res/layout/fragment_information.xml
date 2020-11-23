@@ -204,8 +204,9 @@
                                         android:id="@+id/txtHealth"
                                         android:layout_alignParentRight="true"
                                         android:layout_width="wrap_content"
+                                        android:maxLines="2"
                                         android:layout_height="wrap_content"
-                                        android:text="Good"
+                                        android:text="KHÔNG XÁC ĐỊNH"
                                         android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>

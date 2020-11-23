@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
-        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
         }else {
@@ -144,4 +144,11 @@ public class HomeActivity extends AppCompatActivity {
 //        alertDialog.show();
 //    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+        String asdas = sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+        Log.d("asdas",asdas);
+    }
 }

@@ -53,6 +53,7 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(SettingActivity.this);
         sharedPreference_utils.getChangeLanguage(SettingActivity.this);
+
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
         }else {
@@ -285,5 +286,12 @@ public class SettingActivity extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(actionIntent));
         startActivity(i);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPreference_utils.getChangeLanguage(SettingActivity.this);
+
     }
 }

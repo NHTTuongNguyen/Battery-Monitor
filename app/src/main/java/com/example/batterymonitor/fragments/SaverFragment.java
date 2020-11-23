@@ -125,7 +125,7 @@ public class SaverFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)  {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
-//        sharedPreference_utils.getChangeLanguage(getActivity());
+        sharedPreference_utils.getChangeLanguage(getActivity());
 
         batteryReceiverClass = new BatteryReceiverClass();
         intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);

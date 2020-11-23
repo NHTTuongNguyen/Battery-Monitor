@@ -69,7 +69,7 @@
     <string name="USB">USB</string>
     <string name="WIRELESS">Không dây</string>
     <string name="Unplugged">Đã rút phích cắm</string>
-    <string name="Unknown">không xác định</string>
+    <string name="Unknown">không\nxác định</string>
     <string name="Good">Tốt</string>
     <string name="Overheat">Làm nóng</string>
     <string name="Dead">Kiệt</string>

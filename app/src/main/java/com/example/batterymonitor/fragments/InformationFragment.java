@@ -134,7 +134,7 @@ public class InformationFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
-//        sharedPreference_utils.getChangeLanguage(getActivity());
+        sharedPreference_utils.getChangeLanguage(getActivity());
 
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
