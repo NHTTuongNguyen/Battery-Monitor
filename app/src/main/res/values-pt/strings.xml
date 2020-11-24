@@ -83,7 +83,7 @@
     <string name="Information">Em formação</string>
     <string name="Saver">Salve</string>
     <string name="Exit">Saída</string>
-        <string name="No">Não</string>
+    <string name="No">Não</string>
     <string name="Out">Você realmente quer sair?</string>
     <string name="ChangeLanguage">Mudar idioma</string>
     <string name="Permissionwritesettings">Configurações de permissão de gravação!</string>

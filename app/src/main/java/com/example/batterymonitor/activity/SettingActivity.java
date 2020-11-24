@@ -1,5 +1,6 @@
 package com.example.batterymonitor.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -61,11 +62,17 @@ public class SettingActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle(getResources().getString(R.string.app_name));
         initView();
         imgSettingCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+//                finish();
+                Intent intent = new Intent(SettingActivity.this,HomeActivity.class);
+                startActivity(intent);
+//                finish();
+
             }
         });
         relativeLayout_Rate.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +131,7 @@ public class SettingActivity extends AppCompatActivity {
             case R.id.radioButtonEnglish:
                 sharedPreference_utils.setChangeLanguage("en",SettingActivity.this);
                 recreate();
+//                finishAffinity();
                 alertDialog.dismiss();
                 break;
             case R.id.radioButtonVietnam:
@@ -139,46 +147,71 @@ public class SettingActivity extends AppCompatActivity {
             case R.id.radioButtonPortuguese:
                 sharedPreference_utils.setChangeLanguage("pt",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
                 break;
             case R.id.radioButtonFrench:
                 sharedPreference_utils.setChangeLanguage("fr",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
                 break;
             case R.id.radioButtonRussian:
                 sharedPreference_utils.setChangeLanguage("ru",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
                 break;
             case R.id.radioButtonGerman:
                 sharedPreference_utils.setChangeLanguage("de",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
                 break;
             case R.id.radioButtonKorean:
                 sharedPreference_utils.setChangeLanguage("ko",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
+//                reLaunchApp();
                 break;
             case R.id.radioButtonArabic:
                 sharedPreference_utils.setChangeLanguage("ar",SettingActivity.this);
                 recreate();
+//                finishAffinity();
                 alertDialog.dismiss();
+//                reLaunchApp();
                 break;
             case R.id.radioButtonJapanese:
                 sharedPreference_utils.setChangeLanguage("ja",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
+//                reLaunchApp();
                 break;
             case R.id.radioButtonItalian:
                 sharedPreference_utils.setChangeLanguage("it",SettingActivity.this);
                 recreate();
+//                finishAffinity();
+
                 alertDialog.dismiss();
+//                reLaunchApp();
                 break;
         }
     }
-    private void checkConnectionAds() {
+    protected void reLaunchApp() {
+
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+        private void checkConnectionAds() {
         if (Common.isConnectedtoInternet(this)){
             setAdsView();
         }else {

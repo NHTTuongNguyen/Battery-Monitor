@@ -133,10 +133,17 @@ public class InformationFragment extends Fragment{
     private TemplateView templateView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        sharedPreference_utils = new SharedPreference_Utils(getActivity());
-        sharedPreference_utils.getChangeLanguage(getActivity());
+
 
         view =  inflater.inflate(R.layout.fragment_information, container, false);
+        sharedPreference_utils = new SharedPreference_Utils(getActivity());
+        sharedPreference_utils.getChangeLanguage(getActivity());
+//        if (sharedPreference_utils.getNightModeState() == true){
+//            getActivity().setTheme(R.style.AppTheme);
+//        }else {
+//            getActivity().setTheme(R.style.DarkTheme);
+//        }
+
         chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
         initView();
         batteryReceiverClass = new BatteryReceiverClass();
@@ -502,6 +509,12 @@ public class InformationFragment extends Fragment{
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
 
@@ -521,6 +534,8 @@ public class InformationFragment extends Fragment{
         super.onResume();
         checkConnectionAds();
         Log.d("ActivityLifeCycler","onResume");
-
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
+        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
     }
 }

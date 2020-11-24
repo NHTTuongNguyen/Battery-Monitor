@@ -2,6 +2,7 @@ package com.example.batterymonitor.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -41,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
 
+//        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
         }else {
@@ -49,6 +51,12 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle(getResources().getString(R.string.app_name));
+
+
+
         floatingActionButton = findViewById(R.id.floatNoti);
         viewPager2 = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tabs);
@@ -94,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this,SettingActivity.class);
                 startActivity(intent);
+//                finish();
             }
         });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -121,8 +130,8 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
     }
-//    @Override
-//    public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
 //        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
 //        alertDialogBuilder.setTitle(getString(R.string.Exit));
 //        alertDialogBuilder
@@ -142,13 +151,16 @@ public class HomeActivity extends AppCompatActivity {
 //                });
 //        AlertDialog alertDialog = alertDialogBuilder.create();
 //        alertDialog.show();
-//    }
+        finishAffinity();
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
-        String asdas = sharedPreference_utils.getChangeLanguage(HomeActivity.this);
-        Log.d("asdas",asdas);
+//        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+//        sharedPreference_utils.setChangeLanguage(sharedPreference_utils.getChangeLanguage(HomeActivity.this),HomeActivity.this);
+//        Log.d("asdas",asdas+"");
+
+
     }
 }

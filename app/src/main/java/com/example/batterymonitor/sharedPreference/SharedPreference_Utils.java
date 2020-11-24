@@ -26,7 +26,7 @@ import java.util.Set;
 public class SharedPreference_Utils {
     private static  Context mcontext;
     private static SharedPreferences sharedPreferences;
-    public static final String MyPREFERENCES = "MyPrefsSetting" ;
+    public static final String MyPREFERENCES = "MyPrefsSetting89" ;
     private static final String Bluetooth_ON = "bluetooth_turn_On_Key";
     private static final String Bluetooth_OFF = "bluetooth_turn_Off_Key";
     private static final String Wifi= "wifi_Key";
@@ -65,38 +65,46 @@ public class SharedPreference_Utils {
         editor.remove(ChangeRadioButton);
         editor.commit();
     }
-    public void  setChangeLanguage(String language,Context context){
-//        if (language!=null) {
-//            Locale locale = new Locale(language);
-//            //get list ngon ngu ho tro
-//            List<String> listLanguage = getLanguages();
-//            if(isLanguageInList(listLanguage, locale)){
-//                Locale.setDefault(locale);
-//                Configuration confi = new Configuration();
-//                confi.locale = locale;
-//                context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString(ChangeLanguage, language);
-//                editor.commit();
-//            }
-//
-//        }
+    public void setChangeLanguage(String language,Context context){
+//        Locale locale = new Locale(language);
+//        Locale.setDefault(locale);
+//        Configuration confi = new Configuration();
+////        android.content.res.Configuration confi = new android.content.res.Configuration();
+//        confi.locale = locale;
+//        context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString(ChangeLanguage, language);
+//        editor.apply();
+
+
 
         if (language!=null) {
             Locale locale = new Locale(language);
             //get list ngon ngu ho tro
-            Locale.setDefault(locale);
-            Configuration confi = new Configuration();
-            confi.locale = locale;
-            context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(ChangeLanguage, language);
-            editor.commit();
-
-
-
+            List<String> listLanguage = getLanguages();
+            if(isLanguageInList(listLanguage, locale)){
+                Locale.setDefault(locale);
+                Configuration confi = new Configuration();
+                confi.locale = locale;
+                context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(ChangeLanguage, language);
+                editor.commit();
+            }
 
         }
+//
+//        if (language!=null) {
+//            Locale locale = new Locale(language);
+//            //get list ngon ngu ho tro
+//            Locale.setDefault(locale);
+//            Configuration confi = new Configuration();
+//            confi.locale = locale;
+//            context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putString(ChangeLanguage, language);
+//            editor.commit();
+//        }
     }
     private List<String> getLanguages() {
         String[] locales = Resources.getSystem().getAssets().getLocales();
@@ -130,7 +138,15 @@ public class SharedPreference_Utils {
         String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,languageSystem);
         setChangeLanguage(getChangeLanguage,context);
         return getChangeLanguage;
+
     }
+
+
+//    public void getChangeLanguage(Context context){
+//        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,"");
+//        setChangeLanguage(getChangeLanguage,context);
+//
+//    }
     public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, float percentage, float currrrTime) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();

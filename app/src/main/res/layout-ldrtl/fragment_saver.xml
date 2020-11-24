@@ -95,7 +95,6 @@
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/linearLayoutClassMode"
                         android:theme="@style/TextViewSize"
                         android:layout_width="match_parent"
@@ -134,7 +133,7 @@
                                         android:layout_alignParentLeft="true"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="On"
+                                        android:text="@string/On"
                                         android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>
