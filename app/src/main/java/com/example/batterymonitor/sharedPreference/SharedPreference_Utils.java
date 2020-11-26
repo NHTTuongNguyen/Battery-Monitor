@@ -126,27 +126,27 @@ public class SharedPreference_Utils {
             return false;
         }
         for (String item: list) {
-            Log.d("list language", item);
+//            Log.d("list language", item);
             if (item.equalsIgnoreCase(locale.getDisplayLanguage())){
                 return true;
             }
         }
         return false;
     }
-    public String getChangeLanguage(Context context){
-        String languageSystem= Resources.getSystem().getConfiguration().locale.getLanguage();
-        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,languageSystem);
-        setChangeLanguage(getChangeLanguage,context);
-        return getChangeLanguage;
-
-    }
-
-
-//    public void getChangeLanguage(Context context){
-//        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,"");
+//    public String getChangeLanguage(Context context){
+//        String languageSystem= Resources.getSystem().getConfiguration().locale.getLanguage();
+//        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,languageSystem);
 //        setChangeLanguage(getChangeLanguage,context);
+//        return getChangeLanguage;
 //
 //    }
+
+
+    public void getChangeLanguage(Context context){
+        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,"");
+        setChangeLanguage(getChangeLanguage,context);
+
+    }
     public void setSaveBatteryCharts(Context context, ArrayList<ChartsModel>chartsModelArrayList, float percentage, float currrrTime) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();

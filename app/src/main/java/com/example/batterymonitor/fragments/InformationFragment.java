@@ -77,6 +77,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.sql.Time;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -256,8 +257,19 @@ public class InformationFragment extends Fragment{
         batterySize= (int)  getBatteryCapacity(getActivity());
         Log.d("12213",batterySize+"");
 
-
+        txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
+//        Calendar calendar = Calendar.getInstance();
+//        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+//        txtCurrentDaysThread.setText(currentDate);
+//        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
+        String asd = getDateTime();
+        txtCurrentDaysThread.setText(asd+"");
         return view;
+    }
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
     public double getBatteryCapacity(Context context) {
         Object mPowerProfile;
@@ -452,11 +464,7 @@ public class InformationFragment extends Fragment{
             public void run() {
                 try{
                     txtCurrentTimeThread = view.findViewById(R.id.txtCurrentTimeThread);
-                    txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
 
-                    Calendar calendar = Calendar.getInstance();
-                    String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-                    txtCurrentDaysThread.setText(currentDate);
                     Date dt = new Date();
                     int hours = dt.getHours();
                     int minutes = dt.getMinutes();
