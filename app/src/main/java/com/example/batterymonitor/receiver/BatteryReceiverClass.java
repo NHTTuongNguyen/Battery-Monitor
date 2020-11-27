@@ -1,63 +1,23 @@
 package com.example.batterymonitor.receiver;
 
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.icu.util.LocaleData;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
-import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-
-import com.example.batterymonitor.MainActivity;
 import com.example.batterymonitor.activity.HomeActivity;
 import com.example.batterymonitor.R;
-import com.example.batterymonitor.activity.SettingActivity;
-import com.example.batterymonitor.models.ChartsModel;
-import com.example.batterymonitor.service.ServiceNotifi;
 import com.example.batterymonitor.sharedPreference.SharedPreference_Utils;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import static com.example.batterymonitor.activity.App.CHANNEL_ID;
 
 public class BatteryReceiverClass extends BroadcastReceiver {
     TextView txtStatusLabel,
@@ -71,23 +31,27 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             txtPower,
             txtBigDOC,
             txtChatHeadImage;
-    ImageView imgBatteryImage,imageView_Bluetooth,imageView_WifiOnOff;
+    ImageView imgBatteryImage, imageView_BluetoothReceiver, imageView_WifiOnOffReceiver;
     private Switch switchBluetoothCustomMode,switchNotification;
     private SharedPreference_Utils sharedPreference_utils;
     private  int percentage;
-    private ArrayList<ChartsModel> chartsModels;
-    int currrrTime;
-    private ChartsModel chartsModel;
-    private LineChart lineChart;
-    private ArrayList<ChartsModel> chartsList,getChartsList;
-    private LineDataSet lineDataSet;
-    int seconds;
-    float time;
-    boolean isAdd = false;
+
+
     @Override
     public void onReceive(final Context context, Intent intent) {
         sharedPreference_utils = new SharedPreference_Utils(context);
-        lineChart  = ((HomeActivity)context).findViewById(R.id.line_Charts);
+        sharedPreference_utils.getChangeLanguage(context);
+
+//        String test  = sharedPreference_utils.getChangeLanguage(context);
+//        Log.d("2345678",test+"");
+//        if (test != null) {
+//            if (test.equals("en")) {
+//                sharedPreference_utils.setChangeLanguage("en", context);
+//            } else if (test.equals("vi")) {
+//                sharedPreference_utils.setChangeLanguage("vi", context);
+//
+//            }
+//        }
         txtChatHeadImage =((HomeActivity)context).findViewById(R.id.chat_head_profile_iv);
         txtStatusLabel = ((HomeActivity)context).findViewById(R.id.txttrangthai);
         txtPercentageLabel = ((HomeActivity)context).findViewById(R.id.txtphantrampin);
@@ -100,8 +64,8 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         txtPower = ((HomeActivity)context).findViewById(R.id.txtPower);
         txtBigDOC = ((HomeActivity)context).findViewById(R.id.txtNhietDoLon);
         imgBatteryImage = ((HomeActivity)context).findViewById(R.id.imghinhpin);
-        imageView_Bluetooth = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
-        imageView_WifiOnOff = ((HomeActivity)context).findViewById(R.id.img_WifiOnOff);
+        imageView_BluetoothReceiver = ((HomeActivity)context).findViewById(R.id.img_Bluetooth);
+        imageView_WifiOnOffReceiver = ((HomeActivity)context).findViewById(R.id.img_WifiOnOff);
         switchBluetoothCustomMode = ((HomeActivity)context).findViewById(R.id.switchBluetoothCustomMode);
         switchNotification = ((HomeActivity)context).findViewById(R.id.switchNotification);
 
@@ -117,6 +81,7 @@ public class BatteryReceiverClass extends BroadcastReceiver {
             percentage = level * 100 / scale;
             if (txtPercentageLabel !=null && txtLevel !=null) {
                 txtPercentageLabel.setText(percentage + "%");
+                txtLevel.setText(percentage + "%");
                 Date dt = new Date();
                 int hours = dt.getHours();
                 int minutes = dt.getMinutes();
@@ -170,13 +135,13 @@ public class BatteryReceiverClass extends BroadcastReceiver {
                 WifiManager.WIFI_STATE_UNKNOWN);
         switch (wifiStateExtra) {
             case WifiManager.WIFI_STATE_ENABLED:
-                if (imageView_WifiOnOff!=null) {
-                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
+                if (imageView_WifiOnOffReceiver !=null) {
+                    imageView_WifiOnOffReceiver.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
                 }
                 break;
             case WifiManager.WIFI_STATE_DISABLED:
-                if (imageView_WifiOnOff!=null) {
-                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
+                if (imageView_WifiOnOffReceiver !=null) {
+                    imageView_WifiOnOffReceiver.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
                 }
                 break;
         }
@@ -185,15 +150,15 @@ public class BatteryReceiverClass extends BroadcastReceiver {
         int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
         switch(state) {
             case BluetoothAdapter.STATE_OFF:
-                if (imageView_Bluetooth !=null) {
-                    imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
+                if (imageView_BluetoothReceiver !=null) {
+                    imageView_BluetoothReceiver.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
                 }
                 break;
             case BluetoothAdapter.STATE_TURNING_OFF:
                 break;
             case BluetoothAdapter.STATE_ON:
-                if (imageView_Bluetooth !=null) {
-                    imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
+                if (imageView_BluetoothReceiver !=null) {
+                    imageView_BluetoothReceiver.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
                 }
                 break;
             case BluetoothAdapter.STATE_TURNING_ON:

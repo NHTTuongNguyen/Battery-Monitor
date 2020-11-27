@@ -134,6 +134,9 @@ public class SaverFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_saver, container, false);
 
+
+
+
        initView();
 
 

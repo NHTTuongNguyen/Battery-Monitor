@@ -42,7 +42,7 @@
                             <TextView
                                 android:id="@+id/txtphantrampin"
                                 android:layout_marginTop="10dp"
-                                android:text="50%"
+
                                 android:textColor="@color/colorGreen"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/dimen_30"
@@ -60,7 +60,7 @@
                                 android:orientation="vertical">
                                 <TextView
                                     android:id="@+id/txtNhietDoLon"
-                                    android:text="33.3°C"
+
                                     android:textColor="@color/colorGreen"
                                     android:textStyle="bold"
                                     android:textSize="@dimen/dimen_30"
@@ -315,7 +315,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
-                                        android:text="4000 mv"
+
                                         android:textColor="?attr/attrsTextColor"
 
                                         />
@@ -349,7 +349,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
                                         android:layout_marginRight="0dp"
-                                        android:text="33 C"
+
                                         android:textColor="?attr/attrsTextColor" />
                                 </RelativeLayout>
 
@@ -384,7 +384,6 @@
                                         android:id="@+id/txtLevel"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="71%"
                                         android:textColor="?attr/attrsTextColor"
                                         />
                                 </RelativeLayout>

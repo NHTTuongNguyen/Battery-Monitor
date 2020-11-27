@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.batterymonitor.R;
 import com.example.batterymonitor.adapter.ViewPagerAdapter;
@@ -41,8 +42,17 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreference_utils = new SharedPreference_Utils(this);
-
         sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+//        String test  = sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+//        Log.d("2345678",test+"");
+//        if (test != null) {
+//            if (test.equals("en")) {
+//                sharedPreference_utils.setChangeLanguage("en", this);
+//            } else if (test.equals("vi")) {
+//                sharedPreference_utils.setChangeLanguage("vi", this);
+//                Toast.makeText(this, "hr", Toast.LENGTH_SHORT).show();
+//            }
+//        }
         if (sharedPreference_utils.getNightModeState() == true){
             setTheme(R.style.AppTheme);
         }else {
@@ -94,7 +104,6 @@ public class HomeActivity extends AppCompatActivity {
             }
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         imgToSetting.setOnClickListener(new View.OnClickListener() {
@@ -113,53 +122,17 @@ public class HomeActivity extends AppCompatActivity {
                 bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
             }
         });
-
-    }
-    private void showDialogNotification() {
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(HomeActivity.this, R.style.BottomSheetDialogTheme);
-        View bottomSheetView = LayoutInflater.from(getApplicationContext())
-                .inflate(
-                        R.layout.dialong_bottom,
-                        (LinearLayout)findViewById(R.id.bottomSheetContainer));
-        bottomSheetView.findViewById(R.id.button_share).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.cancel();
-            }
-        });
-        bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.show();
     }
     @Override
     public void onBackPressed() {
-//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this,R.style.MyDialogTheme);
-//        alertDialogBuilder.setTitle(getString(R.string.Exit));
-//        alertDialogBuilder
-//                .setMessage(getString(R.string.Out))
-//                .setCancelable(false)
-//                .setPositiveButton(getString(R.string.OK),
-//                        new DialogInterface.OnClickListener() {
-//                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                finishAffinity();
-//                            }
-//                })
-//                .setNegativeButton(getString(R.string.No), new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        dialog.cancel();
-//                    }
-//                });
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-//        alertDialog.show();
         finishAffinity();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-//        sharedPreference_utils.getChangeLanguage(HomeActivity.this);
-//        sharedPreference_utils.setChangeLanguage(sharedPreference_utils.getChangeLanguage(HomeActivity.this),HomeActivity.this);
-//        Log.d("asdas",asdas+"");
+         sharedPreference_utils.getChangeLanguage(HomeActivity.this);
+        String locale =Resources.getSystem().getConfiguration().locale.getLanguage();
+        SharedPreferences sharedPreferences  = getSharedPreferences(SharedPreference_Utils.MyPREFERENCES,Context.MODE_PRIVATE);
 
 
     }

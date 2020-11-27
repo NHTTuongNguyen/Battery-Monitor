@@ -78,33 +78,33 @@ public class SharedPreference_Utils {
 
 
 
-        if (language!=null) {
-            Locale locale = new Locale(language);
-            //get list ngon ngu ho tro
-            List<String> listLanguage = getLanguages();
-            if(isLanguageInList(listLanguage, locale)){
-                Locale.setDefault(locale);
-                Configuration confi = new Configuration();
-                confi.locale = locale;
-                context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(ChangeLanguage, language);
-                editor.commit();
-            }
-
-        }
-//
 //        if (language!=null) {
 //            Locale locale = new Locale(language);
 //            //get list ngon ngu ho tro
-//            Locale.setDefault(locale);
-//            Configuration confi = new Configuration();
-//            confi.locale = locale;
-//            context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.putString(ChangeLanguage, language);
-//            editor.commit();
+//            List<String> listLanguage = getLanguages();
+//            if(isLanguageInList(listLanguage, locale)){
+//                Locale.setDefault(locale);
+//                Configuration confi = new Configuration();
+//                confi.locale = locale;
+//                context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putString(ChangeLanguage, language);
+//                editor.commit();
+//            }
+//
 //        }
+//
+        if (language!=null) {
+            Locale locale = new Locale(language);
+            //get list ngon ngu ho tro
+            Locale.setDefault(locale);
+            Configuration confi = new Configuration();
+            confi.locale = locale;
+            context.getResources().updateConfiguration(confi, context.getResources().getDisplayMetrics());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ChangeLanguage, language);
+            editor.commit();
+        }
     }
     private List<String> getLanguages() {
         String[] locales = Resources.getSystem().getAssets().getLocales();
@@ -143,7 +143,7 @@ public class SharedPreference_Utils {
 
 
     public void getChangeLanguage(Context context){
-        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,"");
+        String getChangeLanguage = sharedPreferences.getString(ChangeLanguage,null);
         setChangeLanguage(getChangeLanguage,context);
 
     }

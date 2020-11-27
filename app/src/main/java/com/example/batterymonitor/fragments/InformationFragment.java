@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -36,6 +37,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,11 +98,10 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
 
-public class InformationFragment extends Fragment{
+public class InformationFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static  final String TAG= "InformationFragment";
-    private LineChart lineChart;
     public static InformationFragment newInstance(String param1, String param2) {
         InformationFragment fragment = new InformationFragment();
         Bundle args = new Bundle();
@@ -109,9 +110,7 @@ public class InformationFragment extends Fragment{
         fragment.setArguments(args);
         return fragment;
     }
-    private LinearLayout linearLayout_View,
-            linearLayout_SettingWifi,
-            linearLayout_Bluetooth,linearLayout_Brightness,linearLayout_Landscape,linearLayout_WifiOnOFF;
+    private LineChart lineChart;
     private  final String url_Battery= Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS;
     private final String url_SettingWifi = Settings.ACTION_WIFI_SETTINGS;
     private SharedPreference_Utils sharedPreference_utils;
@@ -132,139 +131,46 @@ public class InformationFragment extends Fragment{
     private AdView adView;
     private int hours;
     private TemplateView templateView;
+    boolean landscape;
+    boolean brightness;
+    boolean wifi;
+    ////
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         view =  inflater.inflate(R.layout.fragment_information, container, false);
         sharedPreference_utils = new SharedPreference_Utils(getActivity());
         sharedPreference_utils.getChangeLanguage(getActivity());
-//        if (sharedPreference_utils.getNightModeState() == true){
-//            getActivity().setTheme(R.style.AppTheme);
-//        }else {
-//            getActivity().setTheme(R.style.DarkTheme);
-//        }
-
         chartsList =  sharedPreference_utils.getSaveBatteryCharts(getActivity(),getChartsList);
         initView();
-        batteryReceiverClass = new BatteryReceiverClass();
-        btnViewBattery = view.findViewById(R.id.btnViewBattery);
-        intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-        intentFilter_WIFI_STATE_CHANGED_ACTION = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
-
-        linearLayout_View.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setActionIntent(url_Battery);
-            }
-        });
-        linearLayout_SettingWifi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setActionIntent(url_SettingWifi);
-            }
-        });
-        linearLayout_Bluetooth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                if (adapter == null){
-//                    Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (adapter.isEnabled()){
-                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
-                        adapter.disable();
-                    } else {
-                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
-                        adapter.enable();
-                    }
-                }
-            }
-        });
-        linearLayout_Brightness.setOnClickListener(new View.OnClickListener() {
-            boolean brightness;
-            @Override
-            public void onClick(View view) {
-               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                   if (Settings.System.canWrite(getActivity())){
-                       brightness = !brightness;
-                       if (brightness){
-                           Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-                           imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
-                       }else {
-                           Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-                           imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_default);
-                       }
-                   }else {
-                       alertDialogPermission();
-                   }
-               }
-            }
-        });
-        linearLayout_Landscape.setOnClickListener(new View.OnClickListener() {
-            boolean landscape;
-            @Override
-            public void onClick(View view) {
-                landscape = !landscape;
-                if (landscape){
-                        imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                }
-                else {
-                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                }
-            }
-        });
-        linearLayout_WifiOnOFF.setOnClickListener(new View.OnClickListener() {
-            boolean wifi;
-            @Override
-            public void onClick(View view) {
-                wifi = !wifi;
-                WifiManager wifiManager;
-                wifiManager = (WifiManager)getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                if (wifi){
-                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
-//                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
-                    wifiManager.setWifiEnabled(false);
-                }else {
-                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
-                    wifiManager.setWifiEnabled(true);
-                }
-            }
-        });
-        btnViewBattery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setActionIntent(url_Battery);
-            }
-        });
         ///setBluetooth
         setBluetooth();
         displayCurrentTime();
-
-
 //        initChart2();
         checkConnectionAds();
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
-//        lineDataSet.notifyDataSetChanged();
-//        lineChart.notifyDataSetChanged();
+        getbatterySize();
+        getTimeCurrent();
+        return view;
+    }
 
-        int batterySize = 0;
-        batterySize= (int)  getBatteryCapacity(getActivity());
-        Log.d("12213",batterySize+"");
-
+    private void getTimeCurrent() {
         txtCurrentDaysThread = view.findViewById(R.id.txtCurrentDaysThread);
 //        Calendar calendar = Calendar.getInstance();
 //        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
 //        txtCurrentDaysThread.setText(currentDate);
 //        SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-        String asd = getDateTime();
-        txtCurrentDaysThread.setText(asd+"");
-        return view;
+        String dateTime = getDateTime();
+        txtCurrentDaysThread.setText(dateTime+"");
+    }
+    private void getbatterySize() {
+        int batterySize = 0;
+        batterySize= (int)  getBatteryCapacity(getActivity());
+        Log.d("12213",batterySize+"");
     }
     private String getDateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -355,76 +261,7 @@ public class InformationFragment extends Fragment{
         }
     }
 
-    private void initChart2() {
-        lineChart  = view.findViewById(R.id.line_Charts);
-        List<Entry> yValues = new ArrayList<>();
-        float Y,X;
-        float sum = 0;
-        for (int i = 0; i< chartsList.size(); i++){
-            sum++;
-            Y= chartsList.get(i).getHours();
-            X = chartsList.get(i).getLevelBattery();
-            yValues.add(new Entry(sum,X));
-        }
 
-        for (int i = 0;i<chartsList.size();i++){
-            Log.d("lisstTest","Hours: "+chartsList.get(i).getHours()+" Battery"+chartsList.get(i).getLevelBattery());
-        }
-        TypedValue typedValue = new TypedValue();
-        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
-        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
-        lineDataSet = new LineDataSet(yValues,getString(R.string.DataBattery));
-        lineDataSet.setLineWidth(3f);
-        lineDataSet.setCircleRadius(5f);
-        lineDataSet.setCircleHoleRadius(2.5f);
-        lineDataSet.setColor(Color.LTGRAY);
-        lineDataSet.setCircleColor(Color.WHITE);
-        lineDataSet.setHighLightColor(Color.WHITE);
-        lineDataSet.setDrawValues(false);
-        lineDataSet.setDrawCircles(false);//
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        lineDataSet.setCubicIntensity(0.2f);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillColor(Color.CYAN);
-        lineDataSet.setFillAlpha(80);
-        lineDataSet.notifyDataSetChanged();
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet);
-        LineData data  = new LineData(dataSets);
-        Drawable drawable  = ContextCompat.getDrawable(getActivity(),R.drawable.gradient_charts);
-        lineDataSet.setFillDrawable(drawable);
-//        lineChart.setVerticalScrollBarEnabled(false);
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setDrawGridBackground(false);
-        lineChart.setTouchEnabled(false);
-        lineChart.setDragEnabled(true);
-        lineChart.setViewPortOffsets(10,0,10,0);
-        lineChart.setPinchZoom(false);
-//        lineChart.setEnabled(true);
-        lineChart.setDoubleTapToZoomEnabled(false);
-        lineChart.setData(data);
-//        lineChart.setVisibleXRangeMaximum(100);
-        lineChart.notifyDataSetChanged();
-
-//        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
-//        XAxis xAxis = lineChart.getXAxis();
-//        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
-//        xAxis.setGranularity(1);
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-//        lineChart.setVisibleYRangeMaximum(100f);
-    }
-
-    private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter{
-        ArrayList<ChartsModel> chartsModels;
-        private MyValueFormatter (ArrayList<ChartsModel> chartsModelArrayList){
-            this.chartsModels = chartsModelArrayList;
-        }
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-            return String.valueOf(chartsModels.get((int) value));
-        }
-    }
 
 
 
@@ -495,19 +332,92 @@ public class InformationFragment extends Fragment{
             }
         }
     }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.linearLayout_View:
+                setActionIntent(url_Battery);
+                break;
+            case R.id.linearLayout_Landscape:
+                landscape = !landscape;
+                if (landscape){
+                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_rotation_24);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                }
+                else {
+                    imageView_Landscape.setImageResource(R.drawable.ic_baseline_screen_lock_rotation_24);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }
+                break;
+            case R.id.linearLayout_SettingWifi:
+                setActionIntent(url_SettingWifi);
+                break;
+            case R.id.linearLayout_Bluetooth:
+                BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+                if (adapter == null){
+//                    Toast.makeText(getActivity(), "Your phone does not support bluetooth", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (adapter.isEnabled()){
+                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_disabled_24);
+                        adapter.disable();
+                    } else {
+                        imageView_Bluetooth.setImageResource(R.drawable.ic_baseline_bluetooth_24_default);
+                        adapter.enable();
+                    }
+                }
+                break;
+            case R.id.linearLayout_Brightness:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if (Settings.System.canWrite(getActivity())){
+                        brightness = !brightness;
+                        if (brightness){
+                            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+                            imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_auto_24);
+                        }else {
+                            Settings.System.putInt(getActivity().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+                            imageView_Brightness.setImageResource(R.drawable.ic_baseline_brightness_default);
+                        }
+                    }else {
+                        alertDialogPermission();
+                    }
+                }
+                break;
+            case R.id.linearLayout_WifiOnOFF:
+                wifi = !wifi;
+                WifiManager wifiManager;
+                wifiManager = (WifiManager)getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                if (wifi){
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_off_24);
+//                    SharedPreference_Utils.setWifi(R.drawable.ic_baseline_signal_wifi_off_24);
+                    wifiManager.setWifiEnabled(false);
+                }else {
+                    imageView_WifiOnOff.setImageResource(R.drawable.ic_baseline_signal_wifi_default);
+                    wifiManager.setWifiEnabled(true);
+                }
+                break;
+            case R.id.btnViewBattery:
+                setActionIntent(url_Battery);
+                break;
+        }
+    }
+
     private void initView() {
         templateView = view.findViewById(R.id.my_template);
         imageView_Bluetooth = view.findViewById(R.id.img_Bluetooth);
         imageView_Landscape = view.findViewById(R.id.img_Landscape);
         imageView_Brightness = view.findViewById(R.id.img_Brightness);
         imageView_WifiOnOff = view.findViewById(R.id.img_WifiOnOff);
-        linearLayout_View =view.findViewById(R.id.linearLayout_View);
-        linearLayout_Landscape = view.findViewById(R.id.linearLayout_Landscape);
-        linearLayout_SettingWifi = view.findViewById(R.id.linearLayout_SettingWifi);
-        linearLayout_Bluetooth = view.findViewById(R.id.linearLayout_Bluetooth);
-        linearLayout_Brightness = view.findViewById(R.id.linearLayout_Brightness);
-        linearLayout_WifiOnOFF = view.findViewById(R.id.linearLayout_WifiOnOFF);
-//        txtTemp = view.findViewById(R.id.txtNhietDoLon);
+        view.findViewById(R.id.btnViewBattery).setOnClickListener(this);
+        view.findViewById(R.id.linearLayout_View).setOnClickListener(this);
+        view.findViewById(R.id.linearLayout_Landscape).setOnClickListener(this);
+        view.findViewById(R.id.linearLayout_SettingWifi).setOnClickListener(this);
+        view.findViewById(R.id.linearLayout_Bluetooth).setOnClickListener(this);
+        view.findViewById(R.id.linearLayout_Brightness).setOnClickListener(this);
+        view.findViewById(R.id.linearLayout_WifiOnOFF).setOnClickListener(this);
+        batteryReceiverClass = new BatteryReceiverClass();
+        intentFilter_ACTION_BATTERY_CHANGED = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        intentFilter_ACTION_STATE_CHANGED = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        intentFilter_WIFI_STATE_CHANGED_ACTION = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
     }
 
     private void setActionIntent(String actionIntent) {
@@ -542,8 +452,82 @@ public class InformationFragment extends Fragment{
         super.onResume();
         checkConnectionAds();
         Log.d("ActivityLifeCycler","onResume");
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
-        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_WIFI_STATE_CHANGED_ACTION);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_BATTERY_CHANGED);
+//        getActivity().registerReceiver(batteryReceiverClass, intentFilter_ACTION_STATE_CHANGED);
+    }
+
+    private void initChart2() {
+        lineChart  = view.findViewById(R.id.line_Charts);
+        List<Entry> yValues = new ArrayList<>();
+        float Y,X;
+        float sum = 0;
+        for (int i = 0; i< chartsList.size(); i++){
+            sum++;
+            Y= chartsList.get(i).getHours();
+            X = chartsList.get(i).getLevelBattery();
+            yValues.add(new Entry(sum,X));
+        }
+
+        for (int i = 0;i<chartsList.size();i++){
+            Log.d("lisstTest","Hours: "+chartsList.get(i).getHours()+" Battery"+chartsList.get(i).getLevelBattery());
+        }
+        TypedValue typedValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.colorControlNormal, typedValue, true);
+        int color = ContextCompat.getColor(getActivity(), typedValue.resourceId);
+        lineDataSet = new LineDataSet(yValues,getString(R.string.DataBattery));
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setCircleRadius(5f);
+        lineDataSet.setCircleHoleRadius(2.5f);
+        lineDataSet.setColor(Color.LTGRAY);
+        lineDataSet.setCircleColor(Color.WHITE);
+        lineDataSet.setHighLightColor(Color.WHITE);
+        lineDataSet.setDrawValues(false);
+        lineDataSet.setDrawCircles(false);//
+        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setCubicIntensity(0.2f);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFillColor(Color.CYAN);
+        lineDataSet.setFillAlpha(80);
+        lineDataSet.notifyDataSetChanged();
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSet);
+        LineData data  = new LineData(dataSets);
+        Drawable drawable  = ContextCompat.getDrawable(getActivity(),R.drawable.gradient_charts);
+        lineDataSet.setFillDrawable(drawable);
+//        lineChart.setVerticalScrollBarEnabled(false);
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setDrawGridBackground(false);
+        lineChart.setTouchEnabled(false);
+        lineChart.setDragEnabled(true);
+        lineChart.setViewPortOffsets(10,0,10,0);
+        lineChart.setPinchZoom(false);
+//        lineChart.setEnabled(true);
+        lineChart.setDoubleTapToZoomEnabled(false);
+        lineChart.setData(data);
+//        lineChart.setVisibleXRangeMaximum(100);
+        lineChart.notifyDataSetChanged();
+
+//        ArrayList<ChartsModel> chartsModelArrayList = chartsList;
+//        XAxis xAxis = lineChart.getXAxis();
+//        xAxis.setValueFormatter(new MyValueFormatter(chartsModelArrayList));
+//        xAxis.setGranularity(1);
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+//        lineChart.setVisibleYRangeMaximum(100f);
+    }
+
+
+
+
+    private class MyValueFormatter extends ValueFormatter implements IAxisValueFormatter{
+        ArrayList<ChartsModel> chartsModels;
+        private MyValueFormatter (ArrayList<ChartsModel> chartsModelArrayList){
+            this.chartsModels = chartsModelArrayList;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return String.valueOf(chartsModels.get((int) value));
+        }
     }
 }
